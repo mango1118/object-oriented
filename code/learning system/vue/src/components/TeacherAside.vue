@@ -37,6 +37,10 @@
         <i class="el-icon-search"></i>
         <span slot="title">系统功能</span>
       </template>
+      <el-menu-item index="/teacher/search">
+        <i class="el-icon-document"></i>
+        <span slot="title">试卷查询</span>
+      </el-menu-item>
       <el-menu-item index="/teacher/question-control">
         <i class="el-icon-folder-opened"></i>
         <span slot="title">题目管理</span>
@@ -52,6 +56,10 @@
       <el-menu-item index="/teacher/manual-compose">
         <i class="el-icon-view"></i>
         <span slot="title">手动组卷</span>
+      </el-menu-item>
+      <el-menu-item index="/teacher/correct">
+        <i class="el-icon-thumb"></i>
+        <span slot="title">改卷功能</span>
       </el-menu-item>
     </el-submenu>
 
