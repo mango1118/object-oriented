@@ -11,7 +11,7 @@
     <div style="height: 60px; line-height: 60px; text-align: center">
       <img src="@/assets/logo.png" alt="" style="width: 20px; position:relative; top:5px; margin-right: 5px; ">
       <!--这里不能用logoTextShow 原因未知-->
-      <b style="color: white" v-show="!isCollapse">在线学习系统</b>
+      <b style="color: white" v-show="!isCollapse">在线学习系统 教师</b>
     </div>
     <el-submenu index="1-1">
       <template slot="title">
@@ -38,19 +38,19 @@
         <span slot="title">系统功能</span>
       </template>
       <el-menu-item index="/teacher/question-control">
-        <i class="el-icon-notebook-1"></i>
+        <i class="el-icon-folder-opened"></i>
         <span slot="title">题目管理</span>
       </el-menu-item>
       <el-menu-item index="/teacher/question-property">
-        <i class="el-icon-notebook-1"></i>
+        <i class="el-icon-edit-outline"></i>
         <span slot="title">题目性质</span>
       </el-menu-item>
       <el-menu-item index="/teacher/auto-compose">
-        <i class="el-icon-s-check"></i>
+        <i class="el-icon-magic-stick"></i>
         <span slot="title">自动组卷</span>
       </el-menu-item>
       <el-menu-item index="/teacher/manual-compose">
-        <i class="el-icon-folder-opened"></i>
+        <i class="el-icon-view"></i>
         <span slot="title">手动组卷</span>
       </el-menu-item>
     </el-submenu>
