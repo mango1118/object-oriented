@@ -1,0 +1,25 @@
+server:
+  port: 9090
+
+# mysql
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://106.53.104.4:3306/learning_system
+    username: admin
+    password: gdutadmin
+
+logging:
+  level:
+    root: info
+    mapper: info
+    com.baomidou.mybatisplus: info
+  config: classpath:logback-spring.xml
+
+mybatis:
+  mapper-locations: classpath:mapper/*
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
