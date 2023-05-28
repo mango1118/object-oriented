@@ -17,7 +17,7 @@ import java.util.Map;
  */
 @RestController
 // 访问路径:localhost:9090/students
-@RequestMapping("/students")
+@RequestMapping("/student")
 public class StudentController {
 
     /**
