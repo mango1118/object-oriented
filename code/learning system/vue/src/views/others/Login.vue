@@ -4,8 +4,8 @@
         style="margin: 200px auto; background-color: #fff; width: 350px; height: 300px; padding: 20px; border-radius: 10px">
       <div style="margin: 20px 0; text-align: center; font-size: 24px"><b>登 录</b></div>
       <el-form :model="user" :rules="rules" ref="userForm">
-        <el-form-item prop="username">
-          <el-input size="medium" style="margin: 10px 0" prefix-icon="el-icon-user" v-model="user.username"></el-input>
+        <el-form-item prop="account">
+          <el-input size="medium" style="margin: 10px 0" prefix-icon="el-icon-user" v-model="user.account"></el-input>
         </el-form-item>
         <el-form-item prop="password">
           <el-input size="medium" style="margin: 10px 0" prefix-icon="el-icon-lock" show-password
@@ -29,7 +29,7 @@ export default {
     return {
       user: {},
       rules: {
-        username: [
+        account: [
           {required: true, message: '请输入用户名', trigger: 'blur'},
         ],
         password: [
@@ -48,9 +48,9 @@ export default {
               localStorage.setItem("user", JSON.stringify(res.data))
               this.$message.success("登录成功");
               if (res.code === 10001) {//学生
-                this.$router.push("/reader");
+                this.$router.push("/student");
               } else if (res.code === 10002) {//老师
-                this.$router.push("/admin");
+                this.$router.push("/teacher");
               }
             } else {
               this.$message.error(res.msg);

@@ -24,7 +24,7 @@ public class Teacher {
     private Integer id;
 
     private String name;
-
+    private String account;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 

@@ -1,5 +1,6 @@
 package com.oo.service;
 
+import com.oo.domain.LoginDTO;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -9,4 +10,13 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 public interface LoginService {
+
+    /**
+     * 登录
+     *
+     * @param loginDTO
+     * @return Object 用户身份
+     */
+    Object login(LoginDTO loginDTO);
+
 }
