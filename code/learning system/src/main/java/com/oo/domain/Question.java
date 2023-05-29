@@ -20,22 +20,14 @@ import lombok.NoArgsConstructor;
 public class Question {
 
     @TableId(type = IdType.AUTO)
-    private Integer questionId;
-
+    private Integer id;
     private String content;
-
     private Integer type;
-
     private String correctAnswer;
-
     private String knowledgePoint;
-
     private String chapter;
-
     private Float errorRate;
-
     private String errorPoint;
-
     private Integer difficulty;
 
     @TableField(exist = false)

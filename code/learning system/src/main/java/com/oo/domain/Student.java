@@ -21,12 +21,12 @@ import lombok.NoArgsConstructor;
 public class Student {
 
     @TableId(type = IdType.AUTO)
-    private Integer studentId;
+    private Integer id;
 
-    private String studentName;
+    private String name;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String studentPassword;
+    private String password;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

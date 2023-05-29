@@ -2,15 +2,15 @@ package com.oo.dao;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.oo.domain.Files;
+import com.oo.domain.PaperGraph;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @description:
  * @author: mango
- * @date: 2023/5/28 11:35
+ * @date: 2023/5/28 22:43
  */
 @Mapper
-@TableName("t_file")
-public interface FilesDao extends BaseMapper<Files> {
+@TableName("t_paper_graph")
+public interface PaperGraphDao extends BaseMapper<PaperGraph> {
 }

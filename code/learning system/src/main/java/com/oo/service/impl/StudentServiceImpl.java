@@ -53,8 +53,8 @@ public class StudentServiceImpl implements StudentService {
     public Map<String, Object> selectLike(Integer current, Integer size, String id, String name) {
         Page<Student> page = new Page<>(current, size);
         LambdaQueryWrapper<Student> studentLambdaQueryWrapper = new LambdaQueryWrapper<>();
-        studentLambdaQueryWrapper.like(null != id && !"null".equals(id), Student::getStudentId, id);
-        studentLambdaQueryWrapper.like(null != name && !"null".equals(name), Student::getStudentName, name);
+        studentLambdaQueryWrapper.like(null != id && !"null".equals(id), Student::getId, id);
+        studentLambdaQueryWrapper.like(null != name && !"null".equals(name), Student::getName, name);
 
         List<Student> data = studentDao.selectPage(page, studentLambdaQueryWrapper).getRecords();
         Integer total = (int) studentDao.selectPage(page, studentLambdaQueryWrapper).getTotal();

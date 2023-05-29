@@ -20,13 +20,10 @@ import lombok.NoArgsConstructor;
 public class StudentPaper {
 
     @TableId(type = IdType.AUTO)
-    private Integer studentPaperId;
-
+    private Integer id;
     private Integer studentId;
-
-    private Integer papperId;
-
-    private Integer score;
+    private Integer paperId;
+    private Integer total_score;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
