@@ -16,8 +16,9 @@
           el-table-column prog="xxx" 其中xxx是属性名
     -->
     <el-table v-bind:data="tableData" border: stripe :header-cell-class-name="headerBg" row-key="id">
-      <el-table-column prop="studentId" label="学生学号" width="250"></el-table-column>
+      <el-table-column prop="studentId" label="学生id" width="250"></el-table-column>
       <el-table-column prop="studentName" label="学生姓名" width="250"></el-table-column>
+      <el-table-column prop="paperId" label="考试id" width="200"></el-table-column>
       <el-table-column prop="paperName" label="考试名" width="200"></el-table-column>
       <el-table-column prop="totalScore" label="考试得分" width="200"></el-table-column>
     </el-table>
@@ -48,6 +49,7 @@ export default {
       total: 0,
       pageNum: 1,
       pageSize: 5,
+      studentNow: {},
       studentPaperName: null,
       studentPaperId: null,
       headerBg: 'headerBg'
@@ -69,7 +71,7 @@ export default {
     async sendReq() {
       // this.pageNum = 1;
       const resp = await this.axios.get("studentPapers/pageLike?pageNum=" + this.pageNum
-          + "&pageSize=" + this.pageSize + "&name=null&author=null&publisher=null");
+          + "&pageSize=" + this.pageSize + "studentId=" + this.studentNow.id);
       // console.log(resp);
       this.tableData = resp.data.data;
       this.total = resp.data.total;
@@ -77,7 +79,8 @@ export default {
     async sendLikeReq() {
       // this.pageNum = 1;
       const resp = await this.axios.get(`/studentPapers/pageLike?pageNum=${this.pageNum}
-      &pageSize=${this.pageSize}&studentPaperId=${this.studentPaperId}&studentPaperName=${this.studentPaperName}`);
+      &pageSize=${this.pageSize}&studentPaperId=${this.studentPaperId}&studentPaperName=${this.studentPaperName}
+      &studentId=${this.studentNow.id}`);
       // console.log(resp);
       this.tableData = resp.data.data;
       this.total = resp.data.total;
@@ -103,6 +106,8 @@ export default {
     },
   },
   mounted: function () {
+    this.studentNow = JSON.parse(localStorage.getItem("user"))
+    console.log(this.studentNow)
     this.sendLikeReq();
   }
 }

@@ -37,15 +37,15 @@
         <i class="el-icon-search"></i>
         <span slot="title">系统功能</span>
       </template>
-      <el-menu-item index="/teacher/search">
+      <el-menu-item index="/teacher/studentPaperSearch">
         <i class="el-icon-document"></i>
         <span slot="title">试卷查询</span>
       </el-menu-item>
-      <el-menu-item index="/student/my-score">
+      <el-menu-item index="/student/studentScoreSearch">
         <i class="el-icon-s-data"></i>
         <span slot="title">我的成绩</span>
       </el-menu-item>
-      <el-menu-item index="/student/my-exam">
+      <el-menu-item index="/student/studentExam">
         <i class="el-icon-notebook-2"></i>
         <span slot="title">我的考试</span>
       </el-menu-item>

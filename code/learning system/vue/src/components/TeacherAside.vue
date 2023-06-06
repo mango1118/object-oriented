@@ -37,27 +37,27 @@
         <i class="el-icon-search"></i>
         <span slot="title">系统功能</span>
       </template>
-      <el-menu-item index="/teacher/search">
+      <el-menu-item index="/teacher/teacherPaperSearch">
         <i class="el-icon-document"></i>
         <span slot="title">试卷查询</span>
       </el-menu-item>
-      <el-menu-item index="/teacher/question-control">
+      <el-menu-item index="/teacher/teacherQuestionControl">
         <i class="el-icon-folder-opened"></i>
         <span slot="title">题目管理</span>
       </el-menu-item>
-      <el-menu-item index="/teacher/question-property">
+      <el-menu-item index="/teacher/teacherQuestionProperty">
         <i class="el-icon-edit-outline"></i>
         <span slot="title">题目性质</span>
       </el-menu-item>
-      <el-menu-item index="/teacher/auto-compose">
+      <el-menu-item index="/teacher/teacherAutoCompose">
         <i class="el-icon-magic-stick"></i>
         <span slot="title">自动组卷</span>
       </el-menu-item>
-      <el-menu-item index="/teacher/manual-compose">
+      <el-menu-item index="/teacher/teacherManualCompose">
         <i class="el-icon-view"></i>
         <span slot="title">手动组卷</span>
       </el-menu-item>
-      <el-menu-item index="/teacher/correct">
+      <el-menu-item index="/teacher/teacherCorrectAnswer">
         <i class="el-icon-thumb"></i>
         <span slot="title">改卷功能</span>
       </el-menu-item>
