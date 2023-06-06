@@ -260,8 +260,6 @@ export default {
     this.sendLikeReq();
   }
 }
-
-
 </script>
 
 <style>
