@@ -42,7 +42,7 @@ const routes = [
             //系统功能
             {path: 'teacherPaperSearch', name:'teacher试卷查询', component:() => import('../views/controller/teacher/TeacherPaperSearchView')},
             {path: 'teacherQuestionControl', name:'teacher题目管理', component:() => import('../views/controller/teacher/QuestionControlView')},
-            {path: 'teacherQuestionProperty', name:'teacher题目属性', component:() => import('../views/controller/teacher/QuestionPropertyView')},
+            // {path: 'teacherQuestionProperty', name:'teacher题目属性', component:() => import('../views/controller/teacher/QuestionPropertyView')},
             {path: 'teacherAutoCompose', name:'teacher自动组卷', component:() => import('../views/controller/teacher/AutoComposeView')},
             {path: 'teacherManualCompose', name:'teacher手动组卷', component:() => import('../views/controller/teacher/ManualComposeView')},
             {path: 'teacherCorrectAnswer', name:'teacher改卷功能', component:() => import('../views/controller/teacher/CorrectQuestionView')},

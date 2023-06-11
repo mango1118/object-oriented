@@ -45,10 +45,10 @@
         <i class="el-icon-folder-opened"></i>
         <span slot="title">题目管理</span>
       </el-menu-item>
-      <el-menu-item index="/teacher/teacherQuestionProperty">
-        <i class="el-icon-edit-outline"></i>
-        <span slot="title">题目性质</span>
-      </el-menu-item>
+<!--      <el-menu-item index="/teacher/teacherQuestionProperty">-->
+<!--        <i class="el-icon-edit-outline"></i>-->
+<!--        <span slot="title">题目性质</span>-->
+<!--      </el-menu-item>-->
       <el-menu-item index="/teacher/teacherAutoCompose">
         <i class="el-icon-magic-stick"></i>
         <span slot="title">自动组卷</span>
