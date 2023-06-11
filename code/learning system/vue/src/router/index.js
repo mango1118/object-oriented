@@ -25,7 +25,9 @@ const routes = [
             //系统功能
             {path: 'studentPaperSearch', name:'student试卷查询', component:() => import('../views/controller/student/StudentPaperSearchView')},
             {path: 'studentScoreSearch', name:'student成绩查询', component:() => import('../views/controller/student/StudentScoreView')},
+            {path: 'studentSelectExam', name: 'student挑选考试', component:() => import('../views/controller/student/StudentSelectExamView')},
             {path: 'studentExam', name: 'student考试页面', component:() => import('../views/controller/student/StudentExamView')},
+
         ]
     },
     {
