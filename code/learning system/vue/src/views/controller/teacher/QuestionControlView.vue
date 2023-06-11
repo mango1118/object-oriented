@@ -1,6 +1,7 @@
 <template>
 
   <div>
+    <h2>问题管理页面</h2>
     <div style="margin: 10px 0">
       <el-input style="width: 200px" placeholder="请输入问题id" suffix-icon="el-icon-search"
                 v-model="questionId"></el-input>

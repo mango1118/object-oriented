@@ -1,6 +1,7 @@
 <template>
 
   <div>
+    <h2>学生考试选择</h2>
     <div style="margin: 10px 0">
       <el-input style="width: 200px" placeholder="请输入考试id" suffix-icon="el-icon-search"
                 v-model="PaperId"></el-input>

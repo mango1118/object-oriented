@@ -45,7 +45,7 @@
         <i class="el-icon-s-data"></i>
         <span slot="title">我的成绩</span>
       </el-menu-item>
-      <el-menu-item index="/student/studentExam">
+      <el-menu-item index="/student/studentSelectExam">
         <i class="el-icon-notebook-2"></i>
         <span slot="title">我的考试</span>
       </el-menu-item>
