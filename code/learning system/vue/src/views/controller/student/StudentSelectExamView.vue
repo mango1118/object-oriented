@@ -73,7 +73,7 @@ export default {
     },
     async sendReq() {
       // this.pageNum = 1;
-      const resp = await this.axios.get("studentPapers/pageLike?pageNum=" + this.pageNum
+      const resp = await this.axios.get("/studentPapers/pageLike?pageNum=" + this.pageNum
           + "&pageSize=" + this.pageSize + "studentId=" + this.studentNow.id);
       // console.log(resp);
       this.tableData = resp.data.data;
@@ -108,7 +108,7 @@ export default {
       this.sendLikeReq();
     },
     handleSelect(id) {
-      this.$router.push("student/studentExamView/" + id);
+      this.$router.push("/student/studentExamView/" + id);
     },
   },
   mounted: function () {

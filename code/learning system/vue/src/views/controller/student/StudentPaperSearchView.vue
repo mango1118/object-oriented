@@ -119,6 +119,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style>
+.headerBg {
+  background-color: #ccc !important;
+}
 </style>
