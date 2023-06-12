@@ -159,7 +159,7 @@ export default {
             this.$message.success("提交成功");
 
             // 发送POST请求，将表单数据传递给后端,要求后端返回一个JSON格式的RESPOND
-            const resp = await this.axios.post('/api/submitForm', formData);
+            const resp = await this.axios.post('/autoCompose/submitForm', formData);
             // console.log(resp);
             this.tableData = resp.data.data.data;
             this.total = resp.data.data.total;
