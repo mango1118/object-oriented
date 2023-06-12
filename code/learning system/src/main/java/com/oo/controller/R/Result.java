@@ -1,5 +1,7 @@
 package com.oo.controller.R;
 
+import java.util.List;
+
 /**
  * @description: 结果包装类
  * @author: mango
@@ -19,6 +21,12 @@ public class Result {
     }
 
     public Result(Integer code, Object data, String msg) {
+        this.data = data;
+        this.code = code;
+        this.msg = msg;
+    }
+
+    public Result(Integer code, List data, String msg) {
         this.data = data;
         this.code = code;
         this.msg = msg;
