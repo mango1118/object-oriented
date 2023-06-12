@@ -23,9 +23,11 @@ const routes = [
             //个人功能
             {path: 'self', name:'student个人页面', component:()=> import('../views/others/own/StudentSelfView')},
             //系统功能
-            {path: 'studentPaperSearch', name:'student试卷查询', component:() => import('../views/controller/student/StudentPaperSearchView')},
+            // {path: 'studentPaperSearch', name:'student试卷查询', component:() => import('../views/controller/student/StudentPaperSearchView')},
             {path: 'studentScoreSearch', name:'student成绩查询', component:() => import('../views/controller/student/StudentScoreView')},
+            {path: 'studentSelectExam', name: 'student挑选考试', component:() => import('../views/controller/student/StudentSelectExamView')},
             {path: 'studentExam', name: 'student考试页面', component:() => import('../views/controller/student/StudentExamView')},
+
         ]
     },
     {
@@ -40,7 +42,7 @@ const routes = [
             //系统功能
             {path: 'teacherPaperSearch', name:'teacher试卷查询', component:() => import('../views/controller/teacher/TeacherPaperSearchView')},
             {path: 'teacherQuestionControl', name:'teacher题目管理', component:() => import('../views/controller/teacher/QuestionControlView')},
-            {path: 'teacherQuestionProperty', name:'teacher题目属性', component:() => import('../views/controller/teacher/QuestionPropertyView')},
+            // {path: 'teacherQuestionProperty', name:'teacher题目属性', component:() => import('../views/controller/teacher/QuestionPropertyView')},
             {path: 'teacherAutoCompose', name:'teacher自动组卷', component:() => import('../views/controller/teacher/AutoComposeView')},
             {path: 'teacherManualCompose', name:'teacher手动组卷', component:() => import('../views/controller/teacher/ManualComposeView')},
             {path: 'teacherCorrectAnswer', name:'teacher改卷功能', component:() => import('../views/controller/teacher/CorrectQuestionView')},

@@ -1,11 +1,12 @@
 <template>
+
   <div>
-    <h2>学生成绩查询页面</h2>
+    <h2>学生考试选择</h2>
     <div style="margin: 10px 0">
       <el-input style="width: 200px" placeholder="请输入考试id" suffix-icon="el-icon-search"
-                v-model="studentPaperId"></el-input>
+                v-model="PaperId"></el-input>
       <el-input style="width: 200px" placeholder="请输入考试名" suffix-icon="el-icon-studentPaper"
-                v-model="studentPaperName"
+                v-model="PaperName"
                 class="ml-5"></el-input>
       <el-button class="ml-5" type="primary" @click="handleSearch">搜索</el-button>
       <el-button class="ml-5" type="warning" @click="reload">重置</el-button>
@@ -17,11 +18,13 @@
           el-table-column prog="xxx" 其中xxx是属性名
     -->
     <el-table v-bind:data="tableData" border: stripe :header-cell-class-name="headerBg" row-key="id">
-      <el-table-column prop="studentId" label="学生id" width="250"></el-table-column>
-      <el-table-column prop="studentName" label="学生姓名" width="250"></el-table-column>
-      <el-table-column prop="paperId" label="考试id" width="200"></el-table-column>
-      <el-table-column prop="paperName" label="考试名" width="200"></el-table-column>
-      <el-table-column prop="totalScore" label="考试得分" width="200"></el-table-column>
+      <el-table-column prop="paperId" label="考试id" width="250"></el-table-column>
+      <el-table-column prop="paperName" label="考试名" width="250"></el-table-column>
+      <el-table-column label="操作" width="200" align="center">
+        <template slot-scope="scope">
+          <el-button type="success" @click="handleSelect(scope.row.paperId)">挑选<i class="el-icon-edit"></i></el-button>
+        </template>
+      </el-table-column>
     </el-table>
 
     <div style="padding: 10px 0">
@@ -37,13 +40,12 @@
       </el-pagination>
     </div>
   </div>
-
 </template>
 
 <script>
 
 export default {
-  name: "StudentScoreView",
+  name: "StudentSelectExamView",
   data() {
     return {
       tableData: [],
@@ -51,8 +53,8 @@ export default {
       pageNum: 1,
       pageSize: 5,
       studentNow: {},
-      studentPaperName: null,
-      studentPaperId: null,
+      paperName: null,
+      paperId: null,
       headerBg: 'headerBg'
     }
   },
@@ -105,6 +107,9 @@ export default {
       this.pageNum = pageNum;
       this.sendLikeReq();
     },
+    handleSelect(id) {
+      this.$router.push("student/studentExamView/" + id);
+    },
   },
   mounted: function () {
     this.studentNow = JSON.parse(localStorage.getItem("user"))
@@ -113,8 +118,7 @@ export default {
   }
 }
 </script>
-<style>
-.headerBg {
-  background-color: #ccc !important;
-}
+
+<style scoped>
+
 </style>

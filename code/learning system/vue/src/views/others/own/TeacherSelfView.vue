@@ -5,8 +5,8 @@
     <div style="box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04); width: 750px">
       <h1 style="height: 40px; margin-left: 20px;">修改个人信息</h1>
       <el-form :model="saveform" label-width="80px" size="small" style="width: 600px">
-        <el-form-item label="姓名" prop="name">
-          <el-input v-model="saveform.teacherName" autocomplete="off"></el-input>
+        <el-form-item label="账号" prop="name">
+          <el-input v-model="saveform.teacherAccount" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
           <el-input v-model="saveform.teacherPassword" autocomplete="off" show-password></el-input>
@@ -33,8 +33,7 @@ export default {
       pageSize: 5,
       teacherNow: {},
       teacherAccount: null,
-      teacherName: null,
-      teacherEmail: null,
+      teacherPassword: null,
       saveform: {},
       headerBg: 'headerBg'
     }
