@@ -4,9 +4,9 @@
     <h2>学生试卷查询</h2>
     <div style="margin: 10px 0">
       <el-input style="width: 200px" placeholder="请输入考试id" suffix-icon="el-icon-search"
-                v-model="PaperId"></el-input>
+                v-model="paperId"></el-input>
       <el-input style="width: 200px" placeholder="请输入考试名" suffix-icon="el-icon-studentPaper"
-                v-model="PaperName"
+                v-model="paperName"
                 class="ml-5"></el-input>
       <el-button class="ml-5" type="primary" @click="handleSearch">搜索</el-button>
       <el-button class="ml-5" type="warning" @click="reload">重置</el-button>

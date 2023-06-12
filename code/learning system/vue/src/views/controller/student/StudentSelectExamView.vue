@@ -4,9 +4,9 @@
     <h2>学生考试选择</h2>
     <div style="margin: 10px 0">
       <el-input style="width: 200px" placeholder="请输入考试id" suffix-icon="el-icon-search"
-                v-model="PaperId"></el-input>
+                v-model="paperId"></el-input>
       <el-input style="width: 200px" placeholder="请输入考试名" suffix-icon="el-icon-studentPaper"
-                v-model="PaperName"
+                v-model="paperName"
                 class="ml-5"></el-input>
       <el-button class="ml-5" type="primary" @click="handleSearch">搜索</el-button>
       <el-button class="ml-5" type="warning" @click="reload">重置</el-button>
@@ -82,7 +82,7 @@ export default {
     async sendLikeReq() {
       // this.pageNum = 1;
       const resp = await this.axios.get(`/studentPapers/pageLike?pageNum=${this.pageNum}
-      &pageSize=${this.pageSize}&studentPaperId=${this.studentPaperId}&studentPaperName=${this.studentPaperName}
+      &pageSize=${this.pageSize}&studentPaperId=${this.paperId}&studentPaperName=${this.paperName}
       &studentId=${this.studentNow.id}`);
       // console.log(resp);
       this.tableData = resp.data.data;
@@ -91,8 +91,8 @@ export default {
     reload() {
       this.pageNum = 1;
       this.pageSize = 5;
-      this.studentPaperId = null;
-      this.studentPaperName = null;
+      this.paperId = null;
+      this.paperName = null;
       this.sendReq();
     },
     handleSearch() {
