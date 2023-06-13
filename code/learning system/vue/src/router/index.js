@@ -46,7 +46,7 @@ const routes = [
             {path: 'teacherAutoCompose', name:'teacher自动组卷', component:() => import('../views/controller/teacher/AutoComposeView')},
             {path: 'teacherManualCompose', name:'teacher手动组卷', component:() => import('../views/controller/teacher/ManualComposeView')},
             {path: 'teacherCorrectAnswer', name:'teacher改卷功能', component:() => import('../views/controller/teacher/CorrectQuestionView')},
-            {path: 'teacherGivePaper', name:'teacher发卷', component:() => import('../views/controller/teacher/CorrectQuestionView')},
+            {path: 'teacherGivePaper', name:'teacher发卷', component:() => import('../views/controller/teacher/GivePaperView')},
         ]
     }
 ]
