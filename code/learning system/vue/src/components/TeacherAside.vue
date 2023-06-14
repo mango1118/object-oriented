@@ -45,10 +45,10 @@
         <i class="el-icon-folder-opened"></i>
         <span slot="title">题目管理</span>
       </el-menu-item>
-<!--      <el-menu-item index="/teacher/teacherQuestionProperty">-->
-<!--        <i class="el-icon-edit-outline"></i>-->
-<!--        <span slot="title">题目性质</span>-->
-<!--      </el-menu-item>-->
+      <!--      <el-menu-item index="/teacher/teacherQuestionProperty">-->
+      <!--        <i class="el-icon-edit-outline"></i>-->
+      <!--        <span slot="title">题目性质</span>-->
+      <!--      </el-menu-item>-->
       <el-menu-item index="/teacher/teacherAutoCompose">
         <i class="el-icon-magic-stick"></i>
         <span slot="title">自动组卷</span>
@@ -58,8 +58,12 @@
         <span slot="title">手动组卷</span>
       </el-menu-item>
       <el-menu-item index="/teacher/teacherCorrectAnswer">
-        <i class="el-icon-thumb"></i>
+        <i class="el-icon-check"></i>
         <span slot="title">改卷功能</span>
+      </el-menu-item>
+      <el-menu-item index="/teacher/teacherGivePaper">
+        <i class="el-icon-s-promotion"></i>
+        <span slot="title">发卷功能</span>
       </el-menu-item>
     </el-submenu>
 
