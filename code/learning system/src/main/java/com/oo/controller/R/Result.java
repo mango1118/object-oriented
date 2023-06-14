@@ -1,5 +1,9 @@
 package com.oo.controller.R;
+import com.oo.domain.vo.Qcontent_score;
+import com.oo.domain.Paper;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
 
 /**
@@ -26,10 +30,17 @@ public class Result {
         this.msg = msg;
     }
 
-    public Result(Integer code, List data, String msg) {
-        this.data = data;
+    public Result(Integer code,Paper paper, Map<String, Object> paperQ,  String msg) {
+
         this.code = code;
         this.msg = msg;
+        examPaper examPaper = new examPaper(paper);
+        //Map<String, Object> data = new HashMap<>();
+        //data.put("data", paperQ);
+        //data.put("total", total);
+        paperQ.put("examPaper", examPaper);
+        this.data = paperQ;
+
     }
 
     public Object getData() {
@@ -65,3 +76,28 @@ public class Result {
                 '}';
     }
 }
+
+class examPaper {
+    private Integer id;
+    private String name;
+    private Integer totalScore;
+
+    public examPaper( ){
+    }
+    public examPaper( Paper examPaper) {
+        this.id = examPaper.getId();
+        this.totalScore = examPaper.getScore();
+        this.name = examPaper.getName();
+    }
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+    public Integer getTotalScore() {
+        return totalScore;
+    }
+}
+
