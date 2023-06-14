@@ -16,6 +16,6 @@ import lombok.NoArgsConstructor;
 
 public class Qcontent_score {
 
-    private Integer setScore;
     private String content;
+    private Integer score;
 }
