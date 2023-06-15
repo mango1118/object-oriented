@@ -1,43 +1,43 @@
 <template>
-<!--
-前端需要的JSON格式如下
-{
-  "multipleChoiceQuestions": [
-    {
-      "id": 1,
-      "question": "选择题1",
-      "options": ["选项A", "选项B", "选项C", "选项D"]
-    },
-    {
-      "id": 2,
-      "question": "选择题2",
-      "options": ["选项A", "选项B", "选项C", "选项D"]
-    }
-  ],
-  "fillInTheBlankQuestions": [
-    {
-      "id": 1,
-      "question": "填空题1"
-    },
-    {
-      "id": 2,
-      "question": "填空题2"
-    }
-  ],
-  "subjectiveQuestions": [
-    {
-      "id": 1,
-      "questionImage": "/api/images/question1.jpg",
-      "answerImage": "/api/images/answer1.jpg"
-    },
-    {
-      "id": 2,
-      "questionImage": "/api/images/question2.jpg",
-      "answerImage": "/api/images/answer2.jpg"
-    }
-  ]
-}
--->
+  <!--
+  前端需要的JSON格式如下
+  {
+    "multipleChoiceQuestions": [
+      {
+        "id": 1,
+        "question": "选择题1",
+        "options": ["选项A", "选项B", "选项C", "选项D"]
+      },
+      {
+        "id": 2,
+        "question": "选择题2",
+        "options": ["选项A", "选项B", "选项C", "选项D"]
+      }
+    ],
+    "fillInTheBlankQuestions": [
+      {
+        "id": 1,
+        "question": "填空题1"
+      },
+      {
+        "id": 2,
+        "question": "填空题2"
+      }
+    ],
+    "subjectiveQuestions": [
+      {
+        "id": 1,
+        "questionImage": "/api/images/question1.jpg",
+        "answerImage": "/api/images/answer1.jpg"
+      },
+      {
+        "id": 2,
+        "questionImage": "/api/images/question2.jpg",
+        "answerImage": "/api/images/answer2.jpg"
+      }
+    ]
+  }
+  -->
   <div>
     <h2>学生考试页面</h2>
 
@@ -62,19 +62,21 @@
       <el-input v-model="fillInTheBlankAnswers[index]" type="text"></el-input>
     </el-card>
 
-    <!-- 主观题 --> <h3>主观题</h3> <el-card v-for="(question, index) in subjectiveQuestions" :key="index">
-    <p>{{ question.question }}</p>
-    <el-upload
-        class="upload-demo"
-        :action="uploadUrl"
-        :on-success="handleUploadSuccess"
-        :show-file-list="false"
-    >
-      <el-button slot="trigger" size="small" type="primary">点击上传</el-button>
-    </el-upload>
-    <div v-if="uploadedImages[index]">
-      <img :src="uploadedImages[index]" alt="回答图片" />
-    </div> </el-card>
+    <!-- 主观题 --> <h3>主观题</h3>
+    <el-card v-for="(question, index) in subjectiveQuestions" :key="index">
+      <p>{{ question.question }}</p>
+      <el-upload
+          class="upload-demo"
+          :action="uploadUrl"
+          :on-success="handleUploadSuccess"
+          :show-file-list="false"
+      >
+        <el-button slot="trigger" size="small" type="primary">点击上传</el-button>
+      </el-upload>
+      <div v-if="uploadedImages[index]">
+        <img :src="uploadedImages[index]" alt="回答图片"/>
+      </div>
+    </el-card>
 
     <!-- 提交按钮 -->
     <el-button type="success" @click="submitForm" :disabled="!isFormComplete">点击提交

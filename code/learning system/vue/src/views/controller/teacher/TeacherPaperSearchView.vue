@@ -166,7 +166,7 @@ export default {
 
 <style scoped>
 
-.margin-top{
+.margin-top {
   max-width: 1100px;
 }
 

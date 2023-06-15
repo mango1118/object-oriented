@@ -6,11 +6,11 @@
     </el-aside>
     <el-container>
       <el-header style="font-size: 1px; border-bottom: 1px solid #ccc;">
-        <Header :collapseBtnClass="collapseBtnClass" :collapse=collapse />
+        <Header :collapseBtnClass="collapseBtnClass" :collapse=collapse/>
       </el-header>
       <el-main>
         <!--        表示当前页面的子路由会在router-view里面展示-->
-        <router-view />
+        <router-view/>
       </el-main>
     </el-container>
   </el-container>
@@ -18,6 +18,7 @@
 <script>
 import Aside from "@/components/StudentAside";
 import Header from "@/components/Header";
+
 export default {
   name: "StudentManager",
   data() {

@@ -31,7 +31,10 @@
 
     <h3>题目列表</h3>
     <div v-for="question in questions" :key="question.id">
-      <el-checkbox v-model="question.selected" @change="updateSelectedCount(question)">{{ question.title }}</el-checkbox>
+      <el-checkbox v-model="question.selected" @change="updateSelectedCount(question)">{{
+          question.title
+        }}
+      </el-checkbox>
       <el-input v-model="question.score" type="number" :disabled="!question.selected" placeholder="分值"></el-input>
     </div>
     <h3>已选题目：{{ selectedCount }}/15</h3>

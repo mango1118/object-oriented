@@ -22,7 +22,8 @@
       <el-table-column prop="paperName" label="考试名" width="250"></el-table-column>
       <el-table-column label="操作" width="200" align="center">
         <template slot-scope="scope">
-          <el-button type="success" @click="handleSelect(scope.row.paperId)">挑选<i class="el-icon-edit"></i></el-button>
+          <el-button type="success" @click="handleSelect(scope.row.paperId)">挑选<i class="el-icon-edit"></i>
+          </el-button>
         </template>
       </el-table-column>
     </el-table>

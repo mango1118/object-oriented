@@ -59,7 +59,7 @@
     <br>
     <el-descriptions class="margin-top" title="试卷信息" :column="1" :size="size" border>
 
-      <el-descriptions-item label="试卷名称">{{examPaper.name}}</el-descriptions-item>
+      <el-descriptions-item label="试卷名称">{{ examPaper.name }}</el-descriptions-item>
       <el-descriptions-item label="试卷总分">{{ examPaper.totalScore }}</el-descriptions-item>
       <el-descriptions-item label="试卷ID">{{ examPaper.id }}</el-descriptions-item>
 
@@ -118,8 +118,8 @@ export default {
         totalScore: '',
         id: ''
       },
-      content:null,
-      score:null,
+      content: null,
+      score: null,
       paperName: null,
       paperId: null,
       headerBg: 'headerBg'

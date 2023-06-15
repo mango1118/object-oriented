@@ -1,30 +1,31 @@
 <template>
-<!--
- JSON格式如下
-  {
-    "msg":"msg1",
-    "code":"123".
-    "data":[
-      "classes":[
-        {"id":1, "name":"班级A"}
-        {"id":2, "name":"班级B"}
-        {"id":3, "name":"班级C"}
-      ],
-      "papers":[
-         {"id":1, "name":"试卷1","sent":true},
-         {"id":2, "name":"试卷2","sent":false},   sent属性：该班级是否已经被发送过这张试卷
-         {"id":3, "name":"试卷3","sent":true},
+  <!--
+   JSON格式如下
+    {
+      "msg":"msg1",
+      "code":"123".
+      "data":[
+        "classes":[
+          {"id":1, "name":"班级A"}
+          {"id":2, "name":"班级B"}
+          {"id":3, "name":"班级C"}
+        ],
+        "papers":[
+           {"id":1, "name":"试卷1","sent":true},
+           {"id":2, "name":"试卷2","sent":false},   sent属性：该班级是否已经被发送过这张试卷
+           {"id":3, "name":"试卷3","sent":true},
+        ]
       ]
-    ]
-  }
--->
+    }
+  -->
 
   <div>
     <h2>选择班级:</h2>
     <el-select v-model="selectedClass" placeholder="请选择班级" @change="fetchPapers">
-      <el-option v-for="classItem in classes" :key="classItem.id" :label="classItem.name" :value="classItem.id"></el-option>
+      <el-option v-for="classItem in classes" :key="classItem.id" :label="classItem.name"
+                 :value="classItem.id"></el-option>
     </el-select>
-<!--    <el-button type="primary" @click="confirmClassSelection" :disabled="selectedClass === null">确定选择班级</el-button>-->
+    <!--    <el-button type="primary" @click="confirmClassSelection" :disabled="selectedClass === null">确定选择班级</el-button>-->
     <h2>已发试卷:</h2>
     <el-card v-if="sentPapers.length > 0">
       <ul>
@@ -47,6 +48,7 @@
 
 <script>
 import axios from "axios";
+
 export default {
   data() {
     return {
@@ -94,7 +96,7 @@ export default {
       // 向选定的班级发送试卷
       // 你可以在这里发送异步请求，将试卷发送给选定的班级
       // 同时更新试卷的状态为已发送
-      axios.post(`/api/send-paper`, { paperId, classId: this.selectedClass })
+      axios.post(`/api/send-paper`, {paperId, classId: this.selectedClass})
           .then(response => {
             // 发送成功后，更新试卷的状态为已发送
             const updatedPapers = this.papers.map(paper => {
