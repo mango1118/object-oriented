@@ -28,8 +28,8 @@
   <div>
     <h2>教师试卷查询</h2>
     <div style="margin: 10px 0">
-      <el-input style="width: 200px" placeholder="请输入考试id" suffix-icon="el-icon-search"
-                v-model="paperId"></el-input>
+      <el-input v-model="paperId" placeholder="请输入考试id" style="width: 200px"
+                suffix-icon="el-icon-search"></el-input>
       <!--      <el-input style="width: 200px" placeholder="请输入考试名" suffix-icon="el-icon-studentPaper"-->
       <!--                v-model="PaperName"-->
       <!--                class="ml-5"></el-input>-->
@@ -38,7 +38,7 @@
     </div>
 
     <br>
-    <el-descriptions class="margin-top" title="试卷信息" :column="1" :size='small' border>
+    <el-descriptions :column="1" :size='small' border class="margin-top" title="试卷信息">
 
       <el-descriptions-item label="试卷名称">{{ examPaper.name }}</el-descriptions-item>
       <el-descriptions-item label="试卷总分">{{ examPaper.totalScore }}</el-descriptions-item>
@@ -52,9 +52,9 @@
           对象的类名随意，属性名请与下述表单一一对应
           el-table-column prog="xxx" 其中xxx是属性名
     -->
-    <el-table v-bind:data="tableData" border: stripe :header-cell-class-name="headerBg" row-key="id" class="paper_info">
-      <el-table-column prop="content" label="题干" width="800"></el-table-column>
-      <el-table-column prop="score" label="分值" width="250"></el-table-column>
+    <el-table :header-cell-class-name="headerBg" border: class="paper_info" row-key="id" stripe v-bind:data="tableData">
+      <el-table-column label="题干" prop="content" width="800"></el-table-column>
+      <el-table-column label="分值" prop="score" width="250"></el-table-column>
       <!--      <el-table-column label="操作" width="200" align="center">-->
       <!--        <template slot-scope="scope">-->
       <!--          <el-button type="success" @click="handleSelect(scope.row.paperId)">挑选<i class="el-icon-edit"></i></el-button>-->
@@ -64,13 +64,13 @@
 
     <div style="padding: 10px 0">
       <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
           :current-page="pageNum"
-          :page-sizes="[5, 10, 20]"
           :page-size="pageSize"
+          :page-sizes="[5, 10, 20]"
+          :total=total
           layout="total, sizes, prev, pager, next, jumper"
-          :total=total>
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange">
         >
       </el-pagination>
     </div>

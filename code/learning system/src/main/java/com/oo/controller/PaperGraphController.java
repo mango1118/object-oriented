@@ -30,7 +30,7 @@ public class PaperGraphController {
     private PaperGraphService paperGraphService;
 
     @PostMapping("/upload")
-    public String upload(@RequestParam MultipartFile graph) throws IOException{
+    public String upload(@RequestParam MultipartFile graph) throws IOException {
         String url = paperGraphService.upload(graph, fileUploadPath);
         return url;
     }

@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class LearningSystemApplication extends SpringBootServletInitializer {
 
 
+    public static void main(String[] args) {
+        SpringApplication.run(LearningSystemApplication.class, args);
+    }
+
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
         return builder.sources(LearningSystemApplication.class);
-    }
-
-    public static void main(String[] args) {
-        SpringApplication.run(LearningSystemApplication.class, args);
     }
 
 

@@ -19,6 +19,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Question {
 
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
     @TableId(type = IdType.AUTO)
     private Integer id;
     private String content;
@@ -29,9 +31,6 @@ public class Question {
     private Float errorRate;
     private String errorPoint;
     private Integer difficulty;
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
 
 
 }

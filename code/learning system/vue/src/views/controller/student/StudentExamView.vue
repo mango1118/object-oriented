@@ -66,10 +66,10 @@
     <el-card v-for="(question, index) in subjectiveQuestions" :key="index">
       <p>{{ question.question }}</p>
       <el-upload
-          class="upload-demo"
           :action="uploadUrl"
           :on-success="handleUploadSuccess"
           :show-file-list="false"
+          class="upload-demo"
       >
         <el-button slot="trigger" size="small" type="primary">点击上传</el-button>
       </el-upload>
@@ -79,7 +79,7 @@
     </el-card>
 
     <!-- 提交按钮 -->
-    <el-button type="success" @click="submitForm" :disabled="!isFormComplete">点击提交
+    <el-button :disabled="!isFormComplete" type="success" @click="submitForm">点击提交
     </el-button>
 
   </div>

@@ -33,9 +33,9 @@ public class PaperController {
         Paper paper = PaperService.selectById(id);
         Map<String, Object> paperQ = PaperService.selectByPaperId(pageNum, pageSize, id);
 
-        Integer code =  paper != null && paperQ != null ? Code.GET_OK : Code.GET_ERR;
+        Integer code = paper != null && paperQ != null ? Code.GET_OK : Code.GET_ERR;
         String msg = paper != null && paperQ != null ? "" : "数据查询失败，请重试！";
 
-        return new Result(code, paper, paperQ,  msg);
+        return new Result(code, paper, paperQ, msg);
     }
 }

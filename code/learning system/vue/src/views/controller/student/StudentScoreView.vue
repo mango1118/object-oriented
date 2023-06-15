@@ -2,11 +2,11 @@
   <div>
     <h2>学生成绩查询页面</h2>
     <div style="margin: 10px 0">
-      <el-input style="width: 200px" placeholder="请输入考试id" suffix-icon="el-icon-search"
-                v-model="studentPaperId"></el-input>
-      <el-input style="width: 200px" placeholder="请输入考试名" suffix-icon="el-icon-studentPaper"
-                v-model="studentPaperName"
-                class="ml-5"></el-input>
+      <el-input v-model="studentPaperId" placeholder="请输入考试id" style="width: 200px"
+                suffix-icon="el-icon-search"></el-input>
+      <el-input v-model="studentPaperName" class="ml-5" placeholder="请输入考试名"
+                style="width: 200px"
+                suffix-icon="el-icon-studentPaper"></el-input>
       <el-button class="ml-5" type="primary" @click="handleSearch">搜索</el-button>
       <el-button class="ml-5" type="warning" @click="reload">重置</el-button>
     </div>
@@ -16,23 +16,23 @@
           对象的类名随意，属性名请与下述表单一一对应
           el-table-column prog="xxx" 其中xxx是属性名
     -->
-    <el-table v-bind:data="tableData" border: stripe :header-cell-class-name="headerBg" row-key="id">
-      <el-table-column prop="studentId" label="学生id" width="250"></el-table-column>
-      <el-table-column prop="studentName" label="学生姓名" width="250"></el-table-column>
-      <el-table-column prop="paperId" label="考试id" width="200"></el-table-column>
-      <el-table-column prop="paperName" label="考试名" width="200"></el-table-column>
-      <el-table-column prop="totalScore" label="考试得分" width="200"></el-table-column>
+    <el-table :header-cell-class-name="headerBg" border: row-key="id" stripe v-bind:data="tableData">
+      <el-table-column label="学生id" prop="studentId" width="250"></el-table-column>
+      <el-table-column label="学生姓名" prop="studentName" width="250"></el-table-column>
+      <el-table-column label="考试id" prop="paperId" width="200"></el-table-column>
+      <el-table-column label="考试名" prop="paperName" width="200"></el-table-column>
+      <el-table-column label="考试得分" prop="totalScore" width="200"></el-table-column>
     </el-table>
 
     <div style="padding: 10px 0">
       <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
           :current-page="pageNum"
-          :page-sizes="[5, 10, 20]"
           :page-size="pageSize"
+          :page-sizes="[5, 10, 20]"
+          :total=total
           layout="total, sizes, prev, pager, next, jumper"
-          :total=total>
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange">
         >
       </el-pagination>
     </div>

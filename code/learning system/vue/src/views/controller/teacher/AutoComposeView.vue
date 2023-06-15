@@ -29,7 +29,7 @@
     <h2>自动组卷页面</h2>
     <br>
 
-    <el-form ref="examForm" :model="examData" :rules="formRules" label-width="120px" label-position="left">
+    <el-form ref="examForm" :model="examData" :rules="formRules" label-position="left" label-width="120px">
       <el-form-item label="试卷名称" prop="name">
         <el-input v-model="examData.name"></el-input>
       </el-form-item>
@@ -47,16 +47,16 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="选择题数量" prop="multipleChoiceCount">
-        <el-input-number v-model="examData.multipleChoiceCount" :min="0"
-                         :max="15 - examData.fillInTheBlankCount - examData.subjectiveCount"></el-input-number>
+        <el-input-number v-model="examData.multipleChoiceCount" :max="15 - examData.fillInTheBlankCount - examData.subjectiveCount"
+                         :min="0"></el-input-number>
       </el-form-item>
       <el-form-item label="填空题数量" prop="fillInTheBlankCount">
-        <el-input-number v-model="examData.fillInTheBlankCount" :min="0"
-                         :max="15 - examData.multipleChoiceCount - examData.subjectiveCount"></el-input-number>
+        <el-input-number v-model="examData.fillInTheBlankCount" :max="15 - examData.multipleChoiceCount - examData.subjectiveCount"
+                         :min="0"></el-input-number>
       </el-form-item>
       <el-form-item label="主观题数量" prop="subjectiveCount">
-        <el-input-number v-model="examData.subjectiveCount" :min="0"
-                         :max="15 - examData.multipleChoiceCount - examData.fillInTheBlankCount"></el-input-number>
+        <el-input-number v-model="examData.subjectiveCount" :max="15 - examData.multipleChoiceCount - examData.fillInTheBlankCount"
+                         :min="0"></el-input-number>
       </el-form-item>
       <el-form-item>
         <el-button class="ml-5" type="primary" @click="submitForm">提交</el-button>
@@ -64,7 +64,7 @@
     </el-form>
 
     <br>
-    <el-descriptions class="margin-top" title="试卷信息" :column="1" :size="size" border>
+    <el-descriptions :column="1" :size="size" border class="margin-top" title="试卷信息">
 
       <el-descriptions-item label="试卷名称">{{ examPaper.name }}</el-descriptions-item>
       <el-descriptions-item label="试卷总分">{{ examPaper.totalScore }}</el-descriptions-item>
@@ -73,9 +73,9 @@
     </el-descriptions>
     <br>
 
-    <el-table v-bind:data="tableData" border: stripe :header-cell-class-name="headerBg" row-key="id">
-      <el-table-column prop="content" label="题干" width="800"></el-table-column>
-      <el-table-column prop="score" label="分值" width="250"></el-table-column>
+    <el-table :header-cell-class-name="headerBg" border: row-key="id" stripe v-bind:data="tableData">
+      <el-table-column label="题干" prop="content" width="800"></el-table-column>
+      <el-table-column label="分值" prop="score" width="250"></el-table-column>
     </el-table>
 
   </div>

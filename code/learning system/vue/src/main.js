@@ -4,12 +4,12 @@ import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/gloable.css'
+import axios from "./utils/request"
 
 Vue.config.productionTip = false
 Vue.use(ElementUI, {size: "small"})
 
 
-import axios from "./utils/request"
 Vue.prototype.axios = axios;
 
 localStorage.setItem("user", null)
@@ -21,8 +21,7 @@ localStorage.setItem("user", null)
 // })
 
 
-
 new Vue({
-  router,
-  render: h => h(App)
+    router,
+    render: h => h(App)
 }).$mount('#app')

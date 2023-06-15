@@ -19,12 +19,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PaperQuestion {
 
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
     @TableId(type = IdType.AUTO)
     private Integer id;
     private Integer paperId;
     private Integer questionId;
     private Integer setScore;
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
 }

@@ -1,10 +1,8 @@
 package com.oo.controller.R;
-import com.oo.domain.vo.Qcontent_score;
+
 import com.oo.domain.Paper;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.List;
 
 /**
  * @description: 结果包装类
@@ -19,7 +17,7 @@ public class Result {
     public Result() {
     }
 
-    public Result(Integer code,Object data) {
+    public Result(Integer code, Object data) {
         this.data = data;
         this.code = code;
     }
@@ -30,7 +28,7 @@ public class Result {
         this.msg = msg;
     }
 
-    public Result(Integer code,Paper paper, Map<String, Object> paperQ,  String msg) {
+    public Result(Integer code, Paper paper, Map<String, Object> paperQ, String msg) {
 
         this.code = code;
         this.msg = msg;
@@ -82,13 +80,15 @@ class examPaper {
     private String name;
     private Integer totalScore;
 
-    public examPaper( ){
+    public examPaper() {
     }
-    public examPaper( Paper examPaper) {
+
+    public examPaper(Paper examPaper) {
         this.id = examPaper.getId();
         this.totalScore = examPaper.getScore();
         this.name = examPaper.getName();
     }
+
     public Integer getId() {
         return id;
     }
@@ -96,6 +96,7 @@ class examPaper {
     public String getName() {
         return name;
     }
+
     public Integer getTotalScore() {
         return totalScore;
     }

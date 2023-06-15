@@ -3,14 +3,14 @@
   <div>
     <h2>问题管理页面</h2>
     <div style="margin: 10px 0">
-      <el-input style="width: 200px" placeholder="请输入问题id" suffix-icon="el-icon-search"
-                v-model="questionId"></el-input>
-      <el-input style="width: 200px" placeholder="请输入问题类型" suffix-icon="el-icon-question" v-model="questionType"
-                class="ml-5"></el-input>
-      <el-input style="width: 200px" placeholder="请输入问题知识点" suffix-icon="el-icon-message"
-                v-model="questionKnowledgePoint"></el-input>
-      <el-input style="width: 200px" placeholder="请输入问题章节" suffix-icon="el-icon-message"
-                v-model="questionChapter"></el-input>
+      <el-input v-model="questionId" placeholder="请输入问题id" style="width: 200px"
+                suffix-icon="el-icon-search"></el-input>
+      <el-input v-model="questionType" class="ml-5" placeholder="请输入问题类型" style="width: 200px"
+                suffix-icon="el-icon-question"></el-input>
+      <el-input v-model="questionKnowledgePoint" placeholder="请输入问题知识点" style="width: 200px"
+                suffix-icon="el-icon-message"></el-input>
+      <el-input v-model="questionChapter" placeholder="请输入问题章节" style="width: 200px"
+                suffix-icon="el-icon-message"></el-input>
       <el-button class="ml-5" type="primary" @click="handleSearch">搜索</el-button>
       <el-button class="ml-5" type="warning" @click="reload">重置</el-button>
     </div>
@@ -24,29 +24,29 @@
       对象的类名随意，属性名请与下述表单一一对应
       el-table-column prog="xxx" 其中xxx是属性名
 -->
-    <el-table v-bind:data="tableData" border: stripe :header-cell-class-name="headerBg" row-key="id">
-      <el-table-column prop="questionId" label="ID" width="50"></el-table-column>
-      <el-table-column prop="questionContent" label="内容" width="300"></el-table-column>
-      <el-table-column prop="questionType" label="类型" width="100"></el-table-column>
-      <el-table-column prop="questionAnswer" label="答案" width="300"></el-table-column>
-      <el-table-column prop="questionKnowledgePoint" label="知识点" width="100"></el-table-column>
-      <el-table-column prop="questionChapter" label="章节" width="100"></el-table-column>
-      <el-table-column prop="questionErrorRate" label="错误率" width="100"></el-table-column>
-      <el-table-column prop="questionErrorPoint" label="易错点" width="100"></el-table-column>
-      <el-table-column prop="questionDifficulty" label="难度" width="50"></el-table-column>
-      <el-table-column label="操作" width="200" align="center">
+    <el-table :header-cell-class-name="headerBg" border: row-key="id" stripe v-bind:data="tableData">
+      <el-table-column label="ID" prop="questionId" width="50"></el-table-column>
+      <el-table-column label="内容" prop="questionContent" width="300"></el-table-column>
+      <el-table-column label="类型" prop="questionType" width="100"></el-table-column>
+      <el-table-column label="答案" prop="questionAnswer" width="300"></el-table-column>
+      <el-table-column label="知识点" prop="questionKnowledgePoint" width="100"></el-table-column>
+      <el-table-column label="章节" prop="questionChapter" width="100"></el-table-column>
+      <el-table-column label="错误率" prop="questionErrorRate" width="100"></el-table-column>
+      <el-table-column label="易错点" prop="questionErrorPoint" width="100"></el-table-column>
+      <el-table-column label="难度" prop="questionDifficulty" width="50"></el-table-column>
+      <el-table-column align="center" label="操作" width="200">
         <template slot-scope="scope">
           <el-button type="success" @click="handleEdit(scope.row)">编辑<i class="el-icon-edit"></i></el-button>
           <el-popconfirm
+              cancel-button-text='取消'
               class="ml-5"
               confirm-button-text='确定'
-              cancel-button-text='取消'
               icon="el-icon-info"
               icon-color="red"
               title="您确定删除吗？"
               @confirm="handleDelete(scope.row.questionId)"
           >
-            <el-button type="danger" slot="reference">删除<i class="el-icon-remove-outline"></i>
+            <el-button slot="reference" type="danger">删除<i class="el-icon-remove-outline"></i>
             </el-button>
           </el-popconfirm>
         </template>
@@ -54,18 +54,18 @@
     </el-table>
     <div style="padding: 10px 0">
       <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
           :current-page="pageNum"
-          :page-sizes="[5, 10, 20]"
           :page-size="pageSize"
+          :page-sizes="[5, 10, 20]"
+          :total=total
           layout="total, sizes, prev, pager, next, jumper"
-          :total=total>
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange">
         >
       </el-pagination>
     </div>
 
-    <el-dialog title="题目信息" :visible.sync="saveDialogFormVisible" width="30%">
+    <el-dialog :visible.sync="saveDialogFormVisible" title="题目信息" width="30%">
       <el-form :model="saveform" label-width="80px" size="small">
         <el-form-item label="内容">
           <el-input v-model="saveform.questionContent" autocomplete="off"></el-input>
@@ -98,7 +98,7 @@
       </div>
     </el-dialog>
 
-    <el-dialog title="题目信息" :visible.sync="editDialogFormVisible" width="30%">
+    <el-dialog :visible.sync="editDialogFormVisible" title="题目信息" width="30%">
       <el-form :model="editform" label-width="80px" size="small">
         <el-form-item label="内容">
           <el-input v-model="saveform.questionContent" autocomplete="off"></el-input>
