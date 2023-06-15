@@ -1,17 +1,17 @@
 <template>
-  <el-menu :default-openeds="['1', '3']" style="min-height: 935px; overflow-x: hidden"
-           background-color="rgb(48,65,86)"
-           text-color="#fff"
+  <el-menu :collapse="isCollapse" :collapse-transition="false"
+           :default-openeds="['1', '3']"
            active-text-color="#ffd04b"
-           :collapse-transition="false"
-           :collapse="isCollapse"
+           background-color="rgb(48,65,86)"
            router
+           style="min-height: 935px; overflow-x: hidden"
+           text-color="#fff"
            @select="handleSelect"
   >
     <div style="height: 60px; line-height: 60px; text-align: center">
-      <img src="@/assets/logo.png" alt="" style="width: 20px; position:relative; top:5px; margin-right: 5px; ">
+      <img alt="" src="@/assets/logo.png" style="width: 20px; position:relative; top:5px; margin-right: 5px; ">
       <!--这里不能用logoTextShow 原因未知-->
-      <b style="color: white" v-show="!isCollapse">在线学习系统 教师</b>
+      <b v-show="!isCollapse" style="color: white">在线学习系统 教师</b>
     </div>
     <el-submenu index="1-1">
       <template slot="title">

@@ -19,6 +19,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PaperGraph {
 
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
     @TableId(type = IdType.AUTO)
     private Integer id;
     private Integer studentPaperId;
@@ -27,7 +29,4 @@ public class PaperGraph {
     private Integer score;
     private String size;
     private Integer isMark;
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
 }

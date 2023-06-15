@@ -38,14 +38,14 @@
       <div class="score-row">
         <div class="question-score">分值: {{ question.score }}</div>
         <div class="teacher-score">
-          <el-form :model="question" ref="scoreForm" label-width="60px">
+          <el-form ref="scoreForm" :model="question" label-width="60px">
             <el-form-item label="教师给分" label-width="20">
-              <el-input-number v-model="question.teacherScore" :min="0" :max="question.score"
-                               :disabled="question.submitted"></el-input-number>
+              <el-input-number v-model="question.teacherScore" :disabled="question.submitted" :max="question.score"
+                               :min="0"></el-input-number>
             </el-form-item>
           </el-form>
         </div>
-        <el-button class="confirm-button" type="primary" @click="confirmScore(index)" :disabled="question.submitted">
+        <el-button :disabled="question.submitted" class="confirm-button" type="primary" @click="confirmScore(index)">
           确认
         </el-button>
       </div>

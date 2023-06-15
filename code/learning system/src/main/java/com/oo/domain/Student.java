@@ -20,14 +20,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Student {
 
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
     @TableId(type = IdType.AUTO)
     private Integer id;
     private String name;
     private String account;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
 
 }

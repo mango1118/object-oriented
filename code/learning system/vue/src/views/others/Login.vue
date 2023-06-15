@@ -3,16 +3,16 @@
     <div
         style="margin: 200px auto; background-color: #fff; width: 350px; height: 300px; padding: 20px; border-radius: 10px">
       <div style="margin: 20px 0; text-align: center; font-size: 24px"><b>登 录</b></div>
-      <el-form :model="user" :rules="rules" ref="userForm">
+      <el-form ref="userForm" :model="user" :rules="rules">
         <el-form-item prop="account">
-          <el-input size="medium" style="margin: 10px 0" prefix-icon="el-icon-user" v-model="user.account"></el-input>
+          <el-input v-model="user.account" prefix-icon="el-icon-user" size="medium" style="margin: 10px 0"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input size="medium" style="margin: 10px 0" prefix-icon="el-icon-lock" show-password
-                    v-model="user.password"></el-input>
+          <el-input v-model="user.password" prefix-icon="el-icon-lock" show-password size="medium"
+                    style="margin: 10px 0"></el-input>
         </el-form-item>
         <el-form-item style="margin: 10px 0; text-align: right">
-          <el-button type="primary" size="small" autocomplete="off" @click="login">登录</el-button>
+          <el-button autocomplete="off" size="small" type="primary" @click="login">登录</el-button>
         </el-form-item>
       </el-form>
     </div>

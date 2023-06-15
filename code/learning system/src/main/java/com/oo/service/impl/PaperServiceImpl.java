@@ -41,28 +41,29 @@ public class PaperServiceImpl implements PaperService {
     }
 
     @Override
-    public Integer selectcount(Integer id){
+    public Integer selectcount(Integer id) {
         QueryWrapper<PaperQuestion> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("question_id").eq("paper_id",id);
+        queryWrapper.select("question_id").eq("paper_id", id);
 
         return paperquestionDao.selectCount(queryWrapper);
     }
+
     @Override
-    public Map<String, Object> selectByPaperId(Integer currentPage, Integer pageSize, Integer id){
+    public Map<String, Object> selectByPaperId(Integer currentPage, Integer pageSize, Integer id) {
         //查找某张试卷里的题目id和每道题目对应的score
         Integer max = selectcount(id);
-        Integer maxPage = max % pageSize == 0? (max / pageSize) : (max / pageSize + 1);
+        Integer maxPage = max % pageSize == 0 ? (max / pageSize) : (max / pageSize + 1);
         currentPage = currentPage > maxPage ? maxPage : currentPage;
         Page<PaperQuestion> page1 = new Page<>(currentPage, pageSize);
         QueryWrapper<PaperQuestion> queryWrapper = new QueryWrapper<>();
         QueryWrapper<PaperQuestion> queryWrapper1 = new QueryWrapper<>();
-        queryWrapper.select("question_id").eq("paper_id",id);
-        queryWrapper1.select("question_id", "set_score").eq("paper_id",id);
+        queryWrapper.select("question_id").eq("paper_id", id);
+        queryWrapper1.select("question_id", "set_score").eq("paper_id", id);
         List<PaperQuestion> score = paperquestionDao.selectPage(page1, queryWrapper1).getRecords();
-        Integer total = (int)paperquestionDao.selectPage(page1, queryWrapper).getTotal();
+        Integer total = (int) paperquestionDao.selectPage(page1, queryWrapper).getTotal();
         List<Map<String, Object>> map = paperquestionDao.selectMaps(queryWrapper);
 
-        List<Object> questionIds =  map.stream()
+        List<Object> questionIds = map.stream()
                 .map(m -> m.get("question_id"))
                 .collect(Collectors.toList());
 

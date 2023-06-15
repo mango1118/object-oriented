@@ -3,7 +3,7 @@
     <h2>手动组卷页面</h2>
     <br>
 
-    <el-form ref="examForm" :model="examData" :rules="formRules" label-width="120px" label-position="left">
+    <el-form ref="examForm" :model="examData" :rules="formRules" label-position="left" label-width="120px">
       <el-form-item label="试卷名称" prop="name">
         <el-input v-model="examData.name"></el-input>
       </el-form-item>
@@ -19,7 +19,7 @@
     </el-form>
 
     <br>
-    <el-descriptions class="margin-top" title="试卷信息" :column="1" :size="size" border>
+    <el-descriptions :column="1" :size="size" border class="margin-top" title="试卷信息">
 
       <el-descriptions-item label="试卷ID">{{ examPaper.id }}</el-descriptions-item>
       <el-descriptions-item label="试卷名称">{{ examPaper.name }}</el-descriptions-item>
@@ -35,7 +35,7 @@
           question.title
         }}
       </el-checkbox>
-      <el-input v-model="question.score" type="number" :disabled="!question.selected" placeholder="分值"></el-input>
+      <el-input v-model="question.score" :disabled="!question.selected" placeholder="分值" type="number"></el-input>
     </div>
     <h3>已选题目：{{ selectedCount }}/15</h3>
     <el-button type="primary" @click="submitForm2">提交</el-button>
