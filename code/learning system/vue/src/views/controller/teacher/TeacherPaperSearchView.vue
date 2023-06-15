@@ -117,7 +117,7 @@ export default {
     },
     async sendReqId() {
       // this.pageNum = 1;
-      const resp = await this.axios.get("/studentPapers/pageLike/?pageNum=" + this.pageNum
+      const resp = await this.axios.get("/papers/pageLike/?pageNum=" + this.pageNum
           + "&pageSize=" + this.pageSize + "&pid=" + this.paperId);
       // console.log(resp);
       // console.log(resp.data.data);
@@ -127,7 +127,7 @@ export default {
     },
     async sendLikeReq() {
       // this.pageNum = 1;
-      const resp = await this.axios.get("/studentPapers/pageLike/?pageNum=" + this.pageNum
+      const resp = await this.axios.get("/papers/pageLike/?pageNum=" + this.pageNum
           + "&pid=" + this.pageSize);
       // console.log(resp);
       this.tableData = resp.data.data.data;
