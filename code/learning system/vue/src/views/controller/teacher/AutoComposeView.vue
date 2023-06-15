@@ -161,9 +161,9 @@ export default {
             // 发送POST请求，将表单数据传递给后端,要求后端返回一个JSON格式的RESPOND
             const resp = await this.axios.post('/autoCompose/submitForm', formData);
             // console.log(resp);
-            this.tableData = resp.data.data.data;
-            this.total = resp.data.data.total;
-            this.examPaper = resp.data.data.examPaper;
+            this.tableData = resp.data.data;
+            this.total = resp.data.total;
+            this.examPaper = resp.data.examPaper;
           } else {
             // 题目数量总和不正确，显示警告消息
             this.$message.error("题目数量总和应为15！");

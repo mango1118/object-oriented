@@ -22,10 +22,10 @@ public class StudentPaperController {
     //通过spring自动注入
     private StudentPaperService studentPaperService;
 
-    @GetMapping("/pageLike/{pid}")
+    @GetMapping("/pageLike")
     //前端将在url中添加一个Integer类型的id，例如:localhost:9090/papers/1，注意使用get注解
     public Result getById(@RequestParam(defaultValue = "1") Integer pageNum,
-                          @RequestParam(defaultValue = "5") Integer pageSize, @PathVariable String pid) {
+                          @RequestParam(defaultValue = "5") Integer pageSize, @RequestParam String pid) {
         Integer id = Integer.valueOf(pid);
         Paper paper = studentPaperService.selectById(id);
         Map<String, Object>  paperQ = studentPaperService.selectByPaperId(pageNum, pageSize, id);

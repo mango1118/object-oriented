@@ -107,9 +107,9 @@ export default {
               // 发送POST请求，将表单数据传递给后端,要求后端返回一个JSON格式的RESPOND
               const resp = await this.axios.post('/manualCompose/submitForm', formData);
               // console.log(resp);
-              this.questions = resp.data.data.questions;
-              this.total = resp.data.data.total;
-              this.examPaper = resp.data.data.examPaper;
+              this.questions = resp.data.questions;
+              this.total = resp.data.total;
+              this.examPaper = resp.data.examPaper;
             } else {
               // 表单校验不通过，显示警告消息
               this.$message.error("请填写完整的表单信息！");
