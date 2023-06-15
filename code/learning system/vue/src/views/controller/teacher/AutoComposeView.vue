@@ -39,6 +39,13 @@
           <el-radio label="150">150</el-radio>
         </el-radio-group>
       </el-form-item>
+      <el-form-item label="试卷难度" prop="difficulty">
+        <el-radio-group v-model="examData.difficulty">
+          <el-radio label="1">1</el-radio>
+          <el-radio label="2">2</el-radio>
+          <el-radio label="3">3</el-radio>
+        </el-radio-group>
+      </el-form-item>
       <el-form-item label="选择题数量" prop="multipleChoiceCount">
         <el-input-number v-model="examData.multipleChoiceCount" :min="0"
                          :max="15 - examData.fillInTheBlankCount - examData.subjectiveCount"></el-input-number>
@@ -107,6 +114,9 @@ export default {
           {required: true, message: '请输入主观题数量', trigger: 'blur'},
           {type: 'number', message: '请输入有效的数字', trigger: 'blur'},
           {validator: this.validateQuestionCount, trigger: 'change'}
+        ],
+        difficulty: [
+          { required: true, message: '请选择试卷难度', trigger: 'change' }
         ]
       },
       tableData: [],
@@ -116,7 +126,8 @@ export default {
       examPaper: {
         name: '',
         totalScore: '',
-        id: ''
+        id: '',
+        difficulty:''
       },
       content: null,
       score: null,
