@@ -47,15 +47,15 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="选择题数量" prop="multipleChoiceCount">
-        <el-input-number v-model="examData.multipleChoiceCount" :max="15 - examData.fillInTheBlankCount - examData.subjectiveCount"
+        <el-input-number v-model="examData.multipleChoiceCount" :max="8 - examData.fillInTheBlankCount - examData.subjectiveCount"
                          :min="0"></el-input-number>
       </el-form-item>
       <el-form-item label="填空题数量" prop="fillInTheBlankCount">
-        <el-input-number v-model="examData.fillInTheBlankCount" :max="15 - examData.multipleChoiceCount - examData.subjectiveCount"
+        <el-input-number v-model="examData.fillInTheBlankCount" :max="8 - examData.multipleChoiceCount - examData.subjectiveCount"
                          :min="0"></el-input-number>
       </el-form-item>
       <el-form-item label="主观题数量" prop="subjectiveCount">
-        <el-input-number v-model="examData.subjectiveCount" :max="15 - examData.multipleChoiceCount - examData.fillInTheBlankCount"
+        <el-input-number v-model="examData.subjectiveCount" :max="8 - examData.multipleChoiceCount - examData.fillInTheBlankCount"
                          :min="0"></el-input-number>
       </el-form-item>
       <el-form-item>
@@ -143,9 +143,9 @@ export default {
   },
   methods: {
     validateQuestionCount(rule, value, callback) {
-      const remainingCount = 15 - this.examData.multipleChoiceCount - this.examData.fillInTheBlankCount - this.examData.subjectiveCount;
+      const remainingCount = 8 - this.examData.multipleChoiceCount - this.examData.fillInTheBlankCount - this.examData.subjectiveCount;
       if (remainingCount < 0) {
-        callback(new Error('题目数量总和不得超过15'));
+        callback(new Error('题目数量总和不得超过8'));
       } else {
         callback();
       }
@@ -157,7 +157,7 @@ export default {
           // 表单校验通过，进行题目数量总和的验证
           const {multipleChoiceCount, fillInTheBlankCount, subjectiveCount} = this.examData;
           const totalQuestionCount = multipleChoiceCount + fillInTheBlankCount + subjectiveCount;
-          if (totalQuestionCount === 15) {
+          if (totalQuestionCount === 8) {
             // 题目数量总和正确，执行提交操作
             const formData = {
               name: name,
