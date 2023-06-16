@@ -37,7 +37,7 @@
       </el-checkbox>
       <el-input v-model="question.score" :disabled="!question.selected" placeholder="分值" type="number"></el-input>
     </div>
-    <h3>已选题目：{{ selectedCount }}/15</h3>
+    <h3>已选题目：{{ selectedCount }}/8</h3>
     <el-button type="primary" @click="submitForm2">提交</el-button>
 
   </div>
@@ -123,7 +123,7 @@ export default {
     },
     async submitForm2() {
       // 检查是否选中了15道题目
-      if (this.selectedCount === 15) {
+      if (this.selectedCount === 8) {
         // 构建提交的数据
         const selectedQuestions = this.questions.filter(question => question.selected);
         const formData = {
@@ -137,7 +137,7 @@ export default {
         const resp = await this.axios.post('/manualCompose/submitForm', formData);
         this.$message.success("提交成功");
       } else {
-        this.$message.error("请选择15道题目！");
+        this.$message.error("请选择8道题目！");
       }
     }
   }
