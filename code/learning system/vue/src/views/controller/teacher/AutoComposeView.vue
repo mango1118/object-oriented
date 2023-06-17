@@ -91,7 +91,8 @@ export default {
         totalScore: null,
         multipleChoiceCount: null,
         fillInTheBlankCount: null,
-        subjectiveCount: null
+        subjectiveCount: null,
+        difficulty:null
       },
       formRules: {
         name: [
