@@ -54,9 +54,9 @@ export default {
       examData: {
         name: '',
         totalScore: null,
-        multipleChoiceCount: null,
-        fillInTheBlankCount: null,
-        subjectiveCount: null
+        // multipleChoiceCount: null,
+        // fillInTheBlankCount: null,
+        // subjectiveCount: null
       },
       formRules: {
         name: [
@@ -99,16 +99,16 @@ export default {
       this.$refs.examForm.validate(async (valid) => {
             if (valid) {
               const formData = {
-                name: name,
+                name: this.name,
                 totalScore: this.totalScore,
-                multipleChoiceCount: this.multipleChoiceCount,
-                fillInTheBlankCount: this.fillInTheBlankCount,
-                subjectiveCount: this.subjectiveCount
+                // multipleChoiceCount: this.multipleChoiceCount,
+                // fillInTheBlankCount: this.fillInTheBlankCount,
+                // subjectiveCount: this.subjectiveCount
               };
               this.$message.success("提交成功");
 
               // 发送POST请求，将表单数据传递给后端,要求后端返回一个JSON格式的RESPOND
-              const resp = await this.axios.post('/manualCompose/create', formData);
+              const resp = await this.axios.post('/manualCompose/submitForm', this.examData);
               // console.log(resp);
               this.questions = resp.data.questions;
               this.total = resp.data.total;
@@ -134,7 +134,7 @@ export default {
             };
           })
         };
-        const resp = await this.axios.post('/manualCompose/create', formData);
+        const resp = await this.axios.post('/manualCompose/submitForm', formData);
         this.$message.success("提交成功");
       } else {
         this.$message.error("请选择8道题目！");

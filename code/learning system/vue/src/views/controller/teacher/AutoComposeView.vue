@@ -161,7 +161,7 @@ export default {
           if (totalQuestionCount === 8) {
             // 题目数量总和正确，执行提交操作
             const formData = {
-              name: name,
+              name: this.name,
               totalScore: this.totalScore,
               multipleChoiceCount: this.multipleChoiceCount,
               fillInTheBlankCount: this.fillInTheBlankCount,
@@ -171,7 +171,8 @@ export default {
             this.$message.success("提交成功");
 
             // 发送POST请求，将表单数据传递给后端,要求后端返回一个JSON格式的RESPOND
-            const resp = await this.axios.post('/autoCompose/submitForm', formData);
+            // const resp = await this.axios.post('/autoCompose/submitForm', formData);
+            const resp = await this.axios.post('/autoCompose/submitForm', this.examData);
             // console.log(resp);
             this.tableData = resp.data.data;
             this.total = resp.data.total;
