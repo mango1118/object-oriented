@@ -38,7 +38,7 @@
     </div>
 
     <br>
-    <el-descriptions :column="1" :size='small' border class="margin-top" title="试卷信息">
+    <el-descriptions :column="1"  border class="margin-top" title="试卷信息">
 
       <el-descriptions-item label="试卷名称">{{ examPaper.name }}</el-descriptions-item>
       <el-descriptions-item label="试卷总分">{{ examPaper.totalScore }}</el-descriptions-item>
