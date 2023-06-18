@@ -1,4 +1,5 @@
 <template>
+
   <div>
     <h2>手动组卷页面</h2>
     <br>
@@ -122,7 +123,7 @@ export default {
       ;
     },
     async submitForm2() {
-      // 检查是否选中了15道题目
+      // 检查是否选中了8道题目
       if (this.selectedCount === 8) {
         // 构建提交的数据
         const selectedQuestions = this.questions.filter(question => question.selected);
