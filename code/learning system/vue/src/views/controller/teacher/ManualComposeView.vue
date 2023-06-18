@@ -144,7 +144,7 @@ export default {
               paperId:this.examPaper.id
             };
             // const resp = await this.axios.post('/manualCompose', formData);
-            const resp = this.axios.post('/manualCompose', formData);
+            const resp = this.axios.post('/manualCompose/save', formData);
             this.$refs.examForm.resetFields(); // 重置表单
             this.examData = { // 清空examData数据
               name: '',
