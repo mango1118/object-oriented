@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.oo.domain.PaperQuestion;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * @description:
  * @author: mango
@@ -13,4 +15,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 @TableName("t_paper_question")
 public interface PaperQuestionDao extends BaseMapper<PaperQuestion> {
+    int addBatch(List<PaperQuestion> paperQuestions);
 }

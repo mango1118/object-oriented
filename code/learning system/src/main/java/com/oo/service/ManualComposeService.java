@@ -2,7 +2,9 @@ package com.oo.service;
 
 import com.oo.domain.Paper;
 import com.oo.domain.Question;
+import com.oo.domain.QuestionSelectedDTO;
 import com.oo.domain.Student;
+import com.oo.domain.vo.QuestionsPaper;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -17,18 +19,21 @@ import java.util.Map;
 public interface ManualComposeService {
 
     /**
-     * 输入试卷名称和总分，保存设置
+     * 创建试卷，返回全部题目列表
      * @param paper
      * @return
      */
-    public boolean createPaper(Paper paper);
+    public QuestionsPaper createPaper(Paper paper);
 
 
     /**
      *
      * @param id 试卷编号
-     * @param paperQuestions 选择的题目集合
+     * @param questionSelectedDTOS 选择的题目集合
      * @return
      */
-    boolean addQuestions(Long id, List<Question> paperQuestions);
+    boolean addQuestions(Integer id, List<QuestionSelectedDTO> questionSelectedDTOS);
+
+
+
 }

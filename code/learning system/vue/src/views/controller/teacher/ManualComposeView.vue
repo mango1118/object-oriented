@@ -108,7 +108,7 @@ export default {
               this.$message.success("提交成功");
 
               // 发送POST请求，将表单数据传递给后端,要求后端返回一个JSON格式的RESPOND
-              const resp = await this.axios.post('/manualCompose/submitForm', this.examData);
+              const resp = await this.axios.post('/manualCompose/create', this.examData);
               // console.log(resp);
               this.questions = resp.data.questions;
               this.total = resp.data.total;
@@ -134,7 +134,7 @@ export default {
             };
           })
         };
-        const resp = await this.axios.post('/manualCompose/submitForm', formData);
+        const resp = await this.axios.post('/manualCompose', formData);
         this.$message.success("提交成功");
       } else {
         this.$message.error("请选择8道题目！");
