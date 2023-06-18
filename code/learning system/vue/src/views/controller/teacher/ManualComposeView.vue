@@ -29,12 +29,11 @@
     </el-descriptions>
     <br>
     <h2>挑选题目</h2>
-
     <h3>题目列表</h3>
     <div v-for="question in questions" :key="question.id">
-      <el-checkbox v-model="question.selected" @change="updateSelectedCount(question)">{{
-          question.title
-        }}
+      <el-checkbox v-model="question.selected" @change="updateSelectedCount(question)" border class="question">
+        {{ question.content }}
+        <span class="question-type">{{ question.type }}</span>
       </el-checkbox>
       <el-input v-model="question.score" :disabled="!question.selected" placeholder="分值" type="number"></el-input>
     </div>
@@ -125,18 +124,38 @@ export default {
     async submitForm2() {
       // 检查是否选中了8道题目
       if (this.selectedCount === 8) {
-        // 构建提交的数据
-        const selectedQuestions = this.questions.filter(question => question.selected);
-        const formData = {
-          selectedQuestions: selectedQuestions.map(question => {
-            return {
-              id: question.id,
-              score: question.score
+        // debugger
+        // 检查题目的分值是否有效
+        const isValidScore = this.questions.every(question => {
+          return question.selected && !isNaN(Number(question.score));
+        });
+
+        if (isValidScore) {
+          // 计算题目的分值之和
+          const totalScore = this.questions
+              .filter(question => question.selected)
+              .reduce((sum, question) => sum + Number(question.score), 0);
+          // console.log(this.examData.totalScore)
+          // 检查题目的分值之和是否等于试卷总分
+          if (totalScore == this.examData.totalScore) {
+            // 构建提交的数据
+            const selectedQuestions = this.questions.filter(question => question.selected);
+            const formData = {
+              selectedQuestions: selectedQuestions.map(question => {
+                return {
+                  id: question.id,
+                  score: question.score
+                };
+              })
             };
-          })
-        };
-        const resp = await this.axios.post('/manualCompose', formData);
-        this.$message.success("提交成功");
+            const resp = await this.axios.post('/manualCompose', formData);
+            this.$message.success("提交成功");
+          } else {
+            this.$message.error("挑选的题目分值之和不等于试卷总分！");
+          }
+        } else {
+          this.$message.error("请为每个题目输入有效的分值！");
+        }
       } else {
         this.$message.error("请选择8道题目！");
       }
@@ -147,5 +166,13 @@ export default {
 </script>
 
 <style scoped>
+.question {
+  margin-top: 10px;
+}
 
+.question-type {
+  margin-left: 10px;
+  color: #888;
+  font-style: italic;
+}
 </style>
