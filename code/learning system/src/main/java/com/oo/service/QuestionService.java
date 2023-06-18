@@ -13,6 +13,5 @@ import java.util.List;
 @Transactional
 public interface QuestionService {
 
-    public List<Question> getAll();
 
 }

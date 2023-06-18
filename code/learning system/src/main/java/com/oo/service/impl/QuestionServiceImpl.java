@@ -16,11 +16,4 @@ import java.util.List;
 @Service
 public class QuestionServiceImpl implements QuestionService {
 
-    @Autowired
-    private QuestionDao questionDao;
-
-    @Override
-    public List<Question> getAll() {
-        return questionDao.selectList(null);
-    }
 }
