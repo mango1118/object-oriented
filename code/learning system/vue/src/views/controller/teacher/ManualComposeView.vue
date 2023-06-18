@@ -54,9 +54,6 @@ export default {
       examData: {
         name: '',
         totalScore: null,
-        // multipleChoiceCount: null,
-        // fillInTheBlankCount: null,
-        // subjectiveCount: null
       },
       formRules: {
         name: [
@@ -101,9 +98,6 @@ export default {
               const formData = {
                 name: this.name,
                 totalScore: this.totalScore,
-                // multipleChoiceCount: this.multipleChoiceCount,
-                // fillInTheBlankCount: this.fillInTheBlankCount,
-                // subjectiveCount: this.subjectiveCount
               };
               this.$message.success("提交成功");
 
@@ -149,8 +143,25 @@ export default {
               }),
               paperId:this.examPaper.id
             };
+            // const resp = await this.axios.post('/manualCompose', formData);
+            const resp = this.axios.post('/manualCompose', formData);
+            this.$refs.examForm.resetFields(); // 重置表单
+            this.examData = { // 清空examData数据
+              name: '',
+              totalScore: null
+            };
+            this.questions.forEach(question => { // 清空题目数据
+              question.selected = false;
+              question.score = null;
+            });
+            this.selectedCount = 0; // 重置已选题目数量
+            this.examPaper = null;  //清空试卷信息
+            // 清空所有题目
+            this.questions = []; // 清空题目数组
+            // 重新导航到当前页面，清除内容
             this.$message.success("提交成功");
-            const resp = await this.axios.post('/manualCompose/save', formData);
+            location.reload();
+
           } else {
             this.$message.error("挑选的题目分值之和不等于试卷总分！");
           }
