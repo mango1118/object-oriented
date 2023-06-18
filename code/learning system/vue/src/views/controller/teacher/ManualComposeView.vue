@@ -150,7 +150,7 @@ export default {
               paperId:this.examPaper.id
             };
             this.$message.success("提交成功");
-            const resp = await this.axios.post('/manualCompose', formData);
+            const resp = await this.axios.post('/manualCompose/save', formData);
           } else {
             this.$message.error("挑选的题目分值之和不等于试卷总分！");
           }

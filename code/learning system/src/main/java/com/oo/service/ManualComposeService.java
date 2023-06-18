@@ -1,9 +1,6 @@
 package com.oo.service;
 
-import com.oo.domain.Paper;
-import com.oo.domain.Question;
-import com.oo.domain.QuestionSelectedDTO;
-import com.oo.domain.Student;
+import com.oo.domain.*;
 import com.oo.domain.vo.QuestionsPaper;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,12 +24,11 @@ public interface ManualComposeService {
 
 
     /**
-     *
-     * @param id 试卷编号
-     * @param questionSelectedDTOS 选择的题目集合
+     * 添加试题
+     * @param paperDTO
      * @return
      */
-    boolean addQuestions(Integer id, List<QuestionSelectedDTO> questionSelectedDTOS);
+    boolean addQuestions(PaperDTO paperDTO);
 
 
 
