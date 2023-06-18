@@ -57,7 +57,7 @@ public class ManualComposeController {
      */
     @PostMapping("/save")
     public Result addQuestions(@RequestBody PaperDTO paperDTO) {
-        System.out.println(paperDTO);
+        //System.out.println(paperDTO);
         // 参数校验
         if (paperDTO.getQuestionSelectedDTOS() == null || paperDTO.getQuestionSelectedDTOS().isEmpty()) {
             throw new IllegalArgumentException("试卷题目不能为空或为null");

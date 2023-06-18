@@ -48,12 +48,17 @@ public class ManualComposeServiceImpl implements ManualComposeService {
         Optional<Paper> optionalPaper = Optional.ofNullable(paperDao.selectById(paperDTO.getPaperId()));
         Paper paper = optionalPaper.get();
         if (optionalPaper.isPresent()) {
+            // 判断试卷是否可以启用，若可启用则不能再组卷
+            if (paper.getEnabled()==1) {
+                throw new IllegalArgumentException("试卷已组好");
+            }
 
             // 判断试卷总分是否超过设定值
             Integer totalScore = paperDTO.getQuestionSelectedDTOS().stream().mapToInt(QuestionSelectedDTO::getScore).sum();
             if (!totalScore.equals(paper.getTotalScore())) {
                 throw new IllegalArgumentException("总分不一致");
             }
+
 
             // 添加试题到试卷中
             List<PaperQuestion> savedPaperQuestions = new ArrayList<>();
