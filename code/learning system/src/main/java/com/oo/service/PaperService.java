@@ -32,4 +32,5 @@ public interface PaperService {
      * @return List<Qcontent_score>
      */
     public Map<String, Object> selectByPaperId(Integer pageNum, Integer pageSize, Integer id);
+
 }

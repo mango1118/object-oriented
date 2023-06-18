@@ -24,13 +24,6 @@ public class Question {
     @TableId(type = IdType.AUTO)
     private Integer id;
     private String content;
-    private Integer type;
-    private String correctAnswer;
-    private String knowledgePoint;
-    private String chapter;
-    private Float errorRate;
-    private String errorPoint;
-    private Integer difficulty;
-
+    private String type;
 
 }

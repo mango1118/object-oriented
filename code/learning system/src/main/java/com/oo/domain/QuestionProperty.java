@@ -9,22 +9,25 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * @description: 试卷类
+ * @description: 题目性质类
  * @author: mango
- * @date: 2023/5/26 14:49
+ * @date: 2023/5/26 14:50
  */
-@TableName(value = "t_paper")
+@TableName(value = "t_question_property")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Paper {
+public class QuestionProperty {
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
-    @TableId(type = IdType.AUTO)
-    private Integer Id;
-    @TableField(value = "total_score")
-    private Integer totalScore;
-    private String name;
+    private Integer questionId;
+    private String answer;
+    private String knowledgePoint;
+    private String chapter;
+    private Float errorRate;
+    private String errorPoint;
+    private Integer difficulty;
+
 
 }
