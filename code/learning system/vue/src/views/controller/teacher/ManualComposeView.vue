@@ -146,10 +146,11 @@ export default {
                   id: question.id,
                   score: question.score
                 };
-              })
+              }),
+              paperId:this.examPaper.id
             };
-            const resp = await this.axios.post('/manualCompose', formData);
             this.$message.success("提交成功");
+            const resp = await this.axios.post('/manualCompose', formData);
           } else {
             this.$message.error("挑选的题目分值之和不等于试卷总分！");
           }
