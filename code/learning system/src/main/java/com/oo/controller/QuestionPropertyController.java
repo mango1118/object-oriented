@@ -1,16 +1,20 @@
 package com.oo.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.oo.controller.R.Code;
 import com.oo.controller.R.Result;
+import com.oo.domain.Paper;
 import com.oo.domain.Question;
 import com.oo.domain.QuestionProperty;
 import com.oo.domain.QuestionProperty;
+import com.oo.domain.vo.QuestionVo;
 import com.oo.service.QuestionPropertyService;
 import com.oo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @description:
@@ -23,6 +27,27 @@ public class QuestionPropertyController {
     @Autowired
     //通过spring自动注入
     private QuestionPropertyService questionPropertyService;
+
+    /**
+     * 分页查询全部题目
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("/pageLike")
+    //前端将在url中添加一个Integer类型的id，例如:localhost:9090/papers/1，注意使用get注解
+    public Result getById(@RequestParam(defaultValue = "1") Integer pageNum,
+                          @RequestParam(defaultValue = "5") Integer pageSize) {
+
+
+        Page<QuestionVo> questionVoPage= questionPropertyService.selectPageVo(pageNum, pageSize);
+
+        Integer code = questionVoPage != null && questionVoPage != null ? Code.GET_OK : Code.GET_ERR;
+        String msg = questionVoPage != null && questionVoPage != null ? "" : "数据查询失败，请重试！";
+
+        return new Result(code, questionVoPage.getRecords(), msg);
+    }
+
 
     /**
      * 查询某个问题的性质：1

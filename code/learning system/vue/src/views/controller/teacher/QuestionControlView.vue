@@ -176,7 +176,7 @@ export default {
     },
     async sendReq() {
       // this.pageNum = 1;
-      const resp = await this.axios.get("/questions/pageLike?pageNum=" + this.pageNum
+      const resp = await this.axios.get("/questionProperties/pageLike?pageNum=" + this.pageNum
           + "&pageSize=" + this.pageSize + "&questionId=null&questionType=null&questionKnowledgePoint=null" +
           "&questionChapter=null");
       console.log(resp);
@@ -185,7 +185,7 @@ export default {
     },
     async sendLikeReq() {
       // this.pageNum = 1;
-      const resp = await this.axios.get(`/questions/pageLike?pageNum=${this.pageNum}
+      const resp = await this.axios.get(`/questionProperties/pageLike?pageNum=${this.pageNum}
       &pageSize=${this.pageSize}&questionId=${this.questionId}&questionType=${this.questionType}
       &questionKnowledgePoint=${this.questionKnowledgePoint}&questionChapter=${this.questionChapter}`);
       console.log(resp);
