@@ -26,5 +26,6 @@ public class Paper {
     @TableField(value = "total_score")
     private Integer totalScore;
     private String name;
+    private Integer enabled;
 
 }

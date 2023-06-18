@@ -3,10 +3,7 @@ package com.oo.controller;
 import com.oo.controller.R.Code;
 import com.oo.controller.R.Result;
 import com.oo.dao.QuestionDao;
-import com.oo.domain.Paper;
-import com.oo.domain.Question;
-import com.oo.domain.QuestionSelectedDTO;
-import com.oo.domain.Student;
+import com.oo.domain.*;
 import com.oo.domain.vo.QuestionsPaper;
 import com.oo.service.ManualComposeService;
 import com.oo.service.PaperService;
@@ -52,30 +49,23 @@ public class ManualComposeController {
         return new Result(code, questionsP, msg);
     }
 
+
     /**
-     * 选择多条题目作为试卷保存数据库（未完成）
-     * @param paperId
-     * @param questionSelectedDTOS
+     * 添加试题
+     * @param paperDTO
      * @return
      */
     @PostMapping("/save")
-    public Result addQuestions(@RequestParam Integer paperId, @RequestBody List<QuestionSelectedDTO> questionSelectedDTOS) {
-        System.out.println(paperId);
-        System.out.println(questionSelectedDTOS);
+    public Result addQuestions(@RequestBody PaperDTO paperDTO) {
+        //System.out.println(paperDTO);
         // 参数校验
-        if (questionSelectedDTOS == null || questionSelectedDTOS.isEmpty()) {
+        if (paperDTO.getQuestionSelectedDTOS() == null || paperDTO.getQuestionSelectedDTOS().isEmpty()) {
             throw new IllegalArgumentException("试卷题目不能为空或为null");
         }
         // 调用业务逻辑层添加试题
-        boolean flag = manualComposeService.addQuestions(paperId, questionSelectedDTOS);
+        boolean flag = manualComposeService.addQuestions(paperDTO);
         return new Result(flag ? Code.SAVE_OK : Code.SAVE_ERR, flag);
     }
-
-    /*@GetMapping("/{id}")
-    public Paper getPaper(@PathVariable Long id) {
-        // 调用业务逻辑层获取试卷信息
-        return paperService.getPaper(id);
-    }*/
 
 
 

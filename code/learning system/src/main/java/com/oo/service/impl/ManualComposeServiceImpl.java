@@ -30,6 +30,7 @@ public class ManualComposeServiceImpl implements ManualComposeService {
     @Override
     public QuestionsPaper createPaper(Paper paper) {
         //创建试卷成功
+        paper.setEnabled(0);
         if( paperDao.insert(paper) > 0 ){
             List<Question> questions = questionDao.selectList(null);
             QuestionsPaper questionsPaper = new QuestionsPaper();
@@ -43,24 +44,31 @@ public class ManualComposeServiceImpl implements ManualComposeService {
     }
 
     @Override
-    public boolean addQuestions(Integer id, List<QuestionSelectedDTO> questionSelectedDTOS) {
-        Optional<Paper> optionalPaper = Optional.ofNullable(paperDao.selectById(id));
+    public boolean addQuestions(PaperDTO paperDTO) {
+        Optional<Paper> optionalPaper = Optional.ofNullable(paperDao.selectById(paperDTO.getPaperId()));
+        Paper paper = optionalPaper.get();
         if (optionalPaper.isPresent()) {
-            Paper paper = optionalPaper.get();
+            // 判断试卷是否可以启用，若可启用则不能再组卷
+            if (paper.getEnabled()==1) {
+                throw new IllegalArgumentException("试卷已组好");
+            }
+
             // 判断试卷总分是否超过设定值
-            Integer totalScore = questionSelectedDTOS.stream().mapToInt(QuestionSelectedDTO::getScore).sum();
+            Integer totalScore = paperDTO.getQuestionSelectedDTOS().stream().mapToInt(QuestionSelectedDTO::getScore).sum();
             if (!totalScore.equals(paper.getTotalScore())) {
                 throw new IllegalArgumentException("总分不一致");
             }
 
+
             // 添加试题到试卷中
             List<PaperQuestion> savedPaperQuestions = new ArrayList<>();
-            for (QuestionSelectedDTO questionSelectedDTO : questionSelectedDTOS) {
+            for (QuestionSelectedDTO questionSelectedDTO : paperDTO.getQuestionSelectedDTOS()) {
                 //Optional<Question> optionalQuestion = questionRepository.findById(paperQuestion.getQuestion().getId());
+                //找出每条题目
                 Question questionSelected = questionDao.selectById(questionSelectedDTO.getId());
                 if (Objects.nonNull(questionSelected)) {
                     PaperQuestion savedPaperQuestion = new PaperQuestion();
-                    savedPaperQuestion.setPaperId(id);
+                    savedPaperQuestion.setPaperId(paperDTO.getPaperId());
                     savedPaperQuestion.setQuestionId(questionSelected.getId());
                     savedPaperQuestion.setSetScore(questionSelectedDTO.getScore());
                     System.out.println(savedPaperQuestion);
@@ -70,44 +78,13 @@ public class ManualComposeServiceImpl implements ManualComposeService {
                 }
             }
             paperQuestionDao.addBatch(savedPaperQuestions);
+            //修改试卷为启用
+            paper.setEnabled(1);
+            paperDao.updateById(paper);
         } else {
             throw new EntityNotFoundException("Paper not found");
         }
         return false;
     }
-
-//    @Override
-//    public boolean addQuestions(Long id, List<Question> paperQuestions) {
-//        // 获取试卷信息
-// Optional<Paper> optionalPaper = Optional.ofNullable(paperDao.selectById(id));
-//        if (optionalPaper.isPresent()) {
-//            Paper paper = optionalPaper.get();
-//            // 判断试卷总分是否超过设定值
-//            Integer totalScore = paperQuestions.stream().mapToInt(PaperQuestion::getScore).sum();
-//            if (totalScore > paper.getTotalScore()) {
-//                throw new IllegalArgumentException("Total score of paper exceeds the limit");
-//            }
-//            // 添加试题到试卷中
-//            List<PaperQuestion> savedPaperQuestions = new ArrayList<>();
-//            for (PaperQuestion paperQuestion : paperQuestions) {
-//                Optional<Question> optionalQuestion = questionRepository.findById(paperQuestion.getQuestion().getId());
-//                if (optionalQuestion.isPresent()) {
-//                    PaperQuestion savedPaperQuestion = new PaperQuestion();
-//                    savedPaperQuestion.setPaper(paper);
-//                    savedPaperQuestion.setQuestion(optionalQuestion.get());
-//                    savedPaperQuestion.setScore(paperQuestion.getScore());
-//                    savedPaperQuestions.add(savedPaperQuestion);
-//                } else {
-//                    throw new EntityNotFoundException("Question not found");
-//                }
-//            }
-//            paperQuestionRepository.saveAll(savedPaperQuestions);
-//        } else {
-//            throw new EntityNotFoundException("Paper not found");
-//        }
-//        return false;
-//    }
-
-
 
 }
