@@ -29,12 +29,11 @@
     </el-descriptions>
     <br>
     <h2>挑选题目</h2>
-
     <h3>题目列表</h3>
     <div v-for="question in questions" :key="question.id">
-      <el-checkbox v-model="question.selected" @change="updateSelectedCount(question)">{{
-          question.title
-        }}
+      <el-checkbox v-model="question.selected" @change="updateSelectedCount(question)" border class="question">
+        {{ question.content }}
+        <span class="question-type">{{ question.type }}</span>
       </el-checkbox>
       <el-input v-model="question.score" :disabled="!question.selected" placeholder="分值" type="number"></el-input>
     </div>
@@ -55,9 +54,6 @@ export default {
       examData: {
         name: '',
         totalScore: null,
-        // multipleChoiceCount: null,
-        // fillInTheBlankCount: null,
-        // subjectiveCount: null
       },
       formRules: {
         name: [
@@ -102,9 +98,6 @@ export default {
               const formData = {
                 name: this.name,
                 totalScore: this.totalScore,
-                // multipleChoiceCount: this.multipleChoiceCount,
-                // fillInTheBlankCount: this.fillInTheBlankCount,
-                // subjectiveCount: this.subjectiveCount
               };
               this.$message.success("提交成功");
 
@@ -125,18 +118,56 @@ export default {
     async submitForm2() {
       // 检查是否选中了8道题目
       if (this.selectedCount === 8) {
-        // 构建提交的数据
-        const selectedQuestions = this.questions.filter(question => question.selected);
-        const formData = {
-          selectedQuestions: selectedQuestions.map(question => {
-            return {
-              id: question.id,
-              score: question.score
+        // debugger
+        // 检查题目的分值是否有效
+        const isValidScore = this.questions.every(question => {
+          return question.selected && !isNaN(Number(question.score));
+        });
+
+        if (isValidScore) {
+          // 计算题目的分值之和
+          const totalScore = this.questions
+              .filter(question => question.selected)
+              .reduce((sum, question) => sum + Number(question.score), 0);
+          // console.log(this.examData.totalScore)
+          // 检查题目的分值之和是否等于试卷总分
+          if (totalScore == this.examData.totalScore) {
+            // 构建提交的数据
+            const selectedQuestions = this.questions.filter(question => question.selected);
+            const formData = {
+              selectedQuestions: selectedQuestions.map(question => {
+                return {
+                  id: question.id,
+                  score: question.score
+                };
+              }),
+              paperId:this.examPaper.id
             };
-          })
-        };
-        const resp = await this.axios.post('/manualCompose', formData);
-        this.$message.success("提交成功");
+            // const resp = await this.axios.post('/manualCompose', formData);
+            const resp = this.axios.post('/manualCompose/save', formData);
+            this.$refs.examForm.resetFields(); // 重置表单
+            this.examData = { // 清空examData数据
+              name: '',
+              totalScore: null
+            };
+            this.questions.forEach(question => { // 清空题目数据
+              question.selected = false;
+              question.score = null;
+            });
+            this.selectedCount = 0; // 重置已选题目数量
+            this.examPaper = null;  //清空试卷信息
+            // 清空所有题目
+            this.questions = []; // 清空题目数组
+            // 重新导航到当前页面，清除内容
+            this.$message.success("提交成功");
+            location.reload();
+
+          } else {
+            this.$message.error("挑选的题目分值之和不等于试卷总分！");
+          }
+        } else {
+          this.$message.error("请为每个题目输入有效的分值！");
+        }
       } else {
         this.$message.error("请选择8道题目！");
       }
@@ -147,5 +178,13 @@ export default {
 </script>
 
 <style scoped>
+.question {
+  margin-top: 10px;
+}
 
+.question-type {
+  margin-left: 10px;
+  color: #888;
+  font-style: italic;
+}
 </style>
