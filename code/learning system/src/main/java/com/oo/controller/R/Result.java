@@ -85,7 +85,7 @@ class examPaper {
 
     public examPaper(Paper examPaper) {
         this.id = examPaper.getId();
-        this.totalScore = examPaper.getScore();
+        this.totalScore = examPaper.getTotalScore();
         this.name = examPaper.getName();
     }
 

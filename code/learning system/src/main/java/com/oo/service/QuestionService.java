@@ -1,6 +1,9 @@
 package com.oo.service;
 
+import com.oo.domain.Question;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @description:
@@ -9,4 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 public interface QuestionService {
+
+
 }

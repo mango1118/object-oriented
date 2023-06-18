@@ -94,7 +94,6 @@ public class PaperServiceImpl implements PaperService {
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("data", result);
         resultMap.put("total", total);
-
         return resultMap;
 
     }

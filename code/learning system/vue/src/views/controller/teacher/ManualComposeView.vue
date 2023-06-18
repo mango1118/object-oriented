@@ -1,4 +1,5 @@
 <template>
+
   <div>
     <h2>手动组卷页面</h2>
     <br>
@@ -108,7 +109,7 @@ export default {
               this.$message.success("提交成功");
 
               // 发送POST请求，将表单数据传递给后端,要求后端返回一个JSON格式的RESPOND
-              const resp = await this.axios.post('/manualCompose/submitForm', this.examData);
+              const resp = await this.axios.post('/manualCompose/create', this.examData);
               // console.log(resp);
               this.questions = resp.data.questions;
               this.total = resp.data.total;
@@ -122,7 +123,7 @@ export default {
       ;
     },
     async submitForm2() {
-      // 检查是否选中了15道题目
+      // 检查是否选中了8道题目
       if (this.selectedCount === 8) {
         // 构建提交的数据
         const selectedQuestions = this.questions.filter(question => question.selected);
@@ -134,7 +135,7 @@ export default {
             };
           })
         };
-        const resp = await this.axios.post('/manualCompose/submitForm', formData);
+        const resp = await this.axios.post('/manualCompose', formData);
         this.$message.success("提交成功");
       } else {
         this.$message.error("请选择8道题目！");
