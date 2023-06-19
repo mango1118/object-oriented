@@ -1,6 +1,9 @@
 package com.oo.domain.vo;
 
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.oo.domain.Question;
 import com.oo.domain.QuestionProperty;
 import lombok.AllArgsConstructor;
@@ -17,7 +20,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class QuestionVo {
-    private Integer questionId;
+    @JsonProperty("questionId")
+    private Integer id;
     private String content;
     private String type;
     private String answer;

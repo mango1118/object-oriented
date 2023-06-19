@@ -44,7 +44,7 @@ public class QuestionPropertyController {
 
         Integer code = questionVoPage != null && questionVoPage != null ? Code.GET_OK : Code.GET_ERR;
         String msg = questionVoPage != null && questionVoPage != null ? "" : "数据查询失败，请重试！";
-
+        //System.out.println(questionVoPage.getRecords());
         return new Result(code, questionVoPage.getRecords(), msg);
     }
 

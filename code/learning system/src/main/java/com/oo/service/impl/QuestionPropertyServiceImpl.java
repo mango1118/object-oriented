@@ -67,8 +67,10 @@ public class QuestionPropertyServiceImpl implements QuestionPropertyService {
     public Page<QuestionVo> selectPageVo(Integer pageNum, Integer pageSize) {
         Page<QuestionVo> page = new Page<>(pageNum, pageSize);
         IPage<QuestionVo> iPage = questionPropertyDao.selectPageVo(page);
+        System.out.println(iPage.getRecords());
         Page<QuestionVo> result = new Page<>(iPage.getCurrent(), iPage.getSize(), iPage.getTotal());
         result.setRecords(iPage.getRecords());
+
         return result;
     }
 }
