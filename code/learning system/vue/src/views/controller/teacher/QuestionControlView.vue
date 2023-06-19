@@ -5,11 +5,11 @@
     <div style="margin: 10px 0">
       <el-input v-model="questionId" placeholder="请输入问题id" style="width: 200px"
                 suffix-icon="el-icon-search"></el-input>
-      <el-input v-model="questionType" class="ml-5" placeholder="请输入问题类型" style="width: 200px"
+      <el-input v-model="type" class="ml-5" placeholder="请输入问题类型" style="width: 200px"
                 suffix-icon="el-icon-question"></el-input>
-      <el-input v-model="questionKnowledgePoint" placeholder="请输入问题知识点" style="width: 200px"
+      <el-input v-model="knowledgePoint" placeholder="请输入问题知识点" style="width: 200px"
                 suffix-icon="el-icon-message"></el-input>
-      <el-input v-model="questionChapter" placeholder="请输入问题章节" style="width: 200px"
+      <el-input v-model="chapter" placeholder="请输入问题章节" style="width: 200px"
                 suffix-icon="el-icon-message"></el-input>
       <el-button class="ml-5" type="primary" @click="handleSearch">搜索</el-button>
       <el-button class="ml-5" type="warning" @click="reload">重置</el-button>
@@ -26,14 +26,14 @@
 -->
     <el-table :header-cell-class-name="headerBg" border: row-key="id" stripe v-bind:data="tableData">
       <el-table-column label="ID" prop="questionId" width="50"></el-table-column>
-      <el-table-column label="内容" prop="questionContent" width="300"></el-table-column>
-      <el-table-column label="类型" prop="questionType" width="100"></el-table-column>
-      <el-table-column label="答案" prop="questionAnswer" width="300"></el-table-column>
-      <el-table-column label="知识点" prop="questionKnowledgePoint" width="100"></el-table-column>
-      <el-table-column label="章节" prop="questionChapter" width="100"></el-table-column>
-      <el-table-column label="错误率" prop="questionErrorRate" width="100"></el-table-column>
-      <el-table-column label="易错点" prop="questionErrorPoint" width="100"></el-table-column>
-      <el-table-column label="难度" prop="questionDifficulty" width="50"></el-table-column>
+      <el-table-column label="内容" prop="content" width="300"></el-table-column>
+      <el-table-column label="类型" prop="type" width="100"></el-table-column>
+      <el-table-column label="答案" prop="answer" width="300"></el-table-column>
+      <el-table-column label="知识点" prop="knowledgePoint" width="100"></el-table-column>
+      <el-table-column label="章节" prop="chapter" width="100"></el-table-column>
+      <el-table-column label="错误率" prop="errorRate" width="100"></el-table-column>
+      <el-table-column label="易错点" prop="errorPoint" width="100"></el-table-column>
+      <el-table-column label="难度" prop="difficulty" width="50"></el-table-column>
       <el-table-column align="center" label="操作" width="200">
         <template slot-scope="scope">
           <el-button type="success" @click="handleEdit(scope.row)">编辑<i class="el-icon-edit"></i></el-button>
@@ -68,29 +68,29 @@
     <el-dialog :visible.sync="saveDialogFormVisible" title="题目信息" width="30%">
       <el-form :model="saveform" label-width="80px" size="small">
         <el-form-item label="内容">
-          <el-input v-model="saveform.questionContent" autocomplete="off"></el-input>
+          <el-input v-model="saveform.content" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="类型">
-          <el-input v-model="saveform.questionType" autocomplete="off"></el-input>
+          <el-input v-model="saveform.type" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="答案">
-          <el-input v-model="saveform.questionCorrectAnswer" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="知识点">
-          <el-input v-model="saveform.questionKnowledgePoint" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="章节">
-          <el-input v-model="saveform.questionChapter" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="错误率">
-          <el-input v-model="saveform.questionErrorRate" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="易错点">
-          <el-input v-model="saveform.questionErrorPoint" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="难度">
-          <el-input v-model="saveform.questionDifficulty" autocomplete="off"></el-input>
-        </el-form-item>
+<!--        <el-form-item label="答案">-->
+<!--          <el-input v-model="saveform.answer" autocomplete="off"></el-input>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="知识点">-->
+<!--          <el-input v-model="saveform.knowledgePoint" autocomplete="off"></el-input>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="章节">-->
+<!--          <el-input v-model="saveform.chapter" autocomplete="off"></el-input>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="错误率">-->
+<!--          <el-input v-model="saveform.errorRate" autocomplete="off"></el-input>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="易错点">-->
+<!--          <el-input v-model="saveform.errorPoint" autocomplete="off"></el-input>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="难度">-->
+<!--          <el-input v-model="saveform.difficulty" autocomplete="off"></el-input>-->
+<!--        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="saveDialogFormVisible = false">取 消</el-button>
@@ -101,28 +101,28 @@
     <el-dialog :visible.sync="editDialogFormVisible" title="题目信息" width="30%">
       <el-form :model="editform" label-width="80px" size="small">
         <el-form-item label="内容">
-          <el-input v-model="saveform.questionContent" autocomplete="off"></el-input>
+          <el-input v-model="editform.content" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="类型">
-          <el-input v-model="saveform.questionType" autocomplete="off"></el-input>
+          <el-input v-model="editform.type" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="答案">
-          <el-input v-model="saveform.questionCorrectAnswer" autocomplete="off"></el-input>
+          <el-input v-model="editform.answer" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="知识点">
-          <el-input v-model="saveform.questionKnowledgePoint" autocomplete="off"></el-input>
+          <el-input v-model="editform.knowledgePoint" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="章节">
-          <el-input v-model="saveform.questionChapter" autocomplete="off"></el-input>
+          <el-input v-model="editform.chapter" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="错误率">
-          <el-input v-model="saveform.questionErrorRate" autocomplete="off"></el-input>
+          <el-input v-model="editform.errorRate" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="易错点">
-          <el-input v-model="saveform.questionErrorPoint" autocomplete="off"></el-input>
+          <el-input v-model="editform.errorPoint" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="难度">
-          <el-input v-model="saveform.questionDifficulty" autocomplete="off"></el-input>
+          <el-input v-model="editform.difficulty" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -146,14 +146,14 @@ export default {
       pageNum: 1,
       pageSize: 5,
       questionId: null,
-      questionContent: null,
-      questionCorrectAnswer: null,
-      questionErrorRate: null,
-      questionErrorPoint: null,
-      questionDifficulty: null,
-      questionType: null,
-      questionKnowledgePoint: null,
-      questionChapter: null,
+      content: null,
+      answer: null,
+      errorRate: null,
+      errorPoint: null,
+      difficulty: null,
+      type: null,
+      knowledgePoint: null,
+      chapter: null,
       saveDialogFormVisible: false,
       editDialogFormVisible: false,
       saveform: {},
@@ -176,30 +176,30 @@ export default {
     },
     async sendReq() {
       // this.pageNum = 1;
-      const resp = await this.axios.get("/questions/pageLike?pageNum=" + this.pageNum
-          + "&pageSize=" + this.pageSize + "&questionId=null&questionType=null&questionKnowledgePoint=null" +
-          "&questionChapter=null");
+      const resp = await this.axios.get("/questionProperties/pageLike?pageNum=" + this.pageNum
+          + "&pageSize=" + this.pageSize + "&questionId=null&type=null&knowledgePoint=null" +
+          "&chapter=null");
       console.log(resp);
       this.tableData = resp.data.data;
       this.total = resp.data.total;
     },
     async sendLikeReq() {
       // this.pageNum = 1;
-      const resp = await this.axios.get(`/questions/pageLike?pageNum=${this.pageNum}
-      &pageSize=${this.pageSize}&questionId=${this.questionId}&questionType=${this.questionType}
-      &questionKnowledgePoint=${this.questionKnowledgePoint}&questionChapter=${this.questionChapter}`);
-      console.log(resp);
-      this.tableData = resp.data.data;
+      const resp = await this.axios.get(`/questionProperties/pageLike?pageNum=${this.pageNum}
+      &pageSize=${this.pageSize}&questionId=${this.questionId}&type=${this.type}
+      &knowledgePoint=${this.knowledgePoint}&chapter=${this.chapter}`);
+      // console.log(resp.data);
+      this.tableData = resp.data;
       this.total = resp.data.total;
     },
     reload() {
       this.pageNum = 1;
       this.pageSize = 5;
       this.questionId = null;
-      this.questionType = null;
-      this.questionKnowledgePoint = null;
-      this.questionChapter = null;
-      this.sendReq();
+      this.type = null;
+      this.knowledgePoint = null;
+      this.chapter = null;
+      // this.sendReq();
     },
     handleSearch() {
       this.pageNum = 1;
@@ -232,6 +232,19 @@ export default {
       })
     },
     saveForm() {
+      if (
+          !this.saveform.content ||
+          !this.saveform.type
+          // !this.saveform.answer ||
+          // !this.saveform.knowledgePoint ||
+          // !this.saveform.chapter ||
+          // !this.saveform.errorRate ||
+          // !this.saveform.errorPoint ||
+          // !this.saveform.difficulty
+      ) {
+        this.$message.error('请完整填写表单');
+        return; // Prevent form submission
+      }
       this.axios.post("/questions", this.saveform).then(res => {
         // console.log(res.data);
         if (res.data) {
@@ -245,12 +258,26 @@ export default {
       this.sendReq();
     },
     editForm() {
-      this.axios.put("/questions", this.editform).then(res => {
+      // Check if any required fields are empty
+      if (
+          !this.editform.content ||
+          !this.editform.type ||
+          !this.editform.answer ||
+          !this.editform.knowledgePoint ||
+          !this.editform.chapter ||
+          !this.editform.errorRate ||
+          !this.editform.errorPoint ||
+          !this.editform.difficulty
+      ) {
+        this.$message.error('请完整填写表单');
+        return; // Prevent form submission
+      }
+      this.axios.put("/questionProperties", this.editform).then(res => {
         console.log(res.data);
         if (res.data) {
           this.$message.success("编辑成功");
           this.editDialogFormVisible = false;
-          this.sendReq();
+          this.sendLikeReq();
         } else {
           this.$message.error(`编辑失败，原因：${res.msg}`);
         }

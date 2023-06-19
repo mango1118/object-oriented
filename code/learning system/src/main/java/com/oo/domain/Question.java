@@ -25,5 +25,6 @@ public class Question {
     private Integer id;
     private String content;
     private String type;
-
+    private Integer enabled;
+    private Integer deleted;
 }

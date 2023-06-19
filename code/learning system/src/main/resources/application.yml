@@ -23,6 +23,11 @@ mybatis:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+    page-helper:
+      helper-dialect: mysql
+      reasonable: true
+      support-methods-arguments: true
+      params: count=countSql
 
 files:
   upload:
