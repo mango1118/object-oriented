@@ -5,11 +5,11 @@
     <div style="margin: 10px 0">
       <el-input v-model="questionId" placeholder="请输入问题id" style="width: 200px"
                 suffix-icon="el-icon-search"></el-input>
-      <el-input v-model="questionType" class="ml-5" placeholder="请输入问题类型" style="width: 200px"
+      <el-input v-model="type" class="ml-5" placeholder="请输入问题类型" style="width: 200px"
                 suffix-icon="el-icon-question"></el-input>
-      <el-input v-model="questionKnowledgePoint" placeholder="请输入问题知识点" style="width: 200px"
+      <el-input v-model="knowledgePoint" placeholder="请输入问题知识点" style="width: 200px"
                 suffix-icon="el-icon-message"></el-input>
-      <el-input v-model="questionChapter" placeholder="请输入问题章节" style="width: 200px"
+      <el-input v-model="chapter" placeholder="请输入问题章节" style="width: 200px"
                 suffix-icon="el-icon-message"></el-input>
       <el-button class="ml-5" type="primary" @click="handleSearch">搜索</el-button>
       <el-button class="ml-5" type="warning" @click="reload">重置</el-button>
@@ -73,24 +73,24 @@
         <el-form-item label="类型">
           <el-input v-model="saveform.type" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="答案">
-          <el-input v-model="saveform.answer" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="知识点">
-          <el-input v-model="saveform.knowledgePoint" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="章节">
-          <el-input v-model="saveform.chapter" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="错误率">
-          <el-input v-model="saveform.errorRate" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="易错点">
-          <el-input v-model="saveform.errorPoint" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="难度">
-          <el-input v-model="saveform.difficulty" autocomplete="off"></el-input>
-        </el-form-item>
+<!--        <el-form-item label="答案">-->
+<!--          <el-input v-model="saveform.answer" autocomplete="off"></el-input>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="知识点">-->
+<!--          <el-input v-model="saveform.knowledgePoint" autocomplete="off"></el-input>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="章节">-->
+<!--          <el-input v-model="saveform.chapter" autocomplete="off"></el-input>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="错误率">-->
+<!--          <el-input v-model="saveform.errorRate" autocomplete="off"></el-input>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="易错点">-->
+<!--          <el-input v-model="saveform.errorPoint" autocomplete="off"></el-input>-->
+<!--        </el-form-item>-->
+<!--        <el-form-item label="难度">-->
+<!--          <el-input v-model="saveform.difficulty" autocomplete="off"></el-input>-->
+<!--        </el-form-item>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="saveDialogFormVisible = false">取 消</el-button>
@@ -146,14 +146,14 @@ export default {
       pageNum: 1,
       pageSize: 5,
       questionId: null,
-      questionContent: null,
-      questionCorrectAnswer: null,
-      questionErrorRate: null,
-      questionErrorPoint: null,
-      questionDifficulty: null,
-      questionType: null,
-      questionKnowledgePoint: null,
-      questionChapter: null,
+      content: null,
+      answer: null,
+      errorRate: null,
+      errorPoint: null,
+      difficulty: null,
+      type: null,
+      knowledgePoint: null,
+      chapter: null,
       saveDialogFormVisible: false,
       editDialogFormVisible: false,
       saveform: {},
@@ -177,8 +177,8 @@ export default {
     async sendReq() {
       // this.pageNum = 1;
       const resp = await this.axios.get("/questionProperties/pageLike?pageNum=" + this.pageNum
-          + "&pageSize=" + this.pageSize + "&questionId=null&questionType=null&questionKnowledgePoint=null" +
-          "&questionChapter=null");
+          + "&pageSize=" + this.pageSize + "&questionId=null&type=null&knowledgePoint=null" +
+          "&chapter=null");
       console.log(resp);
       this.tableData = resp.data.data;
       this.total = resp.data.total;
@@ -186,8 +186,8 @@ export default {
     async sendLikeReq() {
       // this.pageNum = 1;
       const resp = await this.axios.get(`/questionProperties/pageLike?pageNum=${this.pageNum}
-      &pageSize=${this.pageSize}&questionId=${this.questionId}&questionType=${this.questionType}
-      &questionKnowledgePoint=${this.questionKnowledgePoint}&questionChapter=${this.questionChapter}`);
+      &pageSize=${this.pageSize}&questionId=${this.questionId}&type=${this.type}
+      &knowledgePoint=${this.knowledgePoint}&chapter=${this.chapter}`);
       // console.log(resp.data);
       this.tableData = resp.data;
       this.total = resp.data.total;
@@ -196,10 +196,10 @@ export default {
       this.pageNum = 1;
       this.pageSize = 5;
       this.questionId = null;
-      this.questionType = null;
-      this.questionKnowledgePoint = null;
-      this.questionChapter = null;
-      this.sendReq();
+      this.type = null;
+      this.knowledgePoint = null;
+      this.chapter = null;
+      // this.sendReq();
     },
     handleSearch() {
       this.pageNum = 1;
@@ -234,13 +234,13 @@ export default {
     saveForm() {
       if (
           !this.saveform.content ||
-          !this.saveform.type ||
-          !this.saveform.answer ||
-          !this.saveform.knowledgePoint ||
-          !this.saveform.chapter ||
-          !this.saveform.errorRate ||
-          !this.saveform.errorPoint ||
-          !this.saveform.difficulty
+          !this.saveform.type
+          // !this.saveform.answer ||
+          // !this.saveform.knowledgePoint ||
+          // !this.saveform.chapter ||
+          // !this.saveform.errorRate ||
+          // !this.saveform.errorPoint ||
+          // !this.saveform.difficulty
       ) {
         this.$message.error('请完整填写表单');
         return; // Prevent form submission
