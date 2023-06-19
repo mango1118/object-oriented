@@ -63,14 +63,16 @@ public class QuestionPropertyController {
     }
 
     /**
-     * 修改问题性质
-     * @param questionProperty
+     * 编辑题目性质
+     * @param questionVo
      * @return
      */
     @PutMapping
-    public Result update(@RequestBody QuestionProperty questionProperty) {
-        boolean flag = questionPropertyService.update(questionProperty);
-        return new Result(flag ? Code.UPDATE_OK : Code.UPDATE_ERR, flag);
+    public Result update(@RequestBody QuestionVo questionVo) {
+        boolean flag = questionPropertyService.update(questionVo);
+        Integer code = flag == true ? Code.GET_OK : Code.GET_ERR;
+        String msg = flag==true ? "编辑成功" : "编辑失败，请重试！";
+        return new Result(code,msg);
     }
 
 

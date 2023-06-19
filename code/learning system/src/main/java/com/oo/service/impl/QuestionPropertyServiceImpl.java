@@ -26,7 +26,8 @@ public class QuestionPropertyServiceImpl implements QuestionPropertyService {
 
     @Autowired
     private QuestionPropertyDao questionPropertyDao;
-
+    @Autowired
+    private QuestionDao questionDao;
 
     /**
      * 根据题目id,查询题目全部性质
@@ -42,15 +43,41 @@ public class QuestionPropertyServiceImpl implements QuestionPropertyService {
 
     /**
      * 修改某题目的性质
-     * @param questionProperty
+     * @param questionVo
      * @return
      */
     @Override
-    public boolean update(QuestionProperty questionProperty) {
-        UpdateWrapper<QuestionProperty> wrapper = new UpdateWrapper<>();
-        wrapper.eq("question_id",questionProperty.getQuestionId());
-
-        return this.questionPropertyDao.update(questionProperty,wrapper) > 0;
+    public boolean update(QuestionVo questionVo) {
+        //感觉要加一个事务
+        //处理数据
+        Question question = new Question();
+        QuestionProperty questionProperty = new QuestionProperty();
+        questionProperty.setQuestionId(questionVo.getId());
+        questionProperty.setAnswer(questionVo.getAnswer());
+        questionProperty.setChapter(questionVo.getChapter());
+        questionProperty.setDifficulty(questionVo.getDifficulty());
+        questionProperty.setErrorPoint(questionVo.getErrorPoint());
+        questionProperty.setErrorRate(questionVo.getErrorRate());
+        questionProperty.setKnowledgePoint(questionVo.getKnowledgePoint());
+        question.setContent(questionVo.getContent());
+        question.setType(questionVo.getType());
+        question.setEnabled(1);
+        //匹配题目
+        UpdateWrapper<Question> wrapperQ = new UpdateWrapper<>();
+        wrapperQ.eq("id",questionVo.getId());
+        //匹配该题目性质
+        UpdateWrapper<QuestionProperty> wrapperQP = new UpdateWrapper<>();
+        wrapperQP.eq("question_id",questionVo.getId());
+        //如果是修改性质.则题目性质不为空
+        boolean flag1,flag2;
+        if(questionPropertyDao.selectOne(wrapperQP)!=null){
+            flag1 = this.questionPropertyDao.update(questionProperty,wrapperQP)>0;
+            flag2 = this.questionDao.update(question,wrapperQ)>0;
+        }else{
+            flag1 = this.questionPropertyDao.insert(questionProperty) > 0;
+            flag2 = this.questionDao.update(question,wrapperQ) > 0;
+        }
+        return flag1&&flag2;
     }
 
     /**

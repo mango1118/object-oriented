@@ -19,7 +19,7 @@ public interface QuestionPropertyService {
 
     QuestionProperty selectById(Integer id);
 
-    boolean update(QuestionProperty questionProperty);
+    boolean update(QuestionVo questionVo);
 
     boolean save(QuestionProperty questionProperty);
 

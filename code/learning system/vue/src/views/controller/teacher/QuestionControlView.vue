@@ -272,12 +272,12 @@ export default {
         this.$message.error('请完整填写表单');
         return; // Prevent form submission
       }
-      this.axios.put("/questions", this.editform).then(res => {
+      this.axios.put("/questionProperties", this.editform).then(res => {
         console.log(res.data);
         if (res.data) {
           this.$message.success("编辑成功");
           this.editDialogFormVisible = false;
-          this.sendReq();
+          this.sendLikeReq();
         } else {
           this.$message.error(`编辑失败，原因：${res.msg}`);
         }
