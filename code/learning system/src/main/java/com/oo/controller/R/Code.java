@@ -16,6 +16,8 @@ public class Code {
     public static final Integer STUDENT_LOGIN_OK = 10001;
     public static final Integer TEACHER_LOGIN_OK = 10002;
 
+    public static final Integer ADMIN_LOGIN_OK = 10003;
+
     public static final Integer BACKUP_ERR = 40001;
     public static final Integer BACKUP_OK = 40002;
 
