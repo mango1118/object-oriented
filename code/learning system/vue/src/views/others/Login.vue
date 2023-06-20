@@ -51,6 +51,8 @@ export default {
                 this.$router.push("/student");
               } else if (res.code === 10002) {//老师
                 this.$router.push("/teacher");
+              } else if (res.code == 10003){ //管理员
+                this.$router.push("/admin");
               }
             } else {
               this.$message.error(res.msg);
