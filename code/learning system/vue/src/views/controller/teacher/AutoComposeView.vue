@@ -8,10 +8,12 @@
       "data":[
         {
           "content":"题干1",
+          "type":"选择题"
           "score":"分值1"
         },
         {
           "content":"题干2",
+          "type":"选择题"
           "score":"分值2"
         }
       ],
@@ -73,8 +75,18 @@
     </el-descriptions>
     <br>
 
-    <el-table :header-cell-class-name="headerBg" border: row-key="id" stripe v-bind:data="tableData">
-      <el-table-column label="题干" prop="content" width="800"></el-table-column>
+    <el-table :header-cell-class-name="headerBg" border class="paper_info" row-key="id" stripe :data="tableData">
+      <el-table-column label="题干" width="800">
+        <template slot-scope="scope">
+          <template v-if="scope.row.type === '主观题'">
+            <img v-if="scope.row.content" :src="scope.row.content" style="max-width: 100%; max-height: 200px;">
+          </template>
+          <template v-else>
+            {{ scope.row.content }}
+          </template>
+        </template>
+      </el-table-column>
+      <el-table-column label="类型" prop="type" width="300"></el-table-column>
       <el-table-column label="分值" prop="score" width="250"></el-table-column>
     </el-table>
 
