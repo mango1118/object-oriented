@@ -3,18 +3,13 @@ package com.oo.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.oo.controller.R.Code;
 import com.oo.controller.R.Result;
-import com.oo.domain.Paper;
-import com.oo.domain.Question;
-import com.oo.domain.QuestionProperty;
-import com.oo.domain.QuestionProperty;
+import com.oo.domain.*;
 import com.oo.domain.vo.QuestionVo;
 import com.oo.service.QuestionPropertyService;
-import com.oo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @description:
@@ -49,18 +44,18 @@ public class QuestionPropertyController {
     }
 
 
-    /**
-     * 查询某个问题的性质：1
-     * @param id
-     * @return
-     */
-    @GetMapping("/{id}")
-    public Result getById(@PathVariable Integer id) {
-        QuestionProperty questionProperty = questionPropertyService.selectById(id);
-        Integer code = questionProperty != null ? Code.GET_OK : Code.GET_ERR;
-        String msg = questionProperty != null ? "" : "数据查询失败，请重试！";
-        return new Result(code, questionProperty, msg);
-    }
+//    /**
+//     * 查询某个问题的性质：1
+//     * @param id
+//     * @return
+//     */
+//    @GetMapping("/{id}")
+//    public Result getById(@PathVariable Integer id) {
+//        QuestionProperty questionProperty = questionPropertyService.selectById(id);
+//        Integer code = questionProperty != null ? Code.GET_OK : Code.GET_ERR;
+//        String msg = questionProperty != null ? "" : "数据查询失败，请重试！";
+//        return new Result(code, questionProperty, msg);
+//    }
 
     /**
      * 编辑题目性质
@@ -76,16 +71,65 @@ public class QuestionPropertyController {
     }
 
 
-    /**
-     * 设置问题性质
-     * @param questionProperty
-     * @return
-     */
-    @PostMapping
-    public Result save(@RequestBody QuestionProperty questionProperty) {
-        boolean flag = questionPropertyService.save(questionProperty);
-        return new Result(flag ? Code.SAVE_OK : Code.SAVE_ERR, flag);
+//    @GetMapping
+//    public Result search(@RequestParam(defaultValue = "1") Integer pageNum,
+//                         @RequestParam(defaultValue = "5") Integer pageSize,
+//                         @RequestParam Integer questionId,
+//                         @RequestParam String type,
+//                         @RequestParam String knowledgePoint,
+//                         @RequestParam String chapter
+//                         ){
+//        System.out.println(pageNum);
+//        System.out.println(pageSize);
+//        System.out.println( questionId+"===="+type+"======"+knowledgePoint+"========"+chapter);
+//
+//        Page<QuestionVo> questionVoPage= questionPropertyService.searchPageVo(pageNum, pageSize,questionId,type,knowledgePoint,chapter);
+//
+//        Integer code = questionVoPage != null && questionVoPage != null ? Code.GET_OK : Code.GET_ERR;
+//        String msg = questionVoPage != null && questionVoPage != null ? "" : "数据查询失败，请重试！";
+//        //System.out.println(questionVoPage.getRecords());
+//        return new Result(code, questionVoPage.getRecords(), msg);
+//
+//    }
+    @GetMapping("/search")
+    public Result search(@RequestParam(defaultValue = "1") Integer pageNum,
+                         @RequestParam(defaultValue = "5") Integer pageSize,
+                         @RequestParam(required = false) Integer questionId,
+                         @RequestParam(required = false) String type,
+                         @RequestParam(required = false) String knowledgePoint,
+                         @RequestParam(required = false) String chapter
+    ){
+        System.out.println(pageNum);
+        System.out.println(pageSize);
+        System.out.println( questionId+"===="+type+"======"+knowledgePoint+"========"+chapter);
+        QuestionSearchDTO questionSearchDTO = new QuestionSearchDTO();
+        questionSearchDTO.setQuestionId(questionId);
+        questionSearchDTO.setChapter(chapter);
+        questionSearchDTO.setType(type);
+        questionSearchDTO.setKnowledgePoint(knowledgePoint);
+        questionSearchDTO.setOffset((pageNum-1)*pageSize);
+        questionSearchDTO.setSize(pageSize);
+        //Page<QuestionVo> questionVoPage= questionPropertyService.searchPageVo(questionSearchDTO,pageNum, pageSize);
+        List<QuestionVo> questionVoList= questionPropertyService.searchPageVo(questionSearchDTO);
+
+        Integer code = questionVoList != null && questionVoList != null ? Code.GET_OK : Code.GET_ERR;
+        String msg = questionVoList != null && questionVoList != null ? "" : "数据查询失败，请重试！";
+        //System.out.println(questionVoPage.getRecords());
+        return new Result(code, questionVoList, msg);
+
     }
+
+
+//    /**
+//     * 设置问题性质
+//     * @param questionProperty
+//     * @return
+//     */
+//    @PostMapping
+//    public Result save(@RequestBody QuestionProperty questionProperty) {
+//        boolean flag = questionPropertyService.save(questionProperty);
+//        return new Result(flag ? Code.SAVE_OK : Code.SAVE_ERR, flag);
+//    }
 
 
 }

@@ -84,6 +84,23 @@ const routes = [
                 component: () => import('../views/controller/teacher/GivePaperView')
             },
         ]
+    },
+    {
+        path: "/admin",
+        component: () => import('../views/others/AdminManger'),
+        redirect: '/admin/home',
+        children: [
+            //主页
+            {path: 'home', name: 'admin首页', component: () => import('../views/others/Home')},
+            //个人功能
+            {path: 'self', name: 'admin个人页面', component: () => import('../views/others/own/AdminSelfView')},
+            //系统功能
+            {
+                path: 'teacherControl',
+                name: 'admin教师管理',
+                component: () => import("../views/controller/admin/TeacherControlView")
+            }
+        ]
     }
 ]
 

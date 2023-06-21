@@ -3,5 +3,35 @@
 <mapper namespace="com.oo.dao.QuestionPropertyDao">
     <select id="selectPageVo" resultType="com.oo.domain.vo.QuestionVo">
         SELECT * FROM t_question  left join t_question_property  on t_question.id=t_question_property.question_id
+        WHERE
+            not (t_question.deleted=1 and t_question.deleted is not null)
+    </select>
+
+    <select id="searchPageVo" parameterType="com.oo.domain.QuestionSearchDTO" resultType="com.oo.domain.vo.QuestionVo">
+        SELECT * FROM t_question left join t_question_property  on t_question.id=t_question_property.question_id
+        where 1=1
+        and not (t_question.deleted=1 and t_question.deleted is not null)
+        <if test="questionSearchDTO.questionId != null and questionSearchDTO.questionId != '' ">
+            AND t_question.id = #{questionSearchDTO.questionId}
+        </if>
+
+        <if test="questionSearchDTO.type != null and questionSearchDTO.type != '' ">
+            AND t_question.type LIKE CONCAT('%', #{questionSearchDTO.type}, '%')
+        </if>
+        <if test="questionSearchDTO.knowledgePoint != null and questionSearchDTO.knowledgePoint != '' ">
+            AND t_question_property.knowledge_point LIKE CONCAT('%', #{questionSearchDTO.knowledgePoint}, '%')
+        </if>
+
+        <if test="questionSearchDTO.chapter != null and questionSearchDTO.chapter != '' ">
+            AND t_question_property.chapter LIKE CONCAT('%', #{questionSearchDTO.chapter}, '%')
+        </if>
+
+<!--          and (t_question_property.chapter=#{questionSearchDTO.chapter} or #{questionSearchDTO.chapter} is null)-->
+<!--          and (knowledge_point =#{questionSearchDTO.knowledgePoint} or #{questionSearchDTO.knowledgePoint} is null)-->
+<!--        <if test="questionSearchDTO.type != null">-->
+<!--            AND t_question.type = '${questionSearchDTO.type}'-->
+<!--        </if>-->
+        order by t_question.id
+        limit  #{questionSearchDTO.offset}, #{questionSearchDTO.size}
     </select>
 </mapper>

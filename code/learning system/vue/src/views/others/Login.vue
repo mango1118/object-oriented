@@ -44,13 +44,15 @@ export default {
         if (valid) {//表单合法
           this.axios.post("http://localhost:9090/login", this.user).then(res => {
             console.log(res);
-            if (res.code === 10001 || res.code === 10002) {
+            if (res.code === 10001 || res.code === 10002 || res.code === 10003) {
               localStorage.setItem("user", JSON.stringify(res.data))
               this.$message.success("登录成功");
               if (res.code === 10001) {//学生
                 this.$router.push("/student");
               } else if (res.code === 10002) {//老师
                 this.$router.push("/teacher");
+              } else if (res.code == 10003){ //管理员
+                this.$router.push("/admin");
               }
             } else {
               this.$message.error(res.msg);

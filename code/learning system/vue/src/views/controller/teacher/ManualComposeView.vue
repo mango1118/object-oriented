@@ -29,7 +29,7 @@
     </el-descriptions>
     <br>
     <h2>挑选题目</h2>
-    <h3>题目列表</h3>
+<!--    <h3>题目列表</h3>
     <div v-for="question in questions" :key="question.id">
       <el-checkbox v-model="question.selected" @change="updateSelectedCount(question)" border class="question">
         {{ question.content }}
@@ -38,7 +38,23 @@
       <el-input v-model="question.score" :disabled="!question.selected" placeholder="分值" type="number"></el-input>
     </div>
     <h3>已选题目：{{ selectedCount }}/8</h3>
+    <el-button type="primary" @click="submitForm2">提交</el-button>-->
+    <h3>题目列表</h3>
+    <div v-for="question in questions" :key="question.id">
+      <el-checkbox v-model="question.selected" @change="updateSelectedCount(question)" border class="question">
+        <template v-if="question.type === '主观题'">
+          <img v-if="question.content" :src="question.content" style="max-width: 100%; max-height: 200px;">
+        </template>
+        <template v-else>
+          {{ question.content }}
+        </template>
+        <span class="question-type">{{ question.type }}</span>
+      </el-checkbox>
+      <el-input v-model="question.score" :disabled="!question.selected" placeholder="分值" type="number"></el-input>
+    </div>
+    <h3>已选题目：{{ selectedCount }}/8</h3>
     <el-button type="primary" @click="submitForm2">提交</el-button>
+
 
   </div>
 </template>

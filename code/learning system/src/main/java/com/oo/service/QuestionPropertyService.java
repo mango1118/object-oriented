@@ -1,8 +1,8 @@
 package com.oo.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.oo.domain.Question;
 import com.oo.domain.QuestionProperty;
+import com.oo.domain.QuestionSearchDTO;
 import com.oo.domain.vo.QuestionVo;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,4 +30,25 @@ public interface QuestionPropertyService {
      * @return
      */
     Page<QuestionVo> selectPageVo(Integer pageNum, Integer pageSize);
+
+
+    //Page<QuestionVo> searchPageVo(QuestionSearchDTO questionSearchDTO, Integer pageNum, Integer pageSize);
+    List<QuestionVo> searchPageVo(QuestionSearchDTO questionSearchDTO);
+
+    /**
+     * 根据性质查询题目 分页查询
+     * @param pageNum
+     * @param pageSize
+     * @param questionId
+     * @param type
+     * @param knowledgePoint
+     * @param chapter
+     * @return
+     */
+//    Page<QuestionVo> searchPageVo(Integer pageNum,
+//                                  Integer pageSize,
+//                                  Integer questionId,
+//                                  String type,
+//                                  String knowledgePoint,
+//                                  String chapter);
 }

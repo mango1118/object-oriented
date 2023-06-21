@@ -5,6 +5,7 @@ import com.oo.controller.R.Result;
 import com.oo.domain.LoginDTO;
 import com.oo.domain.Student;
 import com.oo.domain.Teacher;
+import com.oo.domain.Admin;
 import com.oo.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
 
     @Autowired
-    LoginService loginService;
+    private LoginService loginService;
 
     @PostMapping
     public Result login(@RequestBody LoginDTO loginDTO) {
@@ -32,6 +33,8 @@ public class LoginController {
             return new Result(Code.STUDENT_LOGIN_OK, user);
         } else if (user instanceof Teacher) {
             return new Result(Code.TEACHER_LOGIN_OK, user);
+        } else if (user instanceof Admin) {
+            return new Result(Code.ADMIN_LOGIN_OK, user);
         } else {
             return new Result(Code.POST_ERR, null, "账户密码错误，请重试！");
         }

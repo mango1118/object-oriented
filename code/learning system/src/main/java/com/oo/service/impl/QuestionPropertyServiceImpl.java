@@ -8,13 +8,16 @@ import com.oo.dao.QuestionDao;
 import com.oo.dao.QuestionPropertyDao;
 import com.oo.domain.Question;
 import com.oo.domain.QuestionProperty;
+import com.oo.domain.QuestionSearchDTO;
 import com.oo.domain.vo.QuestionVo;
 import com.oo.service.QuestionPropertyService;
 import com.oo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @description:
@@ -100,4 +103,36 @@ public class QuestionPropertyServiceImpl implements QuestionPropertyService {
 
         return result;
     }
+
+    @Override
+    public List<QuestionVo> searchPageVo(QuestionSearchDTO questionSearchDTO) {
+        System.out.println(questionSearchDTO);
+        List<QuestionVo> questionVoList = questionPropertyDao.searchPageVo(questionSearchDTO);
+        System.out.println(questionVoList);
+        return questionVoList;
+    }
+
+//    @Override
+//    public Page<QuestionVo> searchPageVo(QuestionSearchDTO questionSearchDTO, Integer pageNum, Integer pageSize) {
+//        Page<QuestionVo> page = new Page<>(pageNum, pageSize);
+//        //Map<String,Object> map = new HashMap<>();
+//        /**
+//         *  questionId,
+//         * type,
+//         * knowledgePoint
+//         * chapter);
+//         */
+////        map.put("questionId",questionSearchDTO.getQuestionId());
+////        map.put("type",questionSearchDTO.getType());
+////        map.put("knowledgePoint",questionSearchDTO.getKnowledgePoint());
+////        map.put("chapter",questionSearchDTO.getChapter());
+//
+//
+//        IPage<QuestionVo> iPage = questionPropertyDao.searchPageVo(page,questionSearchDTO);
+//        System.out.println(iPage.getRecords());
+//        Page<QuestionVo> result = new Page<>(iPage.getCurrent(), iPage.getSize(), iPage.getTotal());
+//        result.setRecords(iPage.getRecords());
+//
+//        return result;
+//    }
 }
