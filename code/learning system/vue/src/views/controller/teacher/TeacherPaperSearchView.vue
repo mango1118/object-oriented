@@ -7,10 +7,12 @@
         "data":[
           {
             "content":"题干1",
+            "type":"选择题"
             "score":"分值1"
           },
           {
             "content":"题干2",
+            "type":"主观题"
             "score":"分值2"
           }
         ],
@@ -30,9 +32,6 @@
     <div style="margin: 10px 0">
       <el-input v-model="paperId" placeholder="请输入考试id" style="width: 200px"
                 suffix-icon="el-icon-search"></el-input>
-      <!--      <el-input style="width: 200px" placeholder="请输入考试名" suffix-icon="el-icon-studentPaper"-->
-      <!--                v-model="PaperName"-->
-      <!--                class="ml-5"></el-input>-->
       <el-button class="ml-5" type="primary" @click="sendReqId">搜索</el-button>
       <el-button class="ml-5" type="warning" @click="reload">重置</el-button>
     </div>
@@ -52,15 +51,27 @@
           对象的类名随意，属性名请与下述表单一一对应
           el-table-column prog="xxx" 其中xxx是属性名
     -->
-    <el-table :header-cell-class-name="headerBg" border: class="paper_info" row-key="id" stripe v-bind:data="tableData">
+<!--    <el-table :header-cell-class-name="headerBg" border: class="paper_info" row-key="id" stripe v-bind:data="tableData">
       <el-table-column label="题干" prop="content" width="800"></el-table-column>
+      <el-table-column label="类型" prop="type" width="300"></el-table-column>
       <el-table-column label="分值" prop="score" width="250"></el-table-column>
-      <!--      <el-table-column label="操作" width="200" align="center">-->
-      <!--        <template slot-scope="scope">-->
-      <!--          <el-button type="success" @click="handleSelect(scope.row.paperId)">挑选<i class="el-icon-edit"></i></el-button>-->
-      <!--        </template>-->
-      <!--      </el-table-column>-->
+    </el-table>-->
+
+    <el-table :header-cell-class-name="headerBg" border class="paper_info" row-key="id" stripe :data="tableData">
+      <el-table-column label="题干" width="800">
+        <template slot-scope="scope">
+          <template v-if="scope.row.type === '主观题'">
+            <img v-if="scope.row.content" :src="scope.row.content" style="max-width: 100%; max-height: 200px;">
+          </template>
+          <template v-else>
+            {{ scope.row.content }}
+          </template>
+        </template>
+      </el-table-column>
+      <el-table-column label="类型" prop="type" width="300"></el-table-column>
+      <el-table-column label="分值" prop="score" width="250"></el-table-column>
     </el-table>
+
 
     <div style="padding: 10px 0">
       <el-pagination
