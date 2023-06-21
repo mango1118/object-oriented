@@ -70,7 +70,7 @@ public class PaperServiceImpl implements PaperService {
         // 根据question_id列表查询question表content
         Page<Question> page2 = new Page<>(currentPage, pageSize);
         QueryWrapper<Question> queryWrapper2 = new QueryWrapper<>();
-        queryWrapper2.select("id", "content").in("id", questionIds);
+        queryWrapper2.select("id", "content", "type").in("id", questionIds);
         List<Question> questionContents = questionDao.selectPage(page2, queryWrapper2).getRecords();
 
         // 链接两个列表，封装到Qcontent_score中
@@ -85,6 +85,7 @@ public class PaperServiceImpl implements PaperService {
                     Qcontent_score qcScore = new Qcontent_score();
                     qcScore.setScore(score1);
                     qcScore.setContent(question.getContent());
+                    qcScore.setType(question.getType());
                     result.add(qcScore);
                     break;
                 }

@@ -17,4 +17,5 @@ public class Qcontent_score {
 
     private String content;
     private Integer score;
+    private String type;
 }
