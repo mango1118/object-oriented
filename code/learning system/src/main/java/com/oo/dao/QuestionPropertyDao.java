@@ -4,10 +4,15 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.oo.domain.Question;
 import com.oo.domain.QuestionProperty;
+import com.oo.domain.QuestionSearchDTO;
 import com.oo.domain.vo.QuestionVo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.mybatis.logging.Logger;
+import org.mybatis.logging.LoggerFactory;
+
+import java.util.List;
 
 /**
  * @description:
@@ -17,5 +22,11 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 @TableName("t_question_property")
 public interface QuestionPropertyDao extends BaseMapper<QuestionProperty> {
+
     IPage<QuestionVo> selectPageVo(Page<?> page);
+
+   // IPage<QuestionVo> searchPageVo(@Param("page")Page<?> page,@Param("questionSearchDTO") QuestionSearchDTO questionSearchDTO);
+    List<QuestionVo> searchPageVo(@Param("questionSearchDTO") QuestionSearchDTO questionSearchDTO);
+
+
 }

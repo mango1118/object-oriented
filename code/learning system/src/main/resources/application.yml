@@ -6,7 +6,7 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://106.53.104.4:3306/learning_system
+    url: jdbc:mysql://106.53.104.4:3306/learning_system?useUnicode=true&characterEncoding=UTF-8
     username: admin
     password: gdutadmin
 
@@ -14,11 +14,12 @@ logging:
   level:
     root: info
     mapper: info
-    com.baomidou.mybatisplus: info
+    com.baomidou.mybatisplus: debug
   config: classpath:logback-spring.xml
 
 mybatis:
   mapper-locations: classpath:mapper/*
+
 
 mybatis-plus:
   configuration:
@@ -33,3 +34,4 @@ files:
   upload:
     #    path: classpath:backup/files/
     path: src/main/resources/backup/files/
+
