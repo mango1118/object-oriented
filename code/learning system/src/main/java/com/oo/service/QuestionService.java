@@ -1,9 +1,11 @@
 package com.oo.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.oo.domain.Question;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @description:
@@ -12,6 +14,9 @@ import java.util.List;
  */
 @Transactional
 public interface QuestionService {
+    public boolean addQuestion(Question question);
 
+
+    public boolean deleteQuestion(Integer id);
 
 }
