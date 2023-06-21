@@ -97,12 +97,12 @@ export default {
       selectedAnswers: [],
       fillInTheBlankAnswers: [],
       uploadedImages: [], // 保存上传的图片路径
-
       tableData: [],
       total: 0,
       pageNum: 1,
       pageSize: 5,
       studentNow: {},
+      paperId:null,
       studentPaperName: null,
       studentPaperId: null,
       headerBg: 'headerBg'
@@ -136,12 +136,18 @@ export default {
     },
     async fetchQuestions() {
       try {
-        const response = await fetch('/api/questions'); // 替换为实际的后端接口地址
+        this.paperId = localStorage.getItem("paperId")
+        const resp = await this.axios.get(`/api/questions?paperId=${this.paperId}`)
+        this.multipleChoiceQuestions = resp.data.multipleChoiceQuestions;
+        this.fillInTheBlankQuestions = resp.data.fillInTheBlankQuestions;
+        this.subjectiveQuestions = resp.data.subjectiveQuestions;
+
+/*        const response = await fetch(`/api/questions/` + this.paperId); // 替换为实际的后端接口地址
         const data = await response.json();
 
         this.multipleChoiceQuestions = data.multipleChoiceQuestions;
         this.fillInTheBlankQuestions = data.fillInTheBlankQuestions;
-        this.subjectiveQuestions = data.subjectiveQuestions;
+        this.subjectiveQuestions = data.subjectiveQuestions;*/
       } catch (error) {
         console.error('获取题目失败:', error);
       }
