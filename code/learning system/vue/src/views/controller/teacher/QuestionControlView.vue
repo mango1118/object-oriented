@@ -24,34 +24,34 @@
       对象的类名随意，属性名请与下述表单一一对应
       el-table-column prog="xxx" 其中xxx是属性名
 -->
-<!--    <el-table :header-cell-class-name="headerBg" border: row-key="id" stripe v-bind:data="tableData">
-      <el-table-column label="ID" prop="questionId" width="50"></el-table-column>
-      <el-table-column label="内容" prop="content" width="300"></el-table-column>
-      <el-table-column label="类型" prop="type" width="100"></el-table-column>
-      <el-table-column label="答案" prop="answer" width="300"></el-table-column>
-      <el-table-column label="知识点" prop="knowledgePoint" width="100"></el-table-column>
-      <el-table-column label="章节" prop="chapter" width="100"></el-table-column>
-      <el-table-column label="错误率" prop="errorRate" width="100"></el-table-column>
-      <el-table-column label="易错点" prop="errorPoint" width="100"></el-table-column>
-      <el-table-column label="难度" prop="difficulty" width="50"></el-table-column>
-      <el-table-column align="center" label="操作" width="200">
-        <template slot-scope="scope">
-          <el-button type="success" @click="handleEdit(scope.row)">编辑<i class="el-icon-edit"></i></el-button>
-          <el-popconfirm
-              cancel-button-text='取消'
-              class="ml-5"
-              confirm-button-text='确定'
-              icon="el-icon-info"
-              icon-color="red"
-              title="您确定删除吗？"
-              @confirm="handleDelete(scope.row.questionId)"
-          >
-            <el-button slot="reference" type="danger">删除<i class="el-icon-remove-outline"></i>
-            </el-button>
-          </el-popconfirm>
-        </template>
-      </el-table-column>
-    </el-table>-->
+    <!--    <el-table :header-cell-class-name="headerBg" border: row-key="id" stripe v-bind:data="tableData">
+          <el-table-column label="ID" prop="questionId" width="50"></el-table-column>
+          <el-table-column label="内容" prop="content" width="300"></el-table-column>
+          <el-table-column label="类型" prop="type" width="100"></el-table-column>
+          <el-table-column label="答案" prop="answer" width="300"></el-table-column>
+          <el-table-column label="知识点" prop="knowledgePoint" width="100"></el-table-column>
+          <el-table-column label="章节" prop="chapter" width="100"></el-table-column>
+          <el-table-column label="错误率" prop="errorRate" width="100"></el-table-column>
+          <el-table-column label="易错点" prop="errorPoint" width="100"></el-table-column>
+          <el-table-column label="难度" prop="difficulty" width="50"></el-table-column>
+          <el-table-column align="center" label="操作" width="200">
+            <template slot-scope="scope">
+              <el-button type="success" @click="handleEdit(scope.row)">编辑<i class="el-icon-edit"></i></el-button>
+              <el-popconfirm
+                  cancel-button-text='取消'
+                  class="ml-5"
+                  confirm-button-text='确定'
+                  icon="el-icon-info"
+                  icon-color="red"
+                  title="您确定删除吗？"
+                  @confirm="handleDelete(scope.row.questionId)"
+              >
+                <el-button slot="reference" type="danger">删除<i class="el-icon-remove-outline"></i>
+                </el-button>
+              </el-popconfirm>
+            </template>
+          </el-table-column>
+        </el-table>-->
 
     <el-table :header-cell-class-name="headerBg" border row-key="id" stripe v-bind:data="tableData">
       <el-table-column label="ID" prop="questionId" width="50"></el-table-column>
@@ -104,13 +104,73 @@
       </el-pagination>
     </div>
 
-    <el-dialog :visible.sync="saveDialogFormVisible" title="题目信息" width="30%">
+    <!--    <el-dialog :visible.sync="saveDialogFormVisible" title="题目信息" width="30%">
+          <el-form :model="saveform" label-width="80px" size="small">
+            <el-form-item label="内容">
+              <el-input v-model="saveform.content" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="类型">
+              <el-input v-model="saveform.type" autocomplete="off"></el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="saveDialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="saveForm">确 定</el-button>
+          </div>
+        </el-dialog>-->
+
+<!--    <el-dialog :visible.sync="saveDialogFormVisible" title="题目信息" width="30%">
       <el-form :model="saveform" label-width="80px" size="small">
-        <el-form-item label="内容">
-          <el-input v-model="saveform.content" autocomplete="off"></el-input>
-        </el-form-item>
         <el-form-item label="类型">
           <el-input v-model="saveform.type" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="内容">
+          <template v-if="saveform.type === '主观题'">
+            &lt;!&ndash; 替换为实际的图片上传接口 &ndash;&gt;
+            <el-upload
+                ref="upload"
+                class="upload-demo"
+                action="/your-upload-api"
+                :on-success="handleSaveUploadSuccess"
+                :file-list="saveform.imageList"
+                :show-file-list="false"
+                :auto-upload="false"
+                :before-upload="beforeUpload"
+            >
+              <el-button slot="trigger" size="small" type="primary">上传图片</el-button>
+            </el-upload>
+          </template>
+          <template v-else>
+            <el-input v-model="saveform.content" autocomplete="off"></el-input>
+          </template>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="saveDialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveForm">确 定</el-button>
+      </div>
+    </el-dialog>-->
+
+    <el-dialog :visible.sync="saveDialogFormVisible" title="题目信息" width="30%">
+      <el-form :model="saveform" label-width="80px" size="small">
+        <el-form-item label="类型">
+          <el-input v-model="saveform.type" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="内容">
+          <template v-if="saveform.type === '主观题'">
+            <!-- 根据实际的上传接口进行设置 -->
+            <el-upload
+                ref="upload"
+                action="/api/upload"
+            :show-file-list="false"
+            :before-upload="beforeUpload"
+            >
+            <el-button size="small" type="primary">选择图片</el-button>
+            </el-upload>
+          </template>
+          <template v-else>
+            <el-input v-model="saveform.content" autocomplete="off"></el-input>
+          </template>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -119,38 +179,39 @@
       </div>
     </el-dialog>
 
-<!--    <el-dialog :visible.sync="editDialogFormVisible" title="题目信息" width="30%">
-      <el-form :model="editform" label-width="80px" size="small">
-        <el-form-item label="内容">
-          <el-input v-model="editform.content" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="类型">
-          <el-input v-model="editform.type" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="答案">
-          <el-input v-model="editform.answer" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="知识点">
-          <el-input v-model="editform.knowledgePoint" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="章节">
-          <el-input v-model="editform.chapter" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="错误率">
-          <el-input v-model="editform.errorRate" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="易错点">
-          <el-input v-model="editform.errorPoint" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="难度">
-          <el-input v-model="editform.difficulty" autocomplete="off"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="editDialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="editForm">确 定</el-button>
-      </div>
-    </el-dialog>-->
+
+    <!--    <el-dialog :visible.sync="editDialogFormVisible" title="题目信息" width="30%">
+          <el-form :model="editform" label-width="80px" size="small">
+            <el-form-item label="内容">
+              <el-input v-model="editform.content" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="类型">
+              <el-input v-model="editform.type" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="答案">
+              <el-input v-model="editform.answer" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="知识点">
+              <el-input v-model="editform.knowledgePoint" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="章节">
+              <el-input v-model="editform.chapter" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="错误率">
+              <el-input v-model="editform.errorRate" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="易错点">
+              <el-input v-model="editform.errorPoint" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="难度">
+              <el-input v-model="editform.difficulty" autocomplete="off"></el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="editDialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="editForm">确 定</el-button>
+          </div>
+        </el-dialog>-->
 
     <el-dialog :visible.sync="editDialogFormVisible" title="题目信息" width="30%">
       <el-form :model="editform" label-width="80px" size="small">
@@ -159,7 +220,7 @@
             <img v-if="editform.content" :src="editform.content" style="max-width: 100%; max-height: 200px;">
             <!-- 设置上传图片的接口地址 -->
             <el-upload action="/upload"
-                       :on-success="handleUploadSuccess" :show-file-list="false" :before-upload="beforeUpload">
+                       :on-success="handleEditUploadSuccess" :show-file-list="false" :before-upload="beforeUpload">
               <el-button size="small" type="primary">上传图片</el-button>
             </el-upload>
           </template>
@@ -218,14 +279,19 @@ export default {
       type: null,
       knowledgePoint: null,
       chapter: null,
-      saveDialogFormVisible: false,
       editDialogFormVisible: false,
-      saveform: {},
       editform: {},
-      headerBg: 'headerBg'
+      headerBg: 'headerBg',
+      isUploading: false,
+      saveDialogFormVisible: false,
+      saveform: {
+        content: "",
+        type: ""
+      }
     }
   },
   methods: {
+
     collapse() {// 点击收缩按钮触发
       this.isCollapse = !this.isCollapse;
       if (this.isCollapse) { // 收缩
@@ -295,25 +361,58 @@ export default {
         }
       })
     },
-    saveForm() {
-      if (
-          !this.saveform.content ||
-          !this.saveform.type
-      ) {
+/*    saveForm() {
+      // debugger
+      if (!this.saveform.type) {
         this.$message.error('请完整填写表单');
         return; // Prevent form submission
       }
-      this.axios.post("/questions", this.saveform).then(res => {
-        // console.log(res.data);
-        if (res.data) {
-          this.$message.success("保存成功");
-          this.saveDialogFormVisible = false;
-          this.sendReq();
-        } else {
-          this.$message.error(`保存失败，原因：${res.msg}`);
-        }
-      })
-      this.sendReq();
+
+      if (this.saveform.type === '主观题' && this.saveform.content === '') {
+        // 选择了主观题且没有填写内容，等待图片上传成功后再提交表单
+        this.isUploading = true;
+        return; // Prevent form submission
+      }
+
+      // 继续处理表单提交逻辑
+      this.submitForm();
+    },*/
+    saveForm() {
+      if (!this.saveform.type) {
+        this.$message.error("请完整填写表单");
+        return; // Prevent form submission
+      }
+
+      let requestBody = {};
+
+      if (this.saveform.type === "主观题") {
+        // 获取上传图片的 URL
+        const uploadComponent = this.$refs.upload;
+        const imageUrl = uploadComponent.uploadFiles[0].url;
+
+        requestBody = {
+          content: imageUrl,
+          type: this.saveform.type
+        };
+      } else {
+        requestBody = {
+          content: this.saveform.content,
+          type: this.saveform.type
+        };
+      }
+
+      // 发送请求到后端，将 requestBody 作为请求体
+      this.axios
+          .post("/api/submit-form", requestBody)
+          .then(response => {
+            // 处理请求成功的逻辑
+            console.log("上传成功");
+            this.saveDialogFormVisible = false;
+          })
+          .catch(error => {
+            // 处理请求失败的逻辑
+            console.error("上传失败，原因：", error);
+          });
     },
     editForm() {
       // Check if any required fields are empty
@@ -341,19 +440,38 @@ export default {
         }
       })
     },
-    handleUploadSuccess(response, file, fileList) {
+    submitForm(){
+      this.axios.put("/api", this.saveform).then(res => {
+        if (res.data) {
+          this.$message.success("编辑成功");
+          this.editDialogFormVisible = false;
+          this.sendLikeReq();
+        } else {
+          this.$message.error(`编辑失败，原因：${res.msg}`);
+        }
+      })
+    },
+    handleEditUploadSuccess(response, file, fileList) {
       // 上传成功的回调函数
       // 在这里更新 editform.content 的值为新上传图片的 URL
       this.editform.content = response.url;
     },
+    handleSaveUploadSuccess(response, file, fileList) {
+      // 处理图片上传成功后的逻辑
+      // 可以获取上传的图片地址等信息，并将其保存到 saveform.imageList 中
+      // 例如：
+      this.saveform.content = response.imageUrl;
+      this.isUploading = false;
+      this.saveForm(); // 继续提交表单
+    },
     beforeUpload(file) {
-      // 在这里进行文件类型、大小等的校验
-      const isImage = file.type.startsWith('image/');
+      // 限制只能上传图片类型的文件
+      const isImage = file.type.startsWith("image/");
       if (!isImage) {
-        this.$message.error('请上传img图像文件');
+        this.$message.error("只能上传图片文件");
       }
       return isImage;
-    }
+    },
   },
   mounted: function () {
     this.sendLikeReq();

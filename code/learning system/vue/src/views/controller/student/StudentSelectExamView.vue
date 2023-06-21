@@ -109,7 +109,9 @@ export default {
       this.sendLikeReq();
     },
     handleSelect(id) {
-      this.$router.push("/student/studentExamView/" + id);
+      localStorage.setItem("paperId", JSON.stringify(id))
+      // this.$router.push("/student/studentExamView/" + id);
+      this.$router.push("/student/studentExam/");
     },
   },
   mounted: function () {
