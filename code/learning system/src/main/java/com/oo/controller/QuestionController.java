@@ -3,16 +3,22 @@ package com.oo.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.oo.controller.R.Code;
 import com.oo.controller.R.Result;
+import com.oo.domain.PaperGraph;
 import com.oo.domain.Question;
 import com.oo.domain.Student;
 import com.oo.domain.vo.QuestionVo;
+import com.oo.service.PaperGraphService;
 import com.oo.service.QuestionPropertyService;
 import com.oo.service.QuestionService;
 import com.oo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,11 +27,17 @@ import java.util.Map;
  * @author: mango
  * @date: 2023/5/26 16:30
  */
+
+
 @RestController
 @RequestMapping("/questions")
 public class QuestionController {
     @Autowired
     private QuestionService questionService;
+
+    @Value("${files.upload.path}")
+    // 写在resources/application.yml中
+    private String fileUploadPath;
 
 
 //    /**
@@ -43,12 +55,26 @@ public class QuestionController {
     /**
      * @description: 增加题目
      */
-    @PostMapping()
+    @PostMapping("/submit-form")
     public Result save(@RequestBody Question question){
         boolean flag = questionService.addQuestion(question);
         Integer code = flag == true ? Code.GET_OK : Code.GET_ERR;
         String msg = question != null ? "题目添加成功！" : "题目添加失败，请重试！";
         return new Result(code, msg);
+    }
+
+    /**
+     * @description: 增加题目----主观题---获取url
+     */
+
+    @PostMapping("/upload")
+    public Result upload(@RequestParam(value = "objQImgFile") MultipartFile graph) throws IOException {
+        String url = questionService.upload(graph, fileUploadPath);
+        Integer code = url != null ? Code.GET_OK : Code.GET_ERR;
+        Map<String,String> data = new HashMap<>();
+        data.put("url",url);
+        //System.out.println(url);
+        return new Result(code,data);
     }
 
 

@@ -96,7 +96,7 @@
           :current-page="pageNum"
           :page-size="pageSize"
           :page-sizes="[5, 10, 20]"
-          :total=total
+          :total="total"
           layout="total, sizes, prev, pager, next, jumper"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange">
@@ -161,9 +161,11 @@
             <!-- 根据实际的上传接口进行设置 -->
             <el-upload
                 ref="upload"
-                action="/api/upload"
-            :show-file-list="false"
-            :before-upload="beforeUpload"
+                action=""
+                :auto-upload="false"
+                :show-file-list="true"
+                :file-list="fileList"
+                :on-change="handleUploadImg"
             >
             <el-button size="small" type="primary">选择图片</el-button>
             </el-upload>
@@ -219,7 +221,8 @@
           <template v-if="editform.type === '主观题'">
             <img v-if="editform.content" :src="editform.content" style="max-width: 100%; max-height: 200px;">
             <!-- 设置上传图片的接口地址 -->
-            <el-upload action="/upload"
+            <el-upload
+                        action="/upload"
                        :on-success="handleEditUploadSuccess" :show-file-list="false" :before-upload="beforeUpload">
               <el-button size="small" type="primary">上传图片</el-button>
             </el-upload>
@@ -287,7 +290,8 @@ export default {
       saveform: {
         content: "",
         type: ""
-      }
+      },
+      fileList: []
     }
   },
   methods: {
@@ -377,33 +381,64 @@ export default {
       // 继续处理表单提交逻辑
       this.submitForm();
     },*/
+
+    handleUploadImg(file){
+      console.log('handleUploadImg')
+      console.log(file)
+      let formData = new FormData()
+      formData.append('objQImgFile',file.raw)
+      console.log(formData.get('objQImgFile'))
+      this.axios
+          .post("/questions/upload", formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            },
+            transformRequest: [(data) => data]
+          })
+          .then(response => {
+            // 处理请求成功的逻辑
+            console.log(response);
+            this.$message({
+              message: '图片上传成功！',
+              type: 'success'
+            });
+            this.saveform.content = response.data.url
+          })
+    },
     saveForm() {
       if (!this.saveform.type) {
         this.$message.error("请完整填写表单");
         return; // Prevent form submission
       }
-
-      let requestBody = {};
-
-      if (this.saveform.type === "主观题") {
-        // 获取上传图片的 URL
-        const uploadComponent = this.$refs.upload;
-        const imageUrl = uploadComponent.uploadFiles[0].url;
-
-        requestBody = {
-          content: imageUrl,
-          type: this.saveform.type
-        };
-      } else {
-        requestBody = {
-          content: this.saveform.content,
-          type: this.saveform.type
-        };
+      if(!this.saveform.content){
+        if(this.saveform.type === '主观题'){
+          this.$message.error("请等待图片上传成功！");
+        } else this.$message.error("请完整填写表单");
+        return;
       }
+
+      let requestBody = {
+        content: this.saveform.content,
+        type: this.saveform.type
+      };
+
+      // if (this.saveform.type === "主观题") {
+      //   // 获取上传图片的 URL
+      //   const uploadComponent = this.$refs.upload;
+      //   console.log(uploadComponent)
+      //   const imageUrl = uploadComponent.uploadFiles[0].url;
+      //   //调/question/upload,传uploadComponent.uploadFiles[0].raw，拿到返回的url再调submit-form
+      //   requestBody = {
+      //     content: imageUrl,
+      //     type: this.saveform.type
+      //   };
+      // } else {
+      //   requestBody =
+      // }
 
       // 发送请求到后端，将 requestBody 作为请求体
       this.axios
-          .post("/api/submit-form", requestBody)
+          .post("/questions/submit-form", requestBody)
           .then(response => {
             // 处理请求成功的逻辑
             console.log("上传成功");
@@ -465,12 +500,13 @@ export default {
       this.saveForm(); // 继续提交表单
     },
     beforeUpload(file) {
+      console.log(file)
       // 限制只能上传图片类型的文件
       const isImage = file.type.startsWith("image/");
       if (!isImage) {
         this.$message.error("只能上传图片文件");
       }
-      return isImage;
+      // return isImage;
     },
   },
   mounted: function () {
