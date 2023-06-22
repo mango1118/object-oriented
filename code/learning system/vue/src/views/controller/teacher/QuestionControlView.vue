@@ -222,10 +222,20 @@
             <img v-if="editform.content" :src="editform.content" style="max-width: 100%; max-height: 200px;">
             <!-- 设置上传图片的接口地址 -->
             <el-upload
-                        action="/upload"
-                       :on-success="handleEditUploadSuccess" :show-file-list="false" :before-upload="beforeUpload">
-              <el-button size="small" type="primary">上传图片</el-button>
+                ref="upload"
+                action=""
+                :auto-upload="false"
+                :show-file-list="true"
+                :file-list="fileList"
+                :on-change="handleUploadImg2"
+            >
+              <el-button size="small" type="primary">选择图片</el-button>
             </el-upload>
+<!--            <el-upload-->
+<!--                        action="/questionProperties/upload"-->
+<!--                       :on-success="handleEditUploadSuccess" :show-file-list="false" :before-upload="beforeUpload">-->
+<!--              <el-button size="small" type="primary">上传图片</el-button>-->
+<!--            </el-upload>-->
           </template>
           <template v-else>
             <el-input v-model="editform.content" autocomplete="off"></el-input>
@@ -403,6 +413,29 @@ export default {
               type: 'success'
             });
             this.saveform.content = response.data.url
+          })
+    },
+    handleUploadImg2(file){
+      console.log('handleUploadImg')
+      console.log(file)
+      let formData = new FormData()
+      formData.append('objQImgFile',file.raw)
+      console.log(formData.get('objQImgFile'))
+      this.axios
+          .post("/questions/upload", formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            },
+            transformRequest: [(data) => data]
+          })
+          .then(response => {
+            // 处理请求成功的逻辑
+            console.log(response);
+            this.$message({
+              message: '图片上传成功！',
+              type: 'success'
+            });
+            this.editform.content = response.data.url
           })
     },
     saveForm() {

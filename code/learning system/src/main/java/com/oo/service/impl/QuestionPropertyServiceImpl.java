@@ -1,5 +1,8 @@
 package com.oo.service.impl;
 
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -14,7 +17,10 @@ import com.oo.service.QuestionPropertyService;
 import com.oo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -112,6 +118,7 @@ public class QuestionPropertyServiceImpl implements QuestionPropertyService {
         return questionVoList;
     }
 
+    
 //    @Override
 //    public Page<QuestionVo> searchPageVo(QuestionSearchDTO questionSearchDTO, Integer pageNum, Integer pageSize) {
 //        Page<QuestionVo> page = new Page<>(pageNum, pageSize);

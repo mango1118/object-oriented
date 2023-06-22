@@ -1,0 +1,1 @@
+2023-06-21 17:10:43.088 [main] WARN  c.b.mybatisplus.core.metadata.TableInfoHelper - Can not find table primary key in Class: "com.oo.domain.QuestionProperty".

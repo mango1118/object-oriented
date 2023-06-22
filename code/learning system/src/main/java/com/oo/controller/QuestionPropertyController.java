@@ -7,9 +7,14 @@ import com.oo.domain.*;
 import com.oo.domain.vo.QuestionVo;
 import com.oo.service.QuestionPropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @description:
@@ -22,6 +27,9 @@ public class QuestionPropertyController {
     @Autowired
     //通过spring自动注入
     private QuestionPropertyService questionPropertyService;
+    @Value("${files.upload.path}")
+    // 写在resources/application.yml中
+    private String fileUploadPath;
 
     /**
      * 分页查询全部题目
@@ -118,6 +126,10 @@ public class QuestionPropertyController {
         return new Result(code, questionVoList, msg);
 
     }
+
+
+
+
 
 
 //    /**
