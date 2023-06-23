@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @description:
@@ -50,6 +52,19 @@ public class PaperQuestionController {
                 multipleChoiceQuestion.setId(multipleChoiceIndex);
                 //System.out.print("multipleChoiceIndex:"+multipleChoiceIndex);
                 multipleChoiceQuestion.setQuestion(question.getContent());
+                String content = question.getContent(); // 假设获取到的内容存储在变量 content 中
+
+                Pattern pattern = Pattern.compile("[A-D]\\..*?(\\s|$)");
+                Matcher matcher = pattern.matcher(content);
+
+                List<String> options = new ArrayList<>();
+                while (matcher.find()) {
+                    String option = matcher.group().replaceAll("\\s", "");
+                    options.add(option);
+                }
+
+                multipleChoiceQuestion.setOptions(options);
+
                 // 其他属性设置...
                 multipleChoiceQuestions.add(multipleChoiceQuestion);
                 multipleChoiceIndex++;
@@ -59,13 +74,14 @@ public class PaperQuestionController {
                 //System.out.print("fillInTheBlankIndex:"+fillInTheBlankIndex);
                 fillInTheBlankQuestion.setQuestion(question.getContent());
                 // 其他属性设置...
+
                 fillInTheBlankQuestions.add(fillInTheBlankQuestion);
                 fillInTheBlankIndex++;
             } else if (Objects.equals(question.getType(), "主观题")) {
                 SubjectiveQuestionsDTO subjectiveQuestion = new SubjectiveQuestionsDTO();
                 subjectiveQuestion.setId(subjectiveIndex);
                 //System.out.print("subjectiveIndex:"+subjectiveIndex);
-                subjectiveQuestion.setUrl(question.getContent());
+                subjectiveQuestion.setQuestionImage(question.getContent());
                 // 其他属性设置...
                 subjectiveQuestions.add(subjectiveQuestion);
                 subjectiveIndex++;

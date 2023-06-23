@@ -15,5 +15,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SubjectiveQuestionsDTO {
     private Integer id;
-    private String url;
+    private String questionImage;
 }

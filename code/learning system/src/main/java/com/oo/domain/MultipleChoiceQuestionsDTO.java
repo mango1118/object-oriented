@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  *@title
  *@author bxt
@@ -16,4 +18,5 @@ import lombok.NoArgsConstructor;
 public class MultipleChoiceQuestionsDTO {
     private Integer id;
     private String question;
+    private List<String> options;
 }
