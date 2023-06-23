@@ -29,16 +29,31 @@
     </el-descriptions>
     <br>
     <h2>挑选题目</h2>
-<!--    <h3>题目列表</h3>
-    <div v-for="question in questions" :key="question.id">
-      <el-checkbox v-model="question.selected" @change="updateSelectedCount(question)" border class="question">
-        {{ question.content }}
-        <span class="question-type">{{ question.type }}</span>
-      </el-checkbox>
-      <el-input v-model="question.score" :disabled="!question.selected" placeholder="分值" type="number"></el-input>
-    </div>
-    <h3>已选题目：{{ selectedCount }}/8</h3>
-    <el-button type="primary" @click="submitForm2">提交</el-button>-->
+    <!--    <h3>题目列表</h3>
+        <div v-for="question in questions" :key="question.id">
+          <el-checkbox v-model="question.selected" @change="updateSelectedCount(question)" border class="question">
+            {{ question.content }}
+            <span class="question-type">{{ question.type }}</span>
+          </el-checkbox>
+          <el-input v-model="question.score" :disabled="!question.selected" placeholder="分值" type="number"></el-input>
+        </div>
+        <h3>已选题目：{{ selectedCount }}/8</h3>
+        <el-button type="primary" @click="submitForm2">提交</el-button>-->
+    <!--    <h3>题目列表</h3>
+        <div v-for="question in questions" :key="question.id">
+          <el-checkbox v-model="question.selected" @change="updateSelectedCount(question)" border class="question">
+            <template v-if="question.type === '主观题'">
+              <img v-if="question.content" :src="question.content" style="max-width: 100%; max-height: 200px;">
+            </template>
+            <template v-else>
+              {{ question.content }}
+            </template>
+            <span class="question-type">{{ question.type }}</span>
+          </el-checkbox>
+          <el-input v-model="question.score" :disabled="!question.selected" placeholder="分值" type="number"></el-input>
+        </div>
+        <h3>已选题目：{{ selectedCount }}/8</h3>
+        <el-button type="primary" @click="submitForm2">提交</el-button>-->
     <h3>题目列表</h3>
     <div v-for="question in questions" :key="question.id">
       <el-checkbox v-model="question.selected" @change="updateSelectedCount(question)" border class="question">
@@ -53,8 +68,8 @@
       <el-input v-model="question.score" :disabled="!question.selected" placeholder="分值" type="number"></el-input>
     </div>
     <h3>已选题目：{{ selectedCount }}/8</h3>
+    <h3>当前总分：{{ getTotalScore() }}</h3>
     <el-button type="primary" @click="submitForm2">提交</el-button>
-
 
   </div>
 </template>
@@ -102,12 +117,21 @@ export default {
   },
   methods: {
     updateSelectedCount(question) {
+      this.selectedCount = this.questions.filter(q => q.selected).length;
+    },
+    getTotalScore() {
+      debugger
+      return this.questions
+          .filter(question => question.selected && question.score !== null)
+          .reduce((total, question) => total + Number(question.score), 0);
+    },
+/*    updateSelectedCount(question) {
       if (question.selected) {
         this.selectedCount++;
       } else {
         this.selectedCount--;
       }
-    },
+    },*/
     submitForm1() {
       this.$refs.examForm.validate(async (valid) => {
             if (valid) {
@@ -131,7 +155,7 @@ export default {
       )
       ;
     },
-    async submitForm2() {
+    /*async submitForm2() {
       // 检查是否选中了8道题目
       if (this.selectedCount === 8) {
         // debugger
@@ -157,7 +181,7 @@ export default {
                   score: question.score
                 };
               }),
-              paperId:this.examPaper.id
+              paperId: this.examPaper.id
             };
             // const resp = await this.axios.post('/manualCompose', formData);
             const resp = this.axios.post('/manualCompose/save', formData);
@@ -178,6 +202,63 @@ export default {
             this.$message.success("提交成功");
             location.reload();
 
+          } else {
+            this.$message.error("挑选的题目分值之和不等于试卷总分！");
+          }
+        } else {
+          this.$message.error("请为每个题目输入有效的分值！");
+        }
+      } else {
+        this.$message.error("请选择8道题目！");
+      }
+    }*/
+    async submitForm2() {
+      // 检查是否选中了8道题目
+      if (this.selectedCount === 8) {
+        // 检查题目的分值是否有效
+        const isValidScore = this.questions
+            .filter(question => question.selected)
+            .every(question => !isNaN(Number(question.score)));
+
+        if (isValidScore) {
+          // 计算题目的分值之和
+          const totalScore = this.getTotalScore();
+
+          // 检查题目的分值之和是否等于试卷总分
+          if (totalScore == this.examData.totalScore) {
+            // 构建提交的数据
+            const selectedQuestions = this.questions.filter(question => question.selected && question.score !== null);
+            const formData = {
+              selectedQuestions: selectedQuestions.map(question => {
+                return {
+                  id: question.id,
+                  score: question.score
+                };
+              }),
+              paperId: this.examPaper.id
+            };
+
+            try {
+              // 使用axios或其他HTTP客户端库发送表单数据到后端
+              const response = await this.axios.post('/manualCompose/save', formData);
+              this.$refs.examForm.resetFields(); // 重置表单
+              this.examData = { // 清空examData数据
+                name: '',
+                totalScore: null
+              };
+              this.questions.forEach(question => { // 清空题目数据
+                question.selected = false;
+                question.score = null;
+              });
+              this.selectedCount = 0; // 重置已选题目数量
+              this.examPaper = null;  //清空试卷信息
+              this.questions = []; // 清空题目数组
+              this.$message.success("提交成功");
+              location.reload(); // 重新导航到当前页面，清除内容
+            } catch (error) {
+              console.error(error);
+              this.$message.error("提交失败");
+            }
           } else {
             this.$message.error("挑选的题目分值之和不等于试卷总分！");
           }

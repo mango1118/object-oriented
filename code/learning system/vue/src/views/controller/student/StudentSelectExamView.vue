@@ -33,7 +33,7 @@
           :current-page="pageNum"
           :page-size="pageSize"
           :page-sizes="[5, 10, 20]"
-          :total=total
+          :total="total"
           layout="total, sizes, prev, pager, next, jumper"
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange">
@@ -74,17 +74,16 @@ export default {
     },
     async sendReq() {
       // this.pageNum = 1;
-      const resp = await this.axios.get("/studentPapers/pageLike?pageNum=" + this.pageNum
-          + "&pageSize=" + this.pageSize + "studentId=" + this.studentNow.id);
+      const resp = await this.axios.get("/studentPapers/pageLike?pageNum=" + this.pageNum +
+          "&pageSize=" + this.pageSize + "&studentId=" + this.studentNow.id);
       // console.log(resp);
       this.tableData = resp.data.data;
       this.total = resp.data.total;
     },
     async sendLikeReq() {
       // this.pageNum = 1;
-      const resp = await this.axios.get(`/studentPapers/pageLike?pageNum=${this.pageNum}
-      &pageSize=${this.pageSize}&studentPaperId=${this.paperId}&studentPaperName=${this.paperName}
-      &studentId=${this.studentNow.id}`);
+      // debugger
+      const resp = await this.axios.get(`/studentPapers/pageLike?pageNum=${this.pageNum}&pageSize=${this.pageSize}&studentPaperId=${this.paperId}&studentPaperName=${this.paperName}&studentId=${this.studentNow.id}`);
       // console.log(resp);
       this.tableData = resp.data.data;
       this.total = resp.data.total;
@@ -94,7 +93,7 @@ export default {
       this.pageSize = 5;
       this.paperId = null;
       this.paperName = null;
-      this.sendReq();
+      this.sendLikeReq();
     },
     handleSearch() {
       this.pageNum = 1;
@@ -116,7 +115,6 @@ export default {
   },
   mounted: function () {
     this.studentNow = JSON.parse(localStorage.getItem("user"))
-    console.log(this.studentNow)
     this.sendLikeReq();
   }
 }
