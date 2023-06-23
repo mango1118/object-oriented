@@ -10,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -39,9 +36,16 @@ public class TeacherController {
      */
     @GetMapping("/classes")
     public Result getAllClasses() {
-        List <StuClass> classes = teacherService.getClasses();
-        Integer code = classes != null ? Code.GET_OK : Code.GET_ERR;
-        String msg = classes != null ? "所有班级查找成功" : "数据查询失败，请重试！";
+        List <StuClass> firstClasses = teacherService.getClasses();
+        List<Map<String, Object>> classes = new ArrayList<>();
+        for (StuClass stuClass : firstClasses) {
+            Map<String, Object> map = new LinkedHashMap<>();
+            map.put("id", stuClass.getId());
+            map.put("name", stuClass.getClassName());
+            classes.add(map);
+        }
+        Integer code = !classes.isEmpty() ? Code.GET_OK : Code.GET_ERR;
+        String msg = !classes.isEmpty() ? "所有班级查找成功" : "数据查询失败，请重试！";
         return new Result(code, classes, msg);
     }
 
