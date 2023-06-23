@@ -107,19 +107,40 @@ public class QuestionPropertyController {
                          @RequestParam(required = false) String knowledgePoint,
                          @RequestParam(required = false) String chapter
     ){
-        System.out.println(pageNum);
-        System.out.println(pageSize);
-        System.out.println( questionId+"===="+type+"======"+knowledgePoint+"========"+chapter);
+//        System.out.println(pageNum);
+//        System.out.println(pageSize);
+//        System.out.println( questionId+"===="+type+"======"+knowledgePoint+"========"+chapter);
         QuestionSearchDTO questionSearchDTO = new QuestionSearchDTO();
+//        if(!"null".equals(questionId) && !questionId.equals("")){
+//            Integer questionId2 = Integer.valueOf(questionId);
+//            questionSearchDTO.setQuestionId(questionId2);
+//        }
+        //前端好像不能直接传个null回后端
+        if (questionId==0){
+            questionId=null;
+        }
+        //前端传type为null的时候好像传了个带空号的“null”字符串过来
+        if(type.trim().equals("null")){
+            type=null;
+        }else{
+            type = type.trim();
+        }
+        if(knowledgePoint.equals("null")){
+            knowledgePoint=null;
+        }
+        if(chapter.equals("null")){
+            chapter=null;
+        }
+        //封装为questionSearchDTO
         questionSearchDTO.setQuestionId(questionId);
         questionSearchDTO.setChapter(chapter);
         questionSearchDTO.setType(type);
         questionSearchDTO.setKnowledgePoint(knowledgePoint);
         questionSearchDTO.setOffset((pageNum-1)*pageSize);
         questionSearchDTO.setSize(pageSize);
+        System.out.println(questionSearchDTO);
         //Page<QuestionVo> questionVoPage= questionPropertyService.searchPageVo(questionSearchDTO,pageNum, pageSize);
         List<QuestionVo> questionVoList= questionPropertyService.searchPageVo(questionSearchDTO);
-
         Integer code = questionVoList != null && questionVoList != null ? Code.GET_OK : Code.GET_ERR;
         String msg = questionVoList != null && questionVoList != null ? "" : "数据查询失败，请重试！";
         //System.out.println(questionVoPage.getRecords());

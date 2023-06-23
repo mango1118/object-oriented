@@ -112,13 +112,13 @@ public class QuestionPropertyServiceImpl implements QuestionPropertyService {
 
     @Override
     public List<QuestionVo> searchPageVo(QuestionSearchDTO questionSearchDTO) {
-        System.out.println(questionSearchDTO);
+        //System.out.println(questionSearchDTO);
         List<QuestionVo> questionVoList = questionPropertyDao.searchPageVo(questionSearchDTO);
-        System.out.println(questionVoList);
+        //System.out.println(questionVoList);
         return questionVoList;
     }
 
-    
+
 //    @Override
 //    public Page<QuestionVo> searchPageVo(QuestionSearchDTO questionSearchDTO, Integer pageNum, Integer pageSize) {
 //        Page<QuestionVo> page = new Page<>(pageNum, pageSize);
