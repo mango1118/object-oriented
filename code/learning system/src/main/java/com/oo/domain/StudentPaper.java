@@ -28,4 +28,5 @@ public class StudentPaper {
     private Integer total_score;
 
 
+
 }

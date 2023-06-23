@@ -21,9 +21,7 @@ import java.util.Map;
 @RequestMapping("/papers")
 public class PaperController {
 
-    @Autowired
-    //通过spring自动注入
-    private PaperService PaperService;
+
 
     @GetMapping("/pageLike")
     //前端将在url中添加一个Integer类型的id，例如:localhost:9090/papers/1，注意使用get注解
@@ -51,4 +49,5 @@ public class PaperController {
         return new Result(code, classPaper, msg);
         // 将classes保存到数据库中的班级表中
     }
+
 }

@@ -50,7 +50,7 @@ public class PaperServiceImpl implements PaperService {
         return paperquestionDao.selectCount(queryWrapper);
     }
 
-    @Override
+
     public Map<String, Object> selectByPaperId(Integer currentPage, Integer pageSize, Integer id) {
         //查找某张试卷里的题目id和每道题目对应的score
         Integer max = selectcount(id);

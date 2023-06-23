@@ -18,7 +18,11 @@ import java.util.Map;
 @TableName("t_paper")
 public interface PaperDao extends BaseMapper<Paper> {
 
+
+    Integer selectIdByName(String name);
+
     //获取所有可用的试卷
     @Select("SELECT id, name FROM t_paper WHERE enabled = 1")
     List<Map<String,Object>> getAllExamPapers();
+
 }

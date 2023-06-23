@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.oo.dao.PaperQuestionDao">
+    <insert id="addBatch" parameterType="java.util.List">
+        insert into t_paper_question(id, paper_id, question_id, set_score)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (null, #{item.paperId} , #{item.questionId} , #{item.setScore})
+        </foreach>
+    </insert>
+</mapper>
