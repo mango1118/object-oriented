@@ -13,4 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 @TableName("t_paper")
 public interface PaperDao extends BaseMapper<Paper> {
+
+    Integer selectIdByName(String name);
 }
