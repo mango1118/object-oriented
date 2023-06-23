@@ -1,8 +1,11 @@
 package com.oo.service;
 
+import com.oo.domain.ClassPaper;
 import com.oo.domain.Paper;
+import com.oo.domain.Question;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Map;
 
 
@@ -32,5 +35,12 @@ public interface PaperService {
      * @return List<Qcontent_score>
      */
     public Map<String, Object> selectByPaperId(Integer pageNum, Integer pageSize, Integer id);
+
+
+    /**
+     * @description: 获取全部试卷
+     */
+    public List<ClassPaper> getAndSaveExamPaper();
+
 
 }

@@ -68,7 +68,7 @@ export default {
   methods: {
     fetchClasses() {
       // 向后端发起异步请求，获取所有班级的数据
-      axios.get('/api/classes')
+      axios.get('/teachers/classes')
           .then(response => {
             // 将返回的班级数据存储在classes中
             this.classes = response.data.data.classes;
@@ -80,7 +80,7 @@ export default {
     fetchPapers() {
       // 根据选择的班级从后端获取相应的试卷数据
       if (this.selectedClass !== null) {
-        axios.get(`/api/papers?classId=${this.selectedClass}`)
+        axios.get(`/teachers/papers?classId=${this.selectedClass}`)
             .then(response => {
               // 将返回的试卷数据存储在papers中
               this.papers = response.data.data.papers;
@@ -96,7 +96,7 @@ export default {
       // 向选定的班级发送试卷
       // 你可以在这里发送异步请求，将试卷发送给选定的班级
       // 同时更新试卷的状态为已发送
-      axios.post(`/api/send-paper`, {paperId, classId: this.selectedClass})
+      axios.post(`/teachers/send-paper`, {paperId, classId: this.selectedClass})
           .then(response => {
             // 发送成功后，更新试卷的状态为已发送
             const updatedPapers = this.papers.map(paper => {

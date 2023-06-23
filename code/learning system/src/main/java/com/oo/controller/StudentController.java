@@ -2,10 +2,12 @@ package com.oo.controller;
 
 import com.oo.controller.R.Code;
 import com.oo.controller.R.Result;
+import com.oo.domain.StuClass;
 import com.oo.domain.Student;
 import com.oo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 import java.util.Map;
@@ -30,7 +32,7 @@ public class StudentController {
     //通过spring自动注入
     private StudentService studentService;
 
-    @PostMapping
+    @PostMapping("/saveStudents")
     //前端将在请求体中发送一个Student类型的实例，注意使用post注解
     public Result save(@RequestBody Student student) {
         boolean flag = studentService.save(student);
@@ -64,10 +66,25 @@ public class StudentController {
     //前端直接访问localhost:9090/student，注意使用get注解
     public Result getAll() {
         List<Student> studentList = studentService.getAll();
+        System.out.println(studentList);
         Integer code = studentList != null ? Code.GET_OK : Code.GET_ERR;
         String msg = studentList != null ? "" : "数据查询失败，请重试！";
         return new Result(code, studentList, msg);
     }
+
+    /**
+     * @description: 将班级信息拿出来放班级表，在后端添加，为了没有多余班级
+     */
+    @PostMapping("/saveClass")
+    public Result saveClasses() {
+        List<StuClass> classes = studentService.getClasses();
+        Integer code = classes != null ? Code.GET_OK : Code.GET_ERR;
+        String msg = classes != null ? "班级保存成功!" : "班级保存错误，请重试！";
+        return new Result(code, classes, msg);
+        // 将classes保存到数据库中的班级表中
+    }
+
+
 
     @GetMapping("/pageLike")
     //分页查询，参数均在请求体中，注意使用get注解

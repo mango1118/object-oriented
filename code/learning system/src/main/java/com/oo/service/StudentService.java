@@ -1,5 +1,6 @@
 package com.oo.service;
 
+import com.oo.domain.StuClass;
 import com.oo.domain.Student;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,6 +53,15 @@ public interface StudentService {
      * @return List<Admin>
      */
     public List<Student> getAll();
+
+
+    /**
+     * 返回全部student的class
+     *
+     *
+     */
+    public List<StuClass>getClasses();
+
 
     /**
      * 分页模糊查询

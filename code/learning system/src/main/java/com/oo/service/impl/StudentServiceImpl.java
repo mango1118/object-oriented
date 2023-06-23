@@ -2,12 +2,15 @@ package com.oo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.oo.dao.StuClassDao;
 import com.oo.dao.StudentDao;
+import com.oo.domain.StuClass;
 import com.oo.domain.Student;
 import com.oo.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +26,10 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     //dao的使用方法请学习mybatis-plus
     private StudentDao studentDao;
+
+    @Autowired
+    private StuClassDao stuClassDao;
+
 
     @Override
     public boolean save(Student student) {
@@ -49,6 +56,41 @@ public class StudentServiceImpl implements StudentService {
     public List<Student> getAll() {
         return studentDao.selectList(null);
     }
+
+
+    /**
+     * @description 获取班级且不能重复，并按id:?  name:? 格式返回
+     * @return classes
+     */
+    @Override
+    public List<StuClass> getClasses(){
+        List<String> getClassName = studentDao.getAllClasses();
+        System.out.println(getClassName);
+        List<StuClass> classes = new ArrayList<>();
+        for (String clazz : getClassName) {
+            StuClass stuClass = new StuClass();
+            stuClass.setClassName(clazz);
+            stuClass.setId(getClassName.indexOf(clazz) + 1);
+            System.out.println(stuClass);
+            //一个一个保存数据库中
+            if(stuClassDao.insert(stuClass)<0)
+            {
+                classes = null;
+                return classes;
+            }
+        }
+        classes = stuClassDao.selectList(null);
+
+//        for (String clazz : getClassName) {
+//            StuClass stuClass = new StuClass();
+//            stuClass.setClassName(clazz);
+//            stuClass.setId(getClassName.indexOf(clazz) + 1);
+//            classes.add(stuClass);
+//        }
+        return classes;
+    }
+
+
 
     @Override
     public Map<String, Object> selectLike(Integer current, Integer size, String id, String name) {
