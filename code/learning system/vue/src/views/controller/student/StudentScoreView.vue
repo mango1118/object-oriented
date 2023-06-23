@@ -79,9 +79,7 @@ export default {
     },
     async sendLikeReq() {
       // this.pageNum = 1;
-      const resp = await this.axios.get(`/studentPapers/pageLike?pageNum=${this.pageNum}
-      &pageSize=${this.pageSize}&studentPaperId=${this.studentPaperId}&studentPaperName=${this.studentPaperName}
-      &studentId=${this.studentNow.id}`);
+      const resp = await this.axios.get(`/studentPapers/pageLike?pageNum=${this.pageNum}&pageSize=${this.pageSize}&studentPaperId=${this.studentPaperId}&studentPaperName=${this.studentPaperName}&studentId=${this.studentNow.id}`);
       // console.log(resp);
       this.tableData = resp.data.data;
       this.total = resp.data.total;
