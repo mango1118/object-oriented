@@ -2,12 +2,8 @@ package com.oo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.oo.dao.PaperDao;
-import com.oo.dao.PaperQuestionDao;
-import com.oo.dao.QuestionDao;
-import com.oo.domain.Paper;
-import com.oo.domain.PaperQuestion;
-import com.oo.domain.Question;
+import com.oo.dao.*;
+import com.oo.domain.*;
 import com.oo.domain.vo.Qcontent_score;
 import com.oo.service.PaperService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +29,12 @@ public class PaperServiceImpl implements PaperService {
     private PaperQuestionDao paperquestionDao;
     @Autowired
     private QuestionDao questionDao;
+
+    @Autowired
+    private StuClassDao stuClassDao;
+
+    @Autowired
+    private ClassPaperDao classPaperDao;
 
     @Override
     public Paper selectById(Integer id) {
@@ -99,5 +101,55 @@ public class PaperServiceImpl implements PaperService {
 
     }
 
+
+    /**
+     * @description: 获取全部试卷并将其存在class_paper中,同时将班级id也加进去,并初始化sent
+     */
+    @Override
+    public List<ClassPaper> getAndSaveExamPaper() {
+        List<Map<String,Object>> getPapers = paperDao.getAllExamPapers();
+        System.out.println(getPapers);
+        List<ClassPaper> classPapers = new ArrayList<>();
+        List<Integer> getClassId = stuClassDao.getAllClassId();
+        Integer j = 0;
+        Integer id = 0;
+        for (Integer clazz : getClassId) {
+            for (Map<String, Object> examPapers : getPapers){
+                if(j<=getClassId.indexOf(clazz))
+                {
+                    id++;
+                }
+                ClassPaper classPaper = new ClassPaper();
+                classPaper.setId(id);
+                classPaper.setClassId(clazz);
+                classPaper.setPaperId((Integer) examPapers.get("id"));
+                classPaper.setPaperName((String) examPapers.get("name"));
+                classPaper.setSent(false);
+                System.out.println(classPaper);
+                if(classPaperDao.insert(classPaper)<0)
+                {
+                    classPapers = null;
+                    return classPapers;
+                }
+                //classPapers.add(classPaper);
+                //一个一个保存数据库中
+            }
+            j++;
+        }
+
+        classPapers = classPaperDao.selectList(null);
+//        for (Integer clazz : getClassId) {
+//            for (Map<String, Object> examPapers : getPapers){
+//                ClassPaper classPaper = new ClassPaper();
+//                classPaper.setClassId(clazz);
+//                classPaper.setPaperId((Integer) examPapers.get("id"));
+//                classPaper.setPaperName((String) examPapers.get("name"));
+//                classPaper.setSent(false);
+//                System.out.println(classPaper);
+//                classPapers.add(classPaper);
+//            }
+//        }
+        return classPapers;
+    }
 
 }
