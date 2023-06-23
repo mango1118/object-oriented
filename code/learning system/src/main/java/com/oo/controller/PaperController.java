@@ -21,21 +21,5 @@ import java.util.Map;
 @RequestMapping("/papers")
 public class PaperController {
 
-    @Autowired
-    //通过spring自动注入
-    private PaperService PaperService;
 
-    @GetMapping("/pageLike")
-    //前端将在url中添加一个Integer类型的id，例如:localhost:9090/papers/1，注意使用get注解
-    public Result getById(@RequestParam(defaultValue = "1") Integer pageNum,
-                          @RequestParam(defaultValue = "5") Integer pageSize, @RequestParam String pid) {
-        Integer id = Integer.valueOf(pid);
-        Paper paper = PaperService.selectById(id);
-        Map<String, Object> paperQ = PaperService.selectByPaperId(pageNum, pageSize, id);
-
-        Integer code = paper != null && paperQ != null ? Code.GET_OK : Code.GET_ERR;
-        String msg = paper != null && paperQ != null ? "" : "数据查询失败，请重试！";
-
-        return new Result(code, paper, paperQ, msg);
-    }
 }

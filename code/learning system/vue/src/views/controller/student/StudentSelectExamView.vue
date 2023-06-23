@@ -54,6 +54,7 @@ export default {
       pageNum: 1,
       pageSize: 5,
       studentNow: {},
+      studentId:null,
       paperName: null,
       paperId: null,
       headerBg: 'headerBg'
@@ -83,7 +84,7 @@ export default {
     async sendLikeReq() {
       // this.pageNum = 1;
       const resp = await this.axios.get(`/studentPapers/pageLike?pageNum=${this.pageNum}
-      &pageSize=${this.pageSize}&studentPaperId=${this.paperId}&studentPaperName=${this.paperName}
+      &pageSize=${this.pageSize}&paperId=${this.paperId}&paperName=${this.paperName}
       &studentId=${this.studentNow.id}`);
       // console.log(resp);
       this.tableData = resp.data.data;
