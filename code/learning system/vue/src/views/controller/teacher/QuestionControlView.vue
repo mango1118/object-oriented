@@ -283,7 +283,7 @@ export default {
       total: 0,
       pageNum: 1,
       pageSize: 5,
-      questionId: 0,
+      questionId: null,
       content: null,
       answer: null,
       errorRate: null,

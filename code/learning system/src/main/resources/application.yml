@@ -14,7 +14,7 @@ logging:
   level:
     root: info
     mapper: info
-    com.baomidou.mybatisplus: debug
+    com.baomidou.mybatisplus: info
   config: classpath:logback-spring.xml
 
 mybatis:
