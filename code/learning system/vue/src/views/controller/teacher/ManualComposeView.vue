@@ -120,7 +120,6 @@ export default {
       this.selectedCount = this.questions.filter(q => q.selected).length;
     },
     getTotalScore() {
-      debugger
       return this.questions
           .filter(question => question.selected && question.score !== null)
           .reduce((total, question) => total + Number(question.score), 0);

@@ -84,8 +84,6 @@ public class StudentController {
         // 将classes保存到数据库中的班级表中
     }
 
-
-
     @GetMapping("/pageLike")
     //分页查询，参数均在请求体中，注意使用get注解
     public Result findPage(@RequestParam Integer pageNum, @RequestParam Integer pageSize, @RequestParam String id, @RequestParam String name) {
