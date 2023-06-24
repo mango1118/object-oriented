@@ -27,7 +27,7 @@ public interface PaperService {
 
     public Integer selectcount(Integer id);
 
-
+    public Map<String, Object> selectByPaperId(Integer pageNum, Integer pageSize, Integer id);
 
 
     /**
