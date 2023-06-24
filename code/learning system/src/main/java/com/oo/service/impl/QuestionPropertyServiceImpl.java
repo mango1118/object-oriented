@@ -95,7 +95,7 @@ public class QuestionPropertyServiceImpl implements QuestionPropertyService {
     @Override
     public Map<String,Object> searchPageVo(Integer pageNum, Integer pageSize, String questionId, String type, String knowledgePoint, String chapter) {
         QuestionSearchDTO questionSearchDTO = new QuestionSearchDTO();
-        if(null!=questionId && !"null".equals(questionId)){
+        if(null!=questionId && !"null".equals(questionId) && !questionId.equals("")){
             questionSearchDTO.setQuestionId(Integer.parseInt(questionId));
         }
         if(null!=chapter && !"null".equals(chapter.trim())){
