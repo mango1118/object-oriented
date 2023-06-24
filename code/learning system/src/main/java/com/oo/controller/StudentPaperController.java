@@ -25,13 +25,21 @@ public class StudentPaperController {
     @GetMapping("/pageLike")
     public Result getStudentPapers(@RequestParam(defaultValue = "1") Integer pageNum,
                                    @RequestParam(defaultValue = "5") Integer pageSize,
-                                   @RequestParam(required = false) Integer paperId,
+                                   @RequestParam(required = false) String paperId,
                                    @RequestParam(required = false) String paperName,
-                                   @RequestParam(required = false) Integer studentId) {
+                                   @RequestParam(required = false) String studentId) {
         System.out.println(paperId);
         System.out.println(paperName);
         System.out.println(studentId);
-        List<SelectExamsDTO> selectExamsList = studentPaperService.selectLike(pageNum, pageSize, paperId, paperName,studentId);
+
+        Integer paperid = null;
+        if (paperId != null) {
+            paperid = Integer.valueOf(paperId);
+        }
+
+        Integer studentid = Integer.valueOf(studentId);
+
+        List<SelectExamsDTO> selectExamsList = studentPaperService.selectLike(pageNum, pageSize, paperid, paperName,studentid);
 
         Integer code = selectExamsList != null ? Code.GET_OK : Code.GET_ERR;
         String msg = selectExamsList != null ? "" : "数据查询失败，请重试！";
@@ -41,13 +49,21 @@ public class StudentPaperController {
     @GetMapping("/pageLikeScore")
     public Result getStudentScore(@RequestParam(defaultValue = "1") Integer pageNum,
                                    @RequestParam(defaultValue = "5") Integer pageSize,
-                                  @RequestParam(value = "studentPaperId", required = false) Integer paperId,
+                                  @RequestParam(value = "studentPaperId", required = false) String paperId,
                                   @RequestParam(value = "studentPaperName", required = false) String paperName,
-                                  @RequestParam(value = "studentId", required = false) Integer studentId) {
+                                  @RequestParam(value = "studentId", required = false) String studentId) {
         System.out.println(paperId);
         System.out.println(paperName);
         System.out.println(studentId);
-        List<SearchScoreDTO> selectExamsList = studentPaperService.selectScore(pageNum, pageSize, paperId, paperName,studentId);
+
+        Integer paperid = null;
+        if (paperId != null) {
+            paperid = Integer.valueOf(paperId);
+        }
+
+        Integer studentid = Integer.valueOf(studentId);
+
+        List<SearchScoreDTO> selectExamsList = studentPaperService.selectScore(pageNum, pageSize, paperid, paperName,studentid);
         Integer code = selectExamsList != null ? Code.GET_OK : Code.GET_ERR;
         String msg = selectExamsList != null ? "" : "数据查询失败，请重试！";
         return new Result(code, selectExamsList, msg);
