@@ -75,17 +75,14 @@ export default {
     },
     async sendReq() {
       // this.pageNum = 1;
-      const resp = await this.axios.get("/studentPapers/pageLike?pageNum=" + this.pageNum
-          + "&pageSize=" + this.pageSize + "studentId=" + this.studentNow.id);
+      const resp = await this.axios.get("/studentPapers/pageLike?pageNum="+this.pageNum+"&pageSize="+this.pageSize+"studentId="+this.studentNow.id);
       // console.log(resp);
       this.tableData = resp.data.data;
       this.total = resp.data.total;
     },
     async sendLikeReq() {
       // this.pageNum = 1;
-      const resp = await this.axios.get(`/studentPapers/pageLike?pageNum=${this.pageNum}
-      &pageSize=${this.pageSize}&paperId=${this.paperId}&paperName=${this.paperName}
-      &studentId=${this.studentNow.id}`);
+      const resp = await this.axios.get(`/studentPapers/pageLike?pageNum=${this.pageNum}&pageSize=${this.pageSize}&paperId=${this.paperId}&paperName=${this.paperName}&studentId=${this.studentNow.id}`);
       // console.log(resp);
       this.tableData = resp.data.data;
       this.total = resp.data.total;
