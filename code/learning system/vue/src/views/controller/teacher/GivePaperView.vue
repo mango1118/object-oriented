@@ -65,7 +65,7 @@
       <ul>
         <li v-for="paper in unsentPapers" :key="paper.id" class="paper-item">
           <div class="paper-text">{{ paper.name }}</div>
-          <el-button type="primary" @click="sendPaper(paper.id)">确定</el-button>
+          <el-button type="primary" @click="sendPaper(paper.id)">发送试卷</el-button>
         </li>
       </ul>
     </el-card>
