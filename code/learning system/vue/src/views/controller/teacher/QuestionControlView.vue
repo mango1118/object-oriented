@@ -322,9 +322,10 @@ export default {
       // this.pageNum = 1;
       // const resp = await this.axios.get("/questionProperties/pageLike?pageNum=" + this.pageNum
       //     + "&pageSize=" + this.pageSize);
-      const resp = await this.axios.get("/questionProperties/pageLike?pageNum=0&pageSize=0");
+      const resp = await this.axios.get("/questionProperties/search?pageNum="+this.pageNum+
+          "&pageSize="+this.pageSize+"&questionId=null&type=null&knowledgePoint=null&chapter=null");
       console.log(resp);
-      this.tableData = resp.data;
+      this.tableData = resp.data.data;
       this.total = resp.data.total;
     },
     async sendLikeReq() {
@@ -332,7 +333,7 @@ export default {
       const resp = await this.axios.get(`/questionProperties/search?pageNum=${this.pageNum}
       &pageSize=${this.pageSize}&questionId=${this.questionId}&type=${this.type}
       &knowledgePoint=${this.knowledgePoint}&chapter=${this.chapter}`);
-      // console.log(resp.data);
+      console.log(resp.data);
       this.tableData = resp.data;
       this.total = resp.data.total;
     },

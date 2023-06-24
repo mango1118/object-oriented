@@ -3,6 +3,7 @@ package com.oo.service.impl;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -12,9 +13,11 @@ import com.oo.dao.QuestionPropertyDao;
 import com.oo.domain.Question;
 import com.oo.domain.QuestionProperty;
 import com.oo.domain.QuestionSearchDTO;
+import com.oo.domain.Student;
 import com.oo.domain.vo.QuestionVo;
 import com.oo.service.QuestionPropertyService;
 import com.oo.service.QuestionService;
+import com.sun.org.apache.xerces.internal.util.EntityResolverWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,17 +41,6 @@ public class QuestionPropertyServiceImpl implements QuestionPropertyService {
     @Autowired
     private QuestionDao questionDao;
 
-    /**
-     * 根据题目id,查询题目全部性质
-     * @param id
-     * @return
-     */
-    @Override
-    public QuestionProperty selectById(Integer id) {
-        QueryWrapper<QuestionProperty> wrapper = new QueryWrapper<>();
-        wrapper.eq("question_id",id);
-        return questionPropertyDao.selectOne(wrapper);
-    }
 
     /**
      * 修改某题目的性质
@@ -89,38 +81,77 @@ public class QuestionPropertyServiceImpl implements QuestionPropertyService {
         return flag1&&flag2;
     }
 
+
     /**
-     * 设置某题目性质，保存
-     * @param questionProperty
+     * 条件查询
+     * @param pageNum
+     * @param pageSize
+     * @param questionId
+     * @param type
+     * @param knowledgePoint
+     * @param chapter
      * @return
      */
     @Override
-    public boolean save(QuestionProperty questionProperty) {
-        return questionPropertyDao.insert(questionProperty) > 0;
-    }
-
-    @Override
-    public Page<QuestionVo> selectPageVo(Integer pageNum, Integer pageSize) {
-        if(0 == pageSize || 0 == pageNum){
-            pageNum=1;
-            pageSize=500;
+    public Map<String,Object> searchPageVo(Integer pageNum, Integer pageSize, String questionId, String type, String knowledgePoint, String chapter) {
+        QuestionSearchDTO questionSearchDTO = new QuestionSearchDTO();
+        if(null!=questionId && !"null".equals(questionId)){
+            questionSearchDTO.setQuestionId(Integer.parseInt(questionId));
         }
+        if(null!=chapter && !"null".equals(chapter.trim())){
+            questionSearchDTO.setChapter(chapter.trim());
+        }
+        if(null!=type && !"null".equals(type.trim())){
+            questionSearchDTO.setType(type.trim());
+        }
+        if(null!=knowledgePoint && !"null".equals(knowledgePoint.trim())){
+            questionSearchDTO.setKnowledgePoint(knowledgePoint.trim());
+        }
+
+        questionSearchDTO.setOffset((pageNum-1)*pageSize);
+        questionSearchDTO.setSize(pageSize);
+        System.out.println(questionSearchDTO);
+        //List<QuestionVo> data = questionPropertyDao.searchPageVo(questionSearchDTO);
+        //int total = questionPropertyDao.selectAllVo().size();
         Page<QuestionVo> page = new Page<>(pageNum, pageSize);
-        IPage<QuestionVo> iPage = questionPropertyDao.selectPageVo(page);
-        System.out.println(iPage.getRecords());
-        Page<QuestionVo> result = new Page<>(iPage.getCurrent(), iPage.getSize(), iPage.getTotal());
-        result.setRecords(iPage.getRecords());
-
-        return result;
+        IPage<QuestionVo> iPage = questionPropertyDao.searchPageVo(questionSearchDTO,page);
+        System.out.println("total:"+iPage.getTotal());
+        System.out.println("size:"+iPage.getSize());
+        //Page<QuestionVo> result = new Page<>(iPage.getCurrent(), iPage.getSize(), iPage.getTotal());
+        //result.setRecords(iPage.getRecords());
+        HashMap<String, Object> res = new HashMap<>();
+        res.put("data",iPage.getRecords());
+        res.put("total",iPage.getTotal());
+//        System.out.println(total);
+//        System.out.println(data);
+        return res;
     }
 
-    @Override
-    public List<QuestionVo> searchPageVo(QuestionSearchDTO questionSearchDTO) {
-        //System.out.println(questionSearchDTO);
-        List<QuestionVo> questionVoList = questionPropertyDao.searchPageVo(questionSearchDTO);
-        //System.out.println(questionVoList);
-        return questionVoList;
-    }
+
+//    @Override
+//    public Page<QuestionVo> selectPageVo(Integer pageNum, Integer pageSize) {
+//        if(0 == pageSize || 0 == pageNum){
+//            pageNum=1;
+//            pageSize=500;
+//        }
+//        Page<QuestionVo> page = new Page<>(pageNum, pageSize);
+//        IPage<QuestionVo> iPage = questionPropertyDao.selectPageVo(page);
+//        System.out.println(iPage.getRecords());
+//        Page<QuestionVo> result = new Page<>(iPage.getCurrent(), iPage.getSize(), iPage.getTotal());
+//        result.setRecords(iPage.getRecords());
+//
+//        return result;
+//    }
+
+
+
+//    @Override
+//    public List<QuestionVo> searchPageVo(QuestionSearchDTO questionSearchDTO) {
+//        //System.out.println(questionSearchDTO);
+//        List<QuestionVo> questionVoList = questionPropertyDao.searchPageVo(questionSearchDTO);
+//        //System.out.println(questionVoList);
+//        return questionVoList;
+//    }
 
 
 //    @Override

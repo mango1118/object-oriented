@@ -26,7 +26,8 @@ public interface QuestionPropertyDao extends BaseMapper<QuestionProperty> {
     IPage<QuestionVo> selectPageVo(Page<?> page);
 
    // IPage<QuestionVo> searchPageVo(@Param("page")Page<?> page,@Param("questionSearchDTO") QuestionSearchDTO questionSearchDTO);
-    List<QuestionVo> searchPageVo(@Param("questionSearchDTO") QuestionSearchDTO questionSearchDTO);
+    //List<QuestionVo> searchPageVo(@Param("questionSearchDTO") QuestionSearchDTO questionSearchDTO);
+    IPage<QuestionVo> searchPageVo(@Param("questionSearchDTO") QuestionSearchDTO questionSearchDTO,Page<QuestionVo> page);
 
-
+    List<QuestionVo> selectAllVo();
 }
