@@ -320,8 +320,9 @@ export default {
     },
     async sendReq() {
       // this.pageNum = 1;
-      const resp = await this.axios.get("/questionProperties/pageLike?pageNum=" + this.pageNum
-          + "&pageSize=" + this.pageSize);
+      // const resp = await this.axios.get("/questionProperties/pageLike?pageNum=" + this.pageNum
+      //     + "&pageSize=" + this.pageSize);
+      const resp = await this.axios.get("/questionProperties/pageLike?pageNum=0&pageSize=0");
       console.log(resp);
       this.tableData = resp.data;
       this.total = resp.data.total;
@@ -542,7 +543,7 @@ export default {
     },
   },
   mounted: function () {
-    this.sendLikeReq();
+    this.sendReq();
   }
 }
 </script>

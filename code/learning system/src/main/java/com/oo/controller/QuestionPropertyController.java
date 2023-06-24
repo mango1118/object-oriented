@@ -39,8 +39,8 @@ public class QuestionPropertyController {
      */
     @GetMapping("/pageLike")
     //前端将在url中添加一个Integer类型的id，例如:localhost:9090/papers/1，注意使用get注解
-    public Result getById(@RequestParam(defaultValue = "1") Integer pageNum,
-                          @RequestParam(defaultValue = "5") Integer pageSize) {
+    public Result getById(@RequestParam Integer pageNum,
+                          @RequestParam Integer pageSize) {
 
 
         Page<QuestionVo> questionVoPage= questionPropertyService.selectPageVo(pageNum, pageSize);

@@ -101,6 +101,10 @@ public class QuestionPropertyServiceImpl implements QuestionPropertyService {
 
     @Override
     public Page<QuestionVo> selectPageVo(Integer pageNum, Integer pageSize) {
+        if(0 == pageSize || 0 == pageNum){
+            pageNum=1;
+            pageSize=500;
+        }
         Page<QuestionVo> page = new Page<>(pageNum, pageSize);
         IPage<QuestionVo> iPage = questionPropertyDao.selectPageVo(page);
         System.out.println(iPage.getRecords());
