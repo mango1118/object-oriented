@@ -145,7 +145,7 @@ public class StudentPaperServiceImpl implements StudentPaperService {
             if (studentPaper_score != null) {
                 searchScoreDTO.setScore(studentPaper_score.getTotal_score());
             }*/
-            searchScoreDTO.setScore(studentPaper.getTotal_score());
+            searchScoreDTO.setScore(studentPaper.getTotalScore());
 
             searchScoreDTO.setExamId(studentPaper.getPaperId());
 

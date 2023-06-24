@@ -25,7 +25,7 @@ public class StudentPaper {
     private Integer id;
     private Integer studentId;
     private Integer paperId;
-    private Integer total_score;
+    private Integer totalScore;
 
 
 
