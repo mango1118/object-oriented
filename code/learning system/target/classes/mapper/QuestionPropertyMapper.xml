@@ -60,4 +60,9 @@
         order by t_question.id
         <!-- limit  #{questionSearchDTO.offset}, #{questionSearchDTO.size} -->
     </select>
+
+    <update id="calculateErrorRate" parameterType="int" statementType="CALLABLE">
+        { CALL calculate_error_rate_proc(#{questionId}) }
+    </update>
+
 </mapper>
