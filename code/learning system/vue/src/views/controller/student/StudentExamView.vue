@@ -158,7 +158,7 @@ export default {
         };
 
         // 发送表单数据到后端
-        this.axios.post('/submitForm', formData)
+        this.axios.post('/studentPapers/submitForm', formData)
             .then(response => {
               console.log('表单提交成功:', response);
               // 处理提交成功的逻辑
