@@ -62,35 +62,12 @@
       <el-input v-model="fillInTheBlankAnswers[index]" type="text"></el-input>
     </el-card>
 
-    <!--    &lt;!&ndash; 主观题 &ndash;&gt; <h3>主观题</h3>
-        <el-card v-for="(question, index) in subjectiveQuestions" :key="index">
-          <p>{{ question.question }}</p>
-          <el-upload
-              :action="uploadUrl"
-              :on-success="handleUploadSuccess"
-              :show-file-list="false"
-              class="upload-demo"
-          >
-            <el-button slot="trigger" size="small" type="primary">点击上传</el-button>
-          </el-upload>
-          <div v-if="uploadedImages[index]">
-            <img :src="uploadedImages[index]" alt="回答图片"/>
-          </div>
-        </el-card>-->
-
-    <!-- 主观题 -->
     <h3>主观题</h3>
     <el-card v-for="(question, index) in subjectiveQuestions" :key="index">
       <p>{{ question.question }}</p>
       <div v-if="question.questionImage">
         <img :src="question.questionImage" alt="题目内容"/>
       </div>
-      <!--      <el-upload
-                :action="uploadUrl"
-                :on-success="handleUploadSuccess(index)"
-                :show-file-list="false"
-                class="upload-demo"
-            >-->
       <el-upload
           ref="upload"
           action=""
@@ -167,20 +144,29 @@ export default {
         this.fillInTheBlankQuestions = resp.data.fillInTheBlankQuestions;
         this.subjectiveQuestions = resp.data.subjectiveQuestions;
 
-        /*        const response = await fetch(`/api/questions/` + this.paperId); // 替换为实际的后端接口地址
-                const data = await response.json();
-
-                this.multipleChoiceQuestions = data.multipleChoiceQuestions;
-                this.fillInTheBlankQuestions = data.fillInTheBlankQuestions;
-                this.subjectiveQuestions = data.subjectiveQuestions;*/
       } catch (error) {
         console.error('获取题目失败:', error);
       }
     },
     submitForm() {
       if (this.isFormComplete) {
-        // 在这里编写提交表单的逻辑，可以将选择题、填空题和主观题的答案一起发送到后端
-        console.log("表单已提交");
+        // 构造需要提交的数据
+        const formData = {
+          multipleChoiceAnswers: this.selectedAnswers,
+          fillInTheBlankAnswers: this.fillInTheBlankAnswers,
+          subjectiveAnswers: this.uploadedImages
+        };
+
+        // 发送表单数据到后端
+        this.axios.post('/submitForm', formData)
+            .then(response => {
+              console.log('表单提交成功:', response);
+              // 处理提交成功的逻辑
+            })
+            .catch(error => {
+              console.error('表单提交失败:', error);
+              // 处理提交失败的逻辑
+            });
       } else {
         console.log("请完成所有题目后再提交表单");
       }
