@@ -1,9 +1,7 @@
 package com.oo.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.oo.dao.PaperDao;
-import com.oo.dao.StudentDao;
-import com.oo.dao.StudentPaperDao;
+import com.oo.dao.*;
 import com.oo.domain.*;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -31,6 +29,18 @@ public class StudentPaperServiceImpl implements StudentPaperService {
     @Autowired
     //dao的使用方法请学习mybatis-plus
     private StudentDao studentDao;
+    @Autowired
+    //dao的使用方法请学习mybatis-plus
+    private PaperQuestionDao paperQuestionDao;
+    @Autowired
+    //dao的使用方法请学习mybatis-plus
+    private QuestionDao questionDao;
+    @Autowired
+    //dao的使用方法请学习mybatis-plus
+    private QuestionPropertyDao questionPropertyDao;
+    @Autowired
+    //dao的使用方法请学习mybatis-plus
+    private PaperGraphDao paperGraphDao;
 
 
     @Override
@@ -152,6 +162,90 @@ public class StudentPaperServiceImpl implements StudentPaperService {
             searchScoreDTOs.add(searchScoreDTO);
         }
         return searchScoreDTOs;
+    }
+
+    @Override
+    public Integer getobjectivescore(Integer paperid, Integer studentid, List<String> multipleChoiceAnswers, List<String> fillInTheBlankAnswers) {
+        // 获取paper_question表中对应paperid的questionid
+        List<Integer> questionIds = paperQuestionDao.getQuestionIdsByPaperId(paperid);
+
+        Integer objectiveScore = 0; // 记录客观题分数
+
+        Integer index1=0;
+        Integer index2=0;
+
+        // 遍历questionIds
+        for (int i = 0; i < questionIds.size(); i++) {
+            Integer questionId = questionIds.get(i);
+
+            // 根据questionId在question表中读取题目类型
+            String questionType = questionDao.getQuestionTypeById(questionId);
+
+            // 根据questionId在question_property表中读取答案
+            String answer = questionPropertyDao.getAnswerById(questionId);
+
+            // 获取题目分值
+            Integer score = paperQuestionDao.getScoreByPaperIdAndQuestionId(paperid, questionId);
+
+            // 判断题目类型是选择题还是填空题
+            if (questionType.equals("选择题")) {
+                // 如果是选择题，判断多选题答案是否正确
+                String multipleChoiceAnswer = multipleChoiceAnswers.get(index1);
+                index1++;
+                questionPropertyDao.calculateErrorRate(questionId);
+                if (multipleChoiceAnswer.equals(answer)) {
+                    objectiveScore += score; // 答案正确，加上题目分值
+                }
+            } else if (questionType.equals("填空题")) {
+                // 如果是填空题，判断填空题答案是否正确
+                String fillInTheBlankAnswer = fillInTheBlankAnswers.get(index2);
+                index2++;
+                if (fillInTheBlankAnswer.equals(answer)) {
+                    objectiveScore += score; // 答案正确，加上题目分值
+                }
+            }
+
+            // 将答案数组移到下一个答案（如果需要的话）
+            // moveAnswerArray();
+        }
+
+        studentPaperDao.updateTotalScore(paperid, studentid, objectiveScore);
+        return objectiveScore;
+    }
+
+
+    @Override
+    public void savesubjectiveAnswers(Integer paperid, Integer studentid, List<String> subjectiveAnswers) {
+        // 获取学生试卷ID
+        Integer studentPaperId = studentPaperDao.getStudentPaperIdByPaperIdAndStudentId(paperid, studentid);
+
+        // 获取试卷所有题目的ID列表
+        List<Integer> questionIds = paperQuestionDao.getQuestionIdsByPaperId(paperid);
+
+        Integer index=0;
+        // 遍历题目ID列表
+        for (int i = 0; i < questionIds.size(); i++) {
+            Integer questionId = questionIds.get(i);
+
+            // 获取题目类型
+            String questionType = questionDao.getQuestionTypeById(questionId);
+
+            // 判断题目类型是否为主观题
+            if (questionType.equals("主观题")) {
+                // 从subjectiveAnswers列表中获取主观题答案
+                String subjectiveAnswer = subjectiveAnswers.get(index);
+                index++;
+
+                // 创建PaperGraph对象
+                PaperGraph paperGraph = new PaperGraph();
+                paperGraph.setStudentPaperId(studentPaperId);
+                paperGraph.setQuestionId(questionId);
+                paperGraph.setUrl(subjectiveAnswer);
+
+                // 将PaperGraph对象插入到表格中
+                paperGraphDao.insert(paperGraph);
+            }
+        }
     }
 
 }

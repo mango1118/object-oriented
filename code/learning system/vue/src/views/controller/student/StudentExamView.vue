@@ -142,7 +142,7 @@ export default {
         this.studentNow = JSON.parse(localStorage.getItem("user"))
         console.log(this.studentNow)
 
-        const resp = await this.axios.get(`/student/exam?paperId=${this.paperId}`)
+        const resp = await this.axios.get(`/paperQuestions?paperId=${this.paperId}`)
         this.multipleChoiceQuestions = resp.data.multipleChoiceQuestions;
         this.fillInTheBlankQuestions = resp.data.fillInTheBlankQuestions;
         this.subjectiveQuestions = resp.data.subjectiveQuestions;

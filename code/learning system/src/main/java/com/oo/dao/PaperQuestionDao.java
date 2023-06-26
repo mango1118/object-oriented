@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.oo.domain.PaperQuestion;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -18,4 +19,10 @@ import java.util.List;
 @TableName("t_paper_question")
 public interface PaperQuestionDao extends BaseMapper<PaperQuestion> {
     int addBatch(List<PaperQuestion> paperQuestions);
+
+    @Select("SELECT question_id FROM paper_question WHERE paper_id = #{paperId}")
+    List<Integer> getQuestionIdsByPaperId(@Param("paperId") Integer paperId);
+
+    @Select("SELECT set_score FROM paper_question WHERE paper_id = #{paperId} AND question_id = #{questionId}")
+    Integer getScoreByPaperIdAndQuestionId(@Param("paperId") Integer paperId, @Param("questionId") Integer questionId);
 }
