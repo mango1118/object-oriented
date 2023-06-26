@@ -75,7 +75,11 @@ public class StudentPaperController {
         // 在这里处理表单提交的逻辑
         // formData中包含了前端传递过来的选择题答案、填空题答案和主观题答案
 
-        // 在这里可以进行进一步的数据处理、验证等操作
+        List<String> multipleChoiceAnswers = (List<String>) formData.get("multipleChoiceAnswers");
+        List<String> fillInTheBlankAnswers = (List<String>) formData.get("fillInTheBlankAnswers");
+        List<String> subjectiveAnswers = (List<String>) formData.get("subjectiveAnswers");
+
+        // 进行进一步的数据处理、验证等操作
         // ...
 
         // 返回处理结果
