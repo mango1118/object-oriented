@@ -73,7 +73,7 @@ public class TeacherController {
     }
 
     /**
-     * @description: 选择一个班级发卷
+     * @description: 选择一个班级发卷并将班级对应试卷id匹配到该班级中所有的学生
      * @param
      * @return
      */
@@ -85,9 +85,9 @@ public class TeacherController {
         Integer code = flag == true ? Code.GET_OK : Code.GET_ERR;
         String msg;
         if(flag)
-            msg = "题目发送成功！";
+            msg = "试卷发送成功！";
        else
-            msg = "题目发送失败，请重试！";
+            msg = "试卷发送失败，请重试！";
         return new Result(code, msg);
     }
 }

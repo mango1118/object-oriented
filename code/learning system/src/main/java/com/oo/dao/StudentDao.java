@@ -21,4 +21,9 @@ public interface StudentDao extends BaseMapper<Student> {
     @Select("SELECT DISTINCT stu_class FROM t_student ORDER BY CAST(SUBSTRING(stu_class, 1, REGEXP_INSTR(stu_class, '[^0-9]')) AS UNSIGNED), stu_class")
     List<String> getAllClasses();
 
+
+    //根据班级获取该班级的所有学生id
+    @Select("SELECT id FROM t_student WHERE stu_class = #{className}")
+    List<Integer> getAllStudentId(String className);
+
 }
