@@ -2,6 +2,7 @@ package com.oo.controller.R;
 
 import com.oo.domain.Paper;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,9 +34,9 @@ public class Result {
         this.code = code;
         this.msg = msg;
         Map<String, Object> n = new HashMap<>();
-        n.put("data", null);
+        n.put("data", new ArrayList<>());
         n.put("total", 0);
-        n.put("examPaper", null);
+        n.put("examPaper", new HashMap<>());
         this.data = n;
     }
 
