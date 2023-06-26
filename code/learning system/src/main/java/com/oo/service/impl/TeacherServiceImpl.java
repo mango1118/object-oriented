@@ -1,10 +1,7 @@
 package com.oo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.oo.dao.ClassPaperDao;
-import com.oo.dao.StuClassDao;
-import com.oo.dao.StudentDao;
-import com.oo.dao.TeacherDao;
+import com.oo.dao.*;
 import com.oo.domain.*;
 import com.oo.service.TeacherService;
 import com.sun.org.apache.xerces.internal.impl.xs.util.StringListImpl;
@@ -31,8 +28,11 @@ public class TeacherServiceImpl implements TeacherService {
     @Autowired
     private ClassPaperDao classPaperDao;
 
+    @Autowired
+    private StudentPaperDao studentPaperDao;
+
     /**
-     * @description: 选择一个班级发卷-----更改sent属性
+     * @description: 选择一个班级发卷-----更改sent属性;为了后续方便当发卷成功时将班级发到的卷子也存到学生试卷表中
      */
 
     public boolean chooseClass(Integer paperId, Integer classId){
@@ -43,8 +43,31 @@ public class TeacherServiceImpl implements TeacherService {
         {
             return false;
         }
+        boolean sentPaper = false;
+        boolean savePaperId = false;
         classPaper.setSent(true);
-        return classPaperDao.updateById(classPaper) > 0;
+        if(classPaperDao.updateById(classPaper)>0)
+            sentPaper = true;
+        if(sentPaper==true)
+        {
+            StuClass theClass = stuClassDao.selectById(classId);
+            String className = theClass.getClassName();
+            List<Integer> getAllStudentId = studentDao.getAllStudentId(className);
+            System.out.println(getAllStudentId);
+            for (Integer studentId : getAllStudentId) {
+                savePaperId = false;
+                StudentPaper studentPaper = new StudentPaper();
+                studentPaper.setPaperId(paperId);
+                studentPaper.setStudentId(studentId);
+                System.out.println(studentPaper);
+                //一个一个保存数据库中
+                if(studentPaperDao.insert(studentPaper)<0)
+                {
+                    savePaperId = true;
+                }
+            }
+        }
+        return  sentPaper && savePaperId;
     }
 
     /**

@@ -84,7 +84,9 @@ export default {
       // this.pageNum = 1;
       const resp = await this.axios.get(`/studentPapers/pageLike?pageNum=${this.pageNum}&pageSize=${this.pageSize}&paperId=${this.paperId}&paperName=${this.paperName}&studentId=${this.studentNow.id}`);
       // console.log(resp);
-      this.tableData = resp.data.data;
+      this.tableData = resp.data;
+      console.log(resp.data)
+
       this.total = resp.data.total;
     },
     reload() {
@@ -109,12 +111,12 @@ export default {
     handleSelect(id) {
       localStorage.setItem("paperId", JSON.stringify(id))
       // this.$router.push("/student/studentExamView/" + id);
-      this.$router.push("/student/studentExam/");
+      this.$router.push("/student/studentExam");
     },
   },
   mounted: function () {
     this.studentNow = JSON.parse(localStorage.getItem("user"))
-    console.log(this.studentNow)
+    // console.log(this.studentNow)
     this.sendLikeReq();
   }
 }

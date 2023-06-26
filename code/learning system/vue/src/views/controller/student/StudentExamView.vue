@@ -138,8 +138,13 @@ export default {
     },
     async fetchQuestions() {
       try {
+
+
         this.paperId = localStorage.getItem("paperId")
-        const resp = await this.axios.get(`/paperQuestions/questions?paperId=${this.paperId}`)
+        this.studentNow = JSON.parse(localStorage.getItem("user"))
+        console.log(this.studentNow)
+
+        const resp = await this.axios.get(`/student/exam?paperId=${this.paperId}&studentId=${this.studentNow.id}`)
         this.multipleChoiceQuestions = resp.data.multipleChoiceQuestions;
         this.fillInTheBlankQuestions = resp.data.fillInTheBlankQuestions;
         this.subjectiveQuestions = resp.data.subjectiveQuestions;
@@ -158,7 +163,7 @@ export default {
         };
 
         // 发送表单数据到后端
-        this.axios.post('/submitForm', formData)
+        this.axios.post('/studentPapers/submitForm', formData)
             .then(response => {
               console.log('表单提交成功:', response);
               // 处理提交成功的逻辑

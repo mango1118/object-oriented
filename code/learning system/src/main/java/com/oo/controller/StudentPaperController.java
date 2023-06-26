@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @description:
@@ -33,7 +34,7 @@ public class StudentPaperController {
         System.out.println(studentId);
 
         Integer paperid = null;
-        if (paperId != null) {
+        if (!"null".equals(paperId)) {
             paperid = Integer.valueOf(paperId);
         }
 
@@ -68,5 +69,22 @@ public class StudentPaperController {
         String msg = selectExamsList != null ? "" : "数据查询失败，请重试！";
         return new Result(code, selectExamsList, msg);
     }
+
+    @PostMapping("/submitForm")
+    public String submitForm(@RequestBody Map<String, Object> formData) {
+        // 在这里处理表单提交的逻辑
+        // formData中包含了前端传递过来的选择题答案、填空题答案和主观题答案
+
+        List<String> multipleChoiceAnswers = (List<String>) formData.get("multipleChoiceAnswers");
+        List<String> fillInTheBlankAnswers = (List<String>) formData.get("fillInTheBlankAnswers");
+        List<String> subjectiveAnswers = (List<String>) formData.get("subjectiveAnswers");
+
+        // 进行进一步的数据处理、验证等操作
+        // ...
+
+        // 返回处理结果
+        return "表单提交成功";
+    }
+
 
 }
