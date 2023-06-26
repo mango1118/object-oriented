@@ -2,8 +2,8 @@
   <div>
     <div style="margin: 10px 0">
       <el-input style="width: 200px" placeholder="请输入教师账户" suffix-icon="el-icon-search"
-                v-model="teacherAccount"></el-input>
-      <el-input style="width: 200px" placeholder="请输入教师姓名" suffix-icon="el-icon-search" v-model="teacherName"
+                v-model="account"></el-input>
+      <el-input style="width: 200px" placeholder="请输入教师姓名" suffix-icon="el-icon-search" v-model="name"
                 class="ml-5"></el-input>
       <el-button class="ml-5" type="primary" @click="handleSearch">搜索</el-button>
       <el-button class="ml-5" type="warning" @click="reload">重置</el-button>
@@ -14,9 +14,9 @@
     </div>
 
     <el-table v-bind:data="tableData" border stripe :header-cell-class-name="headerBg" row-key="id">
-      <el-table-column prop="teacherId" label="ID" width="50"></el-table-column>
-      <el-table-column prop="teacherAccount" label="账户" width="300"></el-table-column>
-      <el-table-column prop="teacherName" label="姓名" width="200"></el-table-column>
+      <el-table-column prop="id" label="ID" width="50"></el-table-column>
+      <el-table-column prop="account" label="账户" width="300"></el-table-column>
+      <el-table-column prop="name" label="姓名" width="200"></el-table-column>
       <el-table-column label="操作" width="200" align="center">
         <template slot-scope="scope">
           <el-button type="success" @click="handleEdit(scope.row)">编辑<i class="el-icon-edit"></i></el-button>
@@ -27,7 +27,7 @@
               icon="el-icon-info"
               icon-color="red"
               title="您确定删除吗？"
-              @confirm="handleDelete(scope.row.teacherId)"
+              @confirm="handleDelete(scope.row.id)"
           >
             <el-button type="danger" slot="reference">删除<i class="el-icon-remove-outline"></i>
             </el-button>
@@ -69,13 +69,13 @@
     <el-dialog title="教师信息" :visible.sync="editDialogFormVisible" width="30%">
       <el-form ref="editForm" :model="editform" :rules="formRules" label-width="80px" size="small">
         <el-form-item label="账户" prop="teacherAccount">
-          <el-input v-model="editform.teacherAccount" autocomplete="off" disabled></el-input>
+          <el-input v-model="editform.account" autocomplete="off" disabled></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="teacherPassword">
-          <el-input v-model="editform.teacherPassword" autocomplete="off"></el-input>
+          <el-input v-model="editform.password" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="姓名" prop="teacherName">
-          <el-input v-model="editform.teacherName" autocomplete="off"></el-input>
+          <el-input v-model="editform.name" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -90,8 +90,8 @@
 export default {
   data() {
     return {
-      teacherAccount: '',
-      teacherName: '',
+      account: '',
+      name: '',
       pageNum: 1,
       pageSize: 5,
       total: 0,
@@ -102,18 +102,19 @@ export default {
         teacherName: ''
       },
       editform: {
+        teacherId: '',
         teacherAccount: '',
         teacherPassword: '',
         teacherName: ''
       },
       formRules: {
-        teacherAccount: [
+        account: [
           { required: true, message: '请输入账户', trigger: 'blur' }
         ],
-        teacherPassword: [
+        password: [
           { required: true, message: '请输入密码', trigger: 'blur' }
         ],
-        teacherName: [
+        name: [
           { required: true, message: '请输入姓名', trigger: 'blur' }
         ]
       },
@@ -141,8 +142,8 @@ export default {
       this.sendReq();
     },
     reload() {
-      this.teacherAccount = '';
-      this.teacherName = '';
+      this.account = '';
+      this.name = '';
       this.pageNum = 1;
       this.sendReq();
     },
@@ -154,7 +155,7 @@ export default {
       this.editDialogFormVisible = true;
     },
     handleDelete(id) {
-      this.axios.delete(`/teachers/${id}`).then(res => {
+      this.axios.delete(`/admin/teacherControl/${id}`).then(res => {
         if (res.data) {
           this.$message.success("删除成功");
           this.sendReq();
@@ -166,7 +167,7 @@ export default {
     saveForm() {
       this.$refs.saveForm.validate((valid) => {
         if (valid) {
-          this.axios.post("/teachers", this.saveform).then(res => {
+          this.axios.post("/admin/teacherControl", this.saveform).then(res => {
             if (res.data) {
               this.$message.success("保存成功");
               this.saveDialogFormVisible = false;
@@ -181,7 +182,7 @@ export default {
     editForm() {
       this.$refs.editForm.validate((valid) => {
         if (valid) {
-          this.axios.put(`/teachers/${this.editform.teacherId}`, this.editform).then(res => {
+          this.axios.put(`/admin/teacherControl/${this.editform.teacherId}`, this.editform).then(res => {
             if (res.data) {
               this.$message.success("更新成功");
               this.editDialogFormVisible = false;
@@ -195,14 +196,15 @@ export default {
     },
     sendReq() {
       const params = {
-        teacherAccount: this.teacherAccount,
-        teacherName: this.teacherName,
+        //id: this.id,
+        account: this.account,
+        name: this.name,
         pageNum: this.pageNum,
         pageSize: this.pageSize
       };
-      this.axios.get('/teachers', { params }).then(res => {
-        if (res.data) {
-          this.tableData = res.data.list;
+      this.axios.get('/admin/teacherControl/pageLike', { params }).then(res => {
+        if (res.data.data) {
+          this.tableData = res.data.data;
           this.total = res.data.total;
         }
       });
