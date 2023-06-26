@@ -69,7 +69,7 @@
     <el-dialog title="教师信息" :visible.sync="editDialogFormVisible" width="30%">
       <el-form ref="editForm" :model="editform" :rules="formRules" label-width="80px" size="small">
         <el-form-item label="账户" prop="teacherAccount">
-          <el-input v-model="editform.account" autocomplete="off" disabled></el-input>
+          <el-input v-model="editform.account" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="teacherPassword">
           <el-input v-model="editform.password" autocomplete="off"></el-input>
