@@ -139,7 +139,8 @@ export default {
     async fetchQuestions() {
       try {
         this.paperId = localStorage.getItem("paperId")
-        const resp = await this.axios.get(`/paperQuestions/questions?paperId=${this.paperId}`)
+        this.studentNow = localStorage.getItem("user")
+        const resp = await this.axios.get(`/student/exam?paperId=${this.paperId}&studentId=${this.studentNow.id}`)
         this.multipleChoiceQuestions = resp.data.multipleChoiceQuestions;
         this.fillInTheBlankQuestions = resp.data.fillInTheBlankQuestions;
         this.subjectiveQuestions = resp.data.subjectiveQuestions;
