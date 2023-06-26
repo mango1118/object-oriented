@@ -30,4 +30,6 @@ public interface QuestionPropertyDao extends BaseMapper<QuestionProperty> {
     IPage<QuestionVo> searchPageVo(@Param("questionSearchDTO") QuestionSearchDTO questionSearchDTO,Page<QuestionVo> page);
 
     List<QuestionVo> selectAllVo();
+
+    void calculateErrorRate(@Param("questionId") int questionId);
 }
