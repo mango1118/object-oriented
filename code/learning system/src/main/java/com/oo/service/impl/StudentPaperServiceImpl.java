@@ -76,7 +76,7 @@ public class StudentPaperServiceImpl implements StudentPaperService {
             paperWrapper.eq(Paper::getId, studentPaper.getPaperId());
             Paper paper = paperDao.selectOne(paperWrapper);
             if (paper != null) {
-                selectExamsDTO.setName(paper.getName());
+                selectExamsDTO.setPaperName(paper.getName());
             }
 
             selectExamsDTOs.add(selectExamsDTO);

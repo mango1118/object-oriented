@@ -15,5 +15,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SelectExamsDTO {
     Integer PaperId;
-    String Name;
+    String paperName;
 }
