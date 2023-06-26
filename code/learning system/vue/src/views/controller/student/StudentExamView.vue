@@ -138,13 +138,11 @@ export default {
     },
     async fetchQuestions() {
       try {
-
-
         this.paperId = localStorage.getItem("paperId")
         this.studentNow = JSON.parse(localStorage.getItem("user"))
         console.log(this.studentNow)
 
-        const resp = await this.axios.get(`/student/exam?paperId=${this.paperId}&studentId=${this.studentNow.id}`)
+        const resp = await this.axios.get(`/student/exam?paperId=${this.paperId}`)
         this.multipleChoiceQuestions = resp.data.multipleChoiceQuestions;
         this.fillInTheBlankQuestions = resp.data.fillInTheBlankQuestions;
         this.subjectiveQuestions = resp.data.subjectiveQuestions;
@@ -157,6 +155,8 @@ export default {
       if (this.isFormComplete) {
         // 构造需要提交的数据
         const formData = {
+          studentId: this.studentNow.id,
+          paperId: this.paperId,
           multipleChoiceAnswers: this.selectedAnswers,
           fillInTheBlankAnswers: this.fillInTheBlankAnswers,
           subjectiveAnswers: this.uploadedImages
