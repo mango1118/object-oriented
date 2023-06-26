@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.oo.domain.Question;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * @description:
@@ -13,4 +15,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 @TableName("t_question")
 public interface QuestionDao extends BaseMapper<Question> {
+
+    @Select("SELECT question_type FROM question WHERE question_id = #{questionId}")
+    String getQuestionTypeById(@Param("questionId") Integer questionId);
 }

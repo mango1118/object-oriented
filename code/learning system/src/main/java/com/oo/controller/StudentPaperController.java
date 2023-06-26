@@ -73,12 +73,20 @@ public class StudentPaperController {
     @PostMapping("/submitForm")
     public String submitForm(@RequestBody Map<String, Object> formData) {
         // 在这里处理表单提交的逻辑
-        // formData中包含了前端传递过来的选择题答案、填空题答案和主观题答案
+        // formData中包含了前端传递过来的选择题答案、填空题答案、主观题答案、paperId和studentId
 
         List<String> multipleChoiceAnswers = (List<String>) formData.get("multipleChoiceAnswers");
         List<String> fillInTheBlankAnswers = (List<String>) formData.get("fillInTheBlankAnswers");
         List<String> subjectiveAnswers = (List<String>) formData.get("subjectiveAnswers");
 
+        String paperId = (String) formData.get("paperId");
+        String studentId = (String) formData.get("studentId");
+
+        Integer studentid = Integer.valueOf(studentId);
+        Integer paperid = Integer.valueOf(paperId);
+
+        Integer objectivescore = studentPaperService.getobjectivescore(paperid, studentid, multipleChoiceAnswers, fillInTheBlankAnswers);
+        studentPaperService.savesubjectiveAnswers(paperid, studentid, subjectiveAnswers);
         // 进行进一步的数据处理、验证等操作
         // ...
 

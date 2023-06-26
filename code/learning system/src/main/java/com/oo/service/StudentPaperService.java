@@ -19,4 +19,8 @@ public interface StudentPaperService {
     public List<SelectExamsDTO> selectLike(Integer pageNum, Integer pageSize, Integer paperId, String paperName, Integer id);
 
     public List<SearchScoreDTO> selectScore(Integer pageNum, Integer pageSize, Integer paperId, String paperName, Integer studentId);
+
+    public Integer getobjectivescore(Integer paperid, Integer studentid, List<String> multipleChoiceAnswers, List<String> fillInTheBlankAnswers);
+
+    public void savesubjectiveAnswers(Integer paperid, Integer studentid, List<String> subjectiveAnswers);
 }

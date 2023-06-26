@@ -9,6 +9,7 @@ import com.oo.domain.QuestionSearchDTO;
 import com.oo.domain.vo.QuestionVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.mybatis.logging.Logger;
 import org.mybatis.logging.LoggerFactory;
 
@@ -32,4 +33,11 @@ public interface QuestionPropertyDao extends BaseMapper<QuestionProperty> {
     List<QuestionVo> selectAllVo();
 
     void calculateErrorRate(@Param("questionId") int questionId);
+
+
+    @Select("SELECT answer FROM question_property WHERE question_id = #{questionId}")
+    String getAnswerById(@Param("questionId") Integer questionId);
+
+
+
 }
