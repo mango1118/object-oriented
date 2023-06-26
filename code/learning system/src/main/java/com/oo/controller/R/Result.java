@@ -2,6 +2,7 @@ package com.oo.controller.R;
 
 import com.oo.domain.Paper;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -26,6 +27,16 @@ public class Result {
         this.data = data;
         this.code = code;
         this.msg = msg;
+    }
+
+    public Result(Integer code, String msg) {
+        this.code = code;
+        this.msg = msg;
+        Map<String, Object> n = new HashMap<>();
+        n.put("data", null);
+        n.put("total", 0);
+        n.put("examPaper", null);
+        this.data = n;
     }
 
     public Result(Integer code, Paper paper, Map<String, Object> paperQ, String msg) {

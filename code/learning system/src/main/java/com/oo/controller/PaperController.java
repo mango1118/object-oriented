@@ -7,6 +7,7 @@ import com.oo.domain.Paper;
 import com.oo.domain.StuClass;
 import com.oo.service.PaperService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.spel.ast.NullLiteral;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,10 +31,15 @@ public class PaperController {
                           @RequestParam(defaultValue = "5") Integer pageSize, @RequestParam String pid) {
         Integer id = Integer.valueOf(pid);
         Paper paper = paperService.selectById(id);
+        if(paper == null){
+            Integer code = Code.GET_ERR;
+            String msg = "此试卷不存在";
+            return new Result(code, msg);
+        }
         Map<String, Object> paperQ = paperService.selectByPaperId(pageNum, pageSize, id);
 
-        Integer code = paper != null && paperQ != null ? Code.GET_OK : Code.GET_ERR;
-        String msg = paper != null && paperQ != null ? "" : "数据查询失败，请重试！";
+        Integer code = paperQ != null ? Code.GET_OK : Code.GET_ERR;
+        String msg = paperQ != null ? "" : "数据查询失败，请重试！";
 
         return new Result(code, paper, paperQ, msg);
     }
