@@ -141,6 +141,9 @@ export default {
       const resp = await this.axios.get("/papers/pageLike/?pageNum=" + this.pageNum
           + "&pid=" + this.pageSize);
       // console.log(resp);
+      if(resp.data.code == 20040){
+        this.$message.error("查询失败，无相应id");
+      }
       this.tableData = resp.data.data.data;
       this.total = resp.data.data.total;
       this.examPaper = resp.data.data.examPaper;
