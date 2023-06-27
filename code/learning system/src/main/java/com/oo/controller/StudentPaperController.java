@@ -80,7 +80,8 @@ public class StudentPaperController {
         List<String> subjectiveAnswers = (List<String>) formData.get("subjectiveAnswers");
 
         String paperId = (String) formData.get("paperId");
-        String studentId = (String) formData.get("studentId");
+        String studentId = formData.get("studentId").toString();
+
 
         Integer studentid = Integer.valueOf(studentId);
         Integer paperid = Integer.valueOf(paperId);

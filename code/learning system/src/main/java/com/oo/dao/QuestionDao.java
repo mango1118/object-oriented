@@ -16,6 +16,6 @@ import org.apache.ibatis.annotations.Select;
 @TableName("t_question")
 public interface QuestionDao extends BaseMapper<Question> {
 
-    @Select("SELECT question_type FROM question WHERE question_id = #{questionId}")
+    @Select("SELECT type FROM t_question WHERE id = #{questionId}")
     String getQuestionTypeById(@Param("questionId") Integer questionId);
 }
