@@ -84,7 +84,7 @@
     </el-card>
 
     <!-- 提交按钮 -->
-    <el-button :disabled="!isFormComplete" type="success" @click="submitForm">点击提交
+    <el-button type="success" @click="submitForm">点击提交
     </el-button>
 
   </div>
@@ -105,15 +105,16 @@ export default {
       tableData: [],
       total: 0,
       pageNum: 1,
-      pageSize: 5,
       studentNow: {},
       paperId: null,
       studentPaperName: null,
       studentPaperId: null,
       headerBg: 'headerBg',
-      fileList: []
+      fileList: [],
+      subjectiveComplete: false // 追踪主观题是否已完成
     };
   },
+
   computed: {
 /*    isFormComplete() {
       return (
@@ -124,12 +125,15 @@ export default {
       );
     },*/
     isFormComplete() {
+      debugger
       // 检查选择题和填空题的答案是否都已填写
       const isChoiceComplete =
           this.selectedAnswers.length === this.multipleChoiceQuestions.length;
       const isFillBlankComplete =
           this.fillInTheBlankAnswers.length === this.fillInTheBlankQuestions.length;
       // 检查主观题的图片是否已上传
+      console.log(this.uploadedImages)
+      console.log(this.subjectiveQuestions.length)
       const isSubjectiveComplete =
           this.uploadedImages.length === this.subjectiveQuestions.length;
 
@@ -159,7 +163,7 @@ export default {
         const resp = await this.axios.get(`/paperQuestions/{this.paperId}?paperId=${this.paperId}`)
 
 
-        console.log(resp.data)
+        // console.log(resp.data)
         this.multipleChoiceQuestions = resp.data.multipleChoiceQuestions;
         this.fillInTheBlankQuestions = resp.data.fillInTheBlankQuestions;
         this.subjectiveQuestions = resp.data.subjectiveQuestions;
@@ -169,6 +173,7 @@ export default {
       }
     },
     submitForm() {
+      // debugger
       if (this.isFormComplete) {
         // 构造需要提交的数据
         const formData = {
@@ -193,6 +198,49 @@ export default {
         console.log("请完成所有题目后再提交表单");
       }
     },
+    /*handleUploadImg(file) {
+/!*      console.log('handleUploadImg');
+      console.log(file);*!/
+      let formData = new FormData();
+      formData.append('objQImgFile', file.raw);
+      // console.log(formData.get('objQImgFile'));
+      this.axios
+          .post('/questions/upload', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            },
+            transformRequest: [(data) => data]
+          })
+          .then(response => {
+            // 处理请求成功的逻辑
+            // console.log(response);
+            this.$message({
+              message: '图片上传成功！',
+              type: 'success'
+            });
+
+            // 更新题目的图片链接
+            const questionIndex = this.subjectiveQuestions.findIndex(
+                question => question.id === file.id
+            );
+            if (questionIndex !== -1) {
+              this.$set(
+                  this.subjectiveQuestions[questionIndex],
+                  'questionImage',
+                  response.data.url
+              );
+
+              // 更新uploadedImages数组中对应题目的图片路径
+              this.uploadedImages.splice(questionIndex, 1, response.data.url);
+              this.uploadedImages.length += 1;
+            }
+          })
+          .catch(error => {
+            // 处理请求失败的逻辑
+            // console.log(error);
+            this.$message.error('图片上传失败！');
+          });
+    },*/
     handleUploadImg(file) {
       console.log('handleUploadImg');
       console.log(file);
@@ -214,17 +262,8 @@ export default {
               type: 'success'
             });
 
-            // 更新题目的图片链接
-            const questionIndex = this.subjectiveQuestions.findIndex(
-                question => question.id === file.id
-            );
-            if (questionIndex !== -1) {
-              this.$set(
-                  this.subjectiveQuestions[questionIndex],
-                  'questionImage',
-                  response.data.url
-              );
-            }
+            // 将上传成功的图片路径添加到uploadedImages数组中
+            this.uploadedImages.push(response.data.url);
           })
           .catch(error => {
             // 处理请求失败的逻辑
@@ -232,6 +271,8 @@ export default {
             this.$message.error('图片上传失败！');
           });
     },
+
+
 
   },
   mounted() {
