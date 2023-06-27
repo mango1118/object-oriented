@@ -115,12 +115,26 @@ export default {
     };
   },
   computed: {
-    isFormComplete() {
+/*    isFormComplete() {
       return (
           this.selectedAnswers.length === this.multipleChoiceQuestions.length &&
           this.fillInTheBlankAnswers.length === this.fillInTheBlankQuestions.length &&
           this.uploadedImages.length === this.subjectiveQuestions.length
+
       );
+    },*/
+    isFormComplete() {
+      // 检查选择题和填空题的答案是否都已填写
+      const isChoiceComplete =
+          this.selectedAnswers.length === this.multipleChoiceQuestions.length;
+      const isFillBlankComplete =
+          this.fillInTheBlankAnswers.length === this.fillInTheBlankQuestions.length;
+      // 检查主观题的图片是否已上传
+      const isSubjectiveComplete =
+          this.uploadedImages.length === this.subjectiveQuestions.length;
+
+      // 返回表单是否完整的布尔值
+      return isChoiceComplete && isFillBlankComplete && isSubjectiveComplete;
     },
   },
   methods: {
@@ -140,9 +154,12 @@ export default {
       try {
         this.paperId = localStorage.getItem("paperId")
         this.studentNow = JSON.parse(localStorage.getItem("user"))
-        console.log(this.studentNow)
+        // console.log(this.studentNow)
 
         const resp = await this.axios.get(`/paperQuestions/{this.paperId}?paperId=${this.paperId}`)
+
+
+        console.log(resp.data)
         this.multipleChoiceQuestions = resp.data.multipleChoiceQuestions;
         this.fillInTheBlankQuestions = resp.data.fillInTheBlankQuestions;
         this.subjectiveQuestions = resp.data.subjectiveQuestions;
