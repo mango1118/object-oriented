@@ -19,40 +19,6 @@
       <el-button type="primary" @click="handleAdd">新增<i class="el-icon-circle-plus-outline"></i></el-button>
     </div>
 
-    <!--
-      需要后端返回一个封装到com.oo.controller.R.Result的对象
-      对象的类名随意，属性名请与下述表单一一对应
-      el-table-column prog="xxx" 其中xxx是属性名
--->
-    <!--    <el-table :header-cell-class-name="headerBg" border: row-key="id" stripe v-bind:data="tableData">
-          <el-table-column label="ID" prop="questionId" width="50"></el-table-column>
-          <el-table-column label="内容" prop="content" width="300"></el-table-column>
-          <el-table-column label="类型" prop="type" width="100"></el-table-column>
-          <el-table-column label="答案" prop="answer" width="300"></el-table-column>
-          <el-table-column label="知识点" prop="knowledgePoint" width="100"></el-table-column>
-          <el-table-column label="章节" prop="chapter" width="100"></el-table-column>
-          <el-table-column label="错误率" prop="errorRate" width="100"></el-table-column>
-          <el-table-column label="易错点" prop="errorPoint" width="100"></el-table-column>
-          <el-table-column label="难度" prop="difficulty" width="50"></el-table-column>
-          <el-table-column align="center" label="操作" width="200">
-            <template slot-scope="scope">
-              <el-button type="success" @click="handleEdit(scope.row)">编辑<i class="el-icon-edit"></i></el-button>
-              <el-popconfirm
-                  cancel-button-text='取消'
-                  class="ml-5"
-                  confirm-button-text='确定'
-                  icon="el-icon-info"
-                  icon-color="red"
-                  title="您确定删除吗？"
-                  @confirm="handleDelete(scope.row.questionId)"
-              >
-                <el-button slot="reference" type="danger">删除<i class="el-icon-remove-outline"></i>
-                </el-button>
-              </el-popconfirm>
-            </template>
-          </el-table-column>
-        </el-table>-->
-
     <el-table :header-cell-class-name="headerBg" border row-key="id" stripe v-bind:data="tableData">
       <el-table-column label="ID" prop="questionId" width="50"></el-table-column>
       <el-table-column label="内容" prop="content" width="300">
@@ -104,57 +70,14 @@
       </el-pagination>
     </div>
 
-    <!--    <el-dialog :visible.sync="saveDialogFormVisible" title="题目信息" width="30%">
-          <el-form :model="saveform" label-width="80px" size="small">
-            <el-form-item label="内容">
-              <el-input v-model="saveform.content" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="类型">
-              <el-input v-model="saveform.type" autocomplete="off"></el-input>
-            </el-form-item>
-          </el-form>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click="saveDialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="saveForm">确 定</el-button>
-          </div>
-        </el-dialog>-->
-
-<!--    <el-dialog :visible.sync="saveDialogFormVisible" title="题目信息" width="30%">
-      <el-form :model="saveform" label-width="80px" size="small">
-        <el-form-item label="类型">
-          <el-input v-model="saveform.type" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="内容">
-          <template v-if="saveform.type === '主观题'">
-            &lt;!&ndash; 替换为实际的图片上传接口 &ndash;&gt;
-            <el-upload
-                ref="upload"
-                class="upload-demo"
-                action="/your-upload-api"
-                :on-success="handleSaveUploadSuccess"
-                :file-list="saveform.imageList"
-                :show-file-list="false"
-                :auto-upload="false"
-                :before-upload="beforeUpload"
-            >
-              <el-button slot="trigger" size="small" type="primary">上传图片</el-button>
-            </el-upload>
-          </template>
-          <template v-else>
-            <el-input v-model="saveform.content" autocomplete="off"></el-input>
-          </template>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="saveDialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="saveForm">确 定</el-button>
-      </div>
-    </el-dialog>-->
-
     <el-dialog :visible.sync="saveDialogFormVisible" title="题目信息" width="30%">
       <el-form :model="saveform" label-width="80px" size="small">
         <el-form-item label="类型">
-          <el-input v-model="saveform.type" autocomplete="off"></el-input>
+          <el-select v-model="saveform.type" autocomplete="off">
+            <el-option label="选择题" value="选择题"></el-option>
+            <el-option label="填空题" value="填空题"></el-option>
+            <el-option label="主观题" value="主观题"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="内容">
           <template v-if="saveform.type === '主观题'">
@@ -167,7 +90,7 @@
                 :file-list="fileList"
                 :on-change="handleUploadImg"
             >
-            <el-button size="small" type="primary">选择图片</el-button>
+              <el-button size="small" type="primary">选择图片</el-button>
             </el-upload>
           </template>
           <template v-else>
@@ -181,42 +104,15 @@
       </div>
     </el-dialog>
 
-
-    <!--    <el-dialog :visible.sync="editDialogFormVisible" title="题目信息" width="30%">
-          <el-form :model="editform" label-width="80px" size="small">
-            <el-form-item label="内容">
-              <el-input v-model="editform.content" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="类型">
-              <el-input v-model="editform.type" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="答案">
-              <el-input v-model="editform.answer" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="知识点">
-              <el-input v-model="editform.knowledgePoint" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="章节">
-              <el-input v-model="editform.chapter" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="错误率">
-              <el-input v-model="editform.errorRate" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="易错点">
-              <el-input v-model="editform.errorPoint" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="难度">
-              <el-input v-model="editform.difficulty" autocomplete="off"></el-input>
-            </el-form-item>
-          </el-form>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click="editDialogFormVisible = false">取 消</el-button>
-            <el-button type="primary" @click="editForm">确 定</el-button>
-          </div>
-        </el-dialog>-->
-
     <el-dialog :visible.sync="editDialogFormVisible" title="题目信息" width="30%">
       <el-form :model="editform" label-width="80px" size="small">
+        <el-form-item label="类型">
+          <el-select v-model="editform.type" autocomplete="off">
+            <el-option label="选择题" value="选择题"></el-option>
+            <el-option label="填空题" value="填空题"></el-option>
+            <el-option label="主观题" value="主观题"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="内容">
           <template v-if="editform.type === '主观题'">
             <img v-if="editform.content" :src="editform.content" style="max-width: 100%; max-height: 200px;">
@@ -231,18 +127,10 @@
             >
               <el-button size="small" type="primary">选择图片</el-button>
             </el-upload>
-<!--            <el-upload-->
-<!--                        action="/questionProperties/upload"-->
-<!--                       :on-success="handleEditUploadSuccess" :show-file-list="false" :before-upload="beforeUpload">-->
-<!--              <el-button size="small" type="primary">上传图片</el-button>-->
-<!--            </el-upload>-->
           </template>
           <template v-else>
             <el-input v-model="editform.content" autocomplete="off"></el-input>
           </template>
-        </el-form-item>
-        <el-form-item label="类型">
-          <el-input v-model="editform.type" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="答案">
           <el-input v-model="editform.answer" autocomplete="off"></el-input>
@@ -268,6 +156,7 @@
         <el-button type="primary" @click="editForm">确 定</el-button>
       </div>
     </el-dialog>
+
 
   </div>
 
@@ -373,22 +262,6 @@ export default {
         }
       })
     },
-/*    saveForm() {
-      // debugger
-      if (!this.saveform.type) {
-        this.$message.error('请完整填写表单');
-        return; // Prevent form submission
-      }
-
-      if (this.saveform.type === '主观题' && this.saveform.content === '') {
-        // 选择了主观题且没有填写内容，等待图片上传成功后再提交表单
-        this.isUploading = true;
-        return; // Prevent form submission
-      }
-
-      // 继续处理表单提交逻辑
-      this.submitForm();
-    },*/
 
     handleUploadImg(file){
       console.log('handleUploadImg')
@@ -453,21 +326,6 @@ export default {
         type: this.saveform.type
       };
 
-      // if (this.saveform.type === "主观题") {
-      //   // 获取上传图片的 URL
-      //   const uploadComponent = this.$refs.upload;
-      //   console.log(uploadComponent)
-      //   const imageUrl = uploadComponent.uploadFiles[0].url;
-      //   //调/question/upload,传uploadComponent.uploadFiles[0].raw，拿到返回的url再调submit-form
-      //   requestBody = {
-      //     content: imageUrl,
-      //     type: this.saveform.type
-      //   };
-      // } else {
-      //   requestBody =
-      // }
-
-      // 发送请求到后端，将 requestBody 作为请求体
       this.axios
           .post("/questions/submit-form", requestBody)
           .then(response => {
