@@ -14,3 +14,39 @@
 2023-06-27 00:20:21.706 [http-nio-9090-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 2023-06-27 00:20:21.707 [http-nio-9090-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
 2023-06-27 00:20:21.855 [http-nio-9090-exec-2] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2023-06-27 00:22:09.837 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
+2023-06-27 00:22:09.842 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2023-06-27 08:29:37.229 [main] INFO  com.oo.LearningSystemApplication - Starting LearningSystemApplication using Java 1.8.0_302 on LAPTOP-2NFQ9SAT with PID 2992 (C:\Users\mango\Desktop\object-oriented\code\learning system\target\classes started by mango in C:\Users\mango\Desktop\object-oriented\code\learning system)
+2023-06-27 08:29:37.233 [main] INFO  com.oo.LearningSystemApplication - No active profile set, falling back to 1 default profile: "default"
+2023-06-27 08:29:38.839 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 9090 (http)
+2023-06-27 08:29:38.851 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-9090"]
+2023-06-27 08:29:38.852 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2023-06-27 08:29:38.852 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.68]
+2023-06-27 08:29:39.009 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-06-27 08:29:39.009 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1713 ms
+2023-06-27 08:29:50.012 [main] INFO  o.s.b.a.web.servlet.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2023-06-27 08:29:50.272 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-9090"]
+2023-06-27 08:29:50.307 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 9090 (http) with context path ''
+2023-06-27 08:29:50.321 [main] INFO  com.oo.LearningSystemApplication - Started LearningSystemApplication in 13.877 seconds (JVM running for 19.194)
+2023-06-27 08:30:25.477 [http-nio-9090-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-06-27 08:30:25.478 [http-nio-9090-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2023-06-27 08:30:25.479 [http-nio-9090-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2023-06-27 08:30:25.616 [http-nio-9090-exec-2] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2023-06-27 08:32:44.076 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closing ...
+2023-06-27 08:32:44.081 [SpringApplicationShutdownHook] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} closed
+2023-06-27 10:06:18.367 [main] INFO  com.oo.LearningSystemApplication - Starting LearningSystemApplication using Java 1.8.0_302 on LAPTOP-2NFQ9SAT with PID 5924 (C:\Users\mango\Desktop\object-oriented\code\learning system\target\classes started by mango in C:\Users\mango\Desktop\object-oriented\code\learning system)
+2023-06-27 10:06:18.370 [main] INFO  com.oo.LearningSystemApplication - No active profile set, falling back to 1 default profile: "default"
+2023-06-27 10:06:20.115 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 9090 (http)
+2023-06-27 10:06:20.128 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-9090"]
+2023-06-27 10:06:20.129 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2023-06-27 10:06:20.129 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.68]
+2023-06-27 10:06:20.330 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2023-06-27 10:06:20.331 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1897 ms
+2023-06-27 10:06:28.909 [main] INFO  o.s.b.a.web.servlet.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+2023-06-27 10:06:29.098 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-9090"]
+2023-06-27 10:06:29.129 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 9090 (http) with context path ''
+2023-06-27 10:06:29.141 [main] INFO  com.oo.LearningSystemApplication - Started LearningSystemApplication in 11.662 seconds (JVM running for 18.665)
+2023-06-27 10:06:47.219 [http-nio-9090-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-06-27 10:06:47.219 [http-nio-9090-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2023-06-27 10:06:47.220 [http-nio-9090-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2023-06-27 10:06:47.421 [http-nio-9090-exec-2] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited

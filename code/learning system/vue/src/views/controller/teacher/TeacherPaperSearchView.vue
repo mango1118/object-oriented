@@ -132,6 +132,9 @@ export default {
           + "&pageSize=" + this.pageSize + "&pid=" + this.paperId);
       // console.log(resp);
       // console.log(resp.data.data);
+      if(resp.code === 20040){
+        this.$message.error(resp.msg);
+      }
       this.tableData = resp.data.data;
       this.total = resp.data.total;
       this.examPaper = resp.data.examPaper;
@@ -141,7 +144,8 @@ export default {
       const resp = await this.axios.get("/papers/pageLike/?pageNum=" + this.pageNum
           + "&pid=" + this.pageSize);
       // console.log(resp);
-      if(resp.data.code == 20040){
+      console.log(resp.data.code);
+      if(resp.data.code === 20040){
         this.$message.error("查询失败，无相应id");
       }
       this.tableData = resp.data.data.data;
