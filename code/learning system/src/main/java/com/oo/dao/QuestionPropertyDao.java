@@ -35,7 +35,7 @@ public interface QuestionPropertyDao extends BaseMapper<QuestionProperty> {
     void calculateErrorRate(@Param("questionId") int questionId);
 
 
-    @Select("SELECT answer FROM question_property WHERE question_id = #{questionId}")
+    @Select("SELECT answer FROM t_question_property WHERE question_id = #{questionId}")
     String getAnswerById(@Param("questionId") Integer questionId);
 
 

@@ -20,9 +20,9 @@ import java.util.List;
 public interface PaperQuestionDao extends BaseMapper<PaperQuestion> {
     int addBatch(List<PaperQuestion> paperQuestions);
 
-    @Select("SELECT question_id FROM paper_question WHERE paper_id = #{paperId}")
+    @Select("SELECT question_id FROM t_paper_question WHERE paper_id = #{paperId}")
     List<Integer> getQuestionIdsByPaperId(@Param("paperId") Integer paperId);
 
-    @Select("SELECT set_score FROM paper_question WHERE paper_id = #{paperId} AND question_id = #{questionId}")
+    @Select("SELECT set_score FROM t_paper_question WHERE paper_id = #{paperId} AND question_id = #{questionId}")
     Integer getScoreByPaperIdAndQuestionId(@Param("paperId") Integer paperId, @Param("questionId") Integer questionId);
 }

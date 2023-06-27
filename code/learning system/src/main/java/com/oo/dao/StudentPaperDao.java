@@ -16,10 +16,10 @@ import org.apache.ibatis.annotations.Update;
 @Mapper
 @TableName("t_student_paper")
 public interface StudentPaperDao extends BaseMapper<StudentPaper> {
-    @Update("UPDATE tstudent_paper SET total_score = #{objectiveScore} WHERE paper_id = #{paperId} AND student_id = #{studentId}")
+    @Update("UPDATE t_student_paper SET total_score = #{objectiveScore} WHERE paper_id = #{paperId} AND student_id = #{studentId}")
     void updateTotalScore(@Param("paperId") Integer paperId, @Param("studentId") Integer studentId, @Param("objectiveScore") Integer objectiveScore);
 
-    @Select("SELECT id FROM student_paper WHERE paper_id = #{paperId} AND student_id = #{studentId}")
+    @Select("SELECT id FROM t_student_paper WHERE paper_id = #{paperId} AND student_id = #{studentId}")
     Integer getStudentPaperIdByPaperIdAndStudentId(Integer paperId, Integer studentId);
 
 }

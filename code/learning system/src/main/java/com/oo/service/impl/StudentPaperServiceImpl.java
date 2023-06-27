@@ -191,17 +191,24 @@ public class StudentPaperServiceImpl implements StudentPaperService {
             if (questionType.equals("选择题")) {
                 // 如果是选择题，判断多选题答案是否正确
                 String multipleChoiceAnswer = multipleChoiceAnswers.get(index1);
+                String option = multipleChoiceAnswer.substring(0, 1); // 截取第一个字符
+                System.out.println("选择题选项：" + option);
+
                 index1++;
-                questionPropertyDao.calculateErrorRate(questionId);
-                if (multipleChoiceAnswer.equals(answer)) {
+                System.out.println("是否正确：" + option.equals(answer));
+                if (option.equals(answer)) {
                     objectiveScore += score; // 答案正确，加上题目分值
                 }
             } else if (questionType.equals("填空题")) {
                 // 如果是填空题，判断填空题答案是否正确
                 String fillInTheBlankAnswer = fillInTheBlankAnswers.get(index2);
+                System.out.println("填空题学生答案："+fillInTheBlankAnswer);
                 index2++;
+                System.out.println("是否正确：" + fillInTheBlankAnswer.equals(answer));
                 if (fillInTheBlankAnswer.equals(answer)) {
+                    System.out.println("填空题加分前：" + objectiveScore);
                     objectiveScore += score; // 答案正确，加上题目分值
+                    System.out.println("填空题加分后：" + objectiveScore);
                 }
             }
 
