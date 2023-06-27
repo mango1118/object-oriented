@@ -1,5 +1,7 @@
 package com.oo.controller;
 
+import com.oo.controller.R.Code;
+import com.oo.controller.R.Result;
 import com.oo.domain.*;
 import com.oo.service.PaperQuestionService;
 import com.oo.service.QuestionGroupService;
@@ -32,7 +34,7 @@ public class PaperQuestionController {
     private QuestionService questionService;
 
     @GetMapping("/{paperId}")
-    public QuestionGroupDTO getQuestionsByPaperId(@RequestParam Integer paperId) {
+    public Result getQuestionsByPaperId(@RequestParam Integer paperId) {
         // 查询数据库或者调用 Service 获取指定试卷的试题列表
         List<Integer> questionList = paperQuestionService.getQuestionsByPaperId(paperId);
 
@@ -50,7 +52,7 @@ public class PaperQuestionController {
             if (Objects.equals(question.getType(), "选择题")) {
                 MultipleChoiceQuestionsDTO multipleChoiceQuestion = new MultipleChoiceQuestionsDTO();
                 multipleChoiceQuestion.setId(multipleChoiceIndex);
-                //System.out.print("multipleChoiceIndex:"+multipleChoiceIndex);
+                System.out.print("multipleChoiceIndex:"+multipleChoiceIndex);
                 multipleChoiceQuestion.setQuestion(question.getContent());
                 String content = question.getContent(); // 假设获取到的内容存储在变量 content 中
 
@@ -93,8 +95,9 @@ public class PaperQuestionController {
         QuestionGroupService.setFillInTheBlankQuestions(questions, fillInTheBlankQuestions);
         QuestionGroupService.setSubjectiveQuestions(questions, subjectiveQuestions);
         //System.out.print("zheli:"+questions);
-
-        return questions;
+        Integer code = questions!= null  ? Code.GET_OK : Code.GET_ERR;
+        String msg = questions != null ? "" : "数据查询失败，请重试！";
+        return new Result(code,questions,msg);
     }
 
 
