@@ -4,6 +4,10 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.oo.domain.PaperGraph;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @description:
@@ -13,4 +17,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 @TableName("t_paper_graph")
 public interface PaperGraphDao extends BaseMapper<PaperGraph> {
+
+    @Select("SELECT * FROM t_paper_graph")
+    List<Map<String,Object>> getAllNeededContent();
 }

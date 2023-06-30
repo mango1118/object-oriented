@@ -1,9 +1,6 @@
 package com.oo.service;
 
-import com.oo.domain.Question;
-import com.oo.domain.StuClass;
-import com.oo.domain.Student;
-import com.oo.domain.Teacher;
+import com.oo.domain.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -35,5 +32,9 @@ public interface TeacherService {
     public List<StuClass> getClasses();
 
     public List <Map<String,Object>> getTheClassPapers(Integer classId);
+
+    public Map<String,Object> getObjContent();
+
+    public boolean giveScore(Integer id, Integer teacherScore);
 
 }

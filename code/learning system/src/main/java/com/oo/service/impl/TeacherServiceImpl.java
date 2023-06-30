@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +31,17 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Autowired
     private StudentPaperDao studentPaperDao;
+
+    @Autowired
+    private QuestionDao questionDao;
+
+    @Autowired
+    private PaperGraphDao paperGraphDao;
+
+    @Autowired
+    private PaperQuestionDao paperQuestionDao;
+
+
 
     /**
      * @description: 选择一个班级发卷-----更改sent属性;为了后续方便当发卷成功时将班级发到的卷子也存到学生试卷表中
@@ -89,6 +101,65 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
 
+    /**
+     * @description: 获取要改卷的内容
+     * @param
+     * @return
+     */
+    public Map<String,Object> getObjContent(){
+        //List<Map<String,Object>> paperGraphs = paperGraphDao.getAllContent(null);
+        List<PaperGraph> paperGraphs = paperGraphDao.selectList(null) ;
+        //PaperGraph allPaperGraphs = new PaperGraph();
+        //List<PaperGraph> idList =  paperGraphDao.getAllNeededContent();
+        //Question question = questionDao.selectById(id);
+        //String content = question.getContent();
+        Map<String, Object> data = new LinkedHashMap<>();
+        List <Map<String,Object>> correctViews = new ArrayList<>();
+        for(PaperGraph paperGraphZz:paperGraphs)
+        {
+            Integer questionId = paperGraphZz.getQuestionId();
+            Question question = questionDao.selectById(questionId);
+            Integer stuPaperId = paperGraphZz.getStudentPaperId();
+            Integer paperId = studentPaperDao.getPaperIdByStudentPaperId(stuPaperId);
+            Integer setScore = paperQuestionDao.getScoreByPaperIdAndQuestionId(paperId,questionId);
+            String content = question.getContent();
+            Map<String,Object> correctView = new LinkedHashMap<>();
+            correctView.put("id",paperGraphZz.getId());
+            correctView.put("content",content);
+            correctView.put("answerImage",paperGraphZz.getUrl());
+            correctView.put("score",setScore);
+            correctView.put("teacherScore",0);
+            correctView.put("submitted",paperGraphZz.getIsMark());
+            correctViews.add(correctView);
+        }
+        data.put("data", correctViews);
+        return data;
+    }
+
+    /**
+     *  保存教师给的主观题分值，并将其加入到学生考试的总分当中去
+     */
+
+    public boolean giveScore(Integer id, Integer teacherScore)
+    {
+        PaperGraph paperGraph = paperGraphDao.selectById(id);
+        if(paperGraph==null)
+            return false;
+        paperGraph.setScore(teacherScore);
+        paperGraph.setIsMark(1);
+        Integer stuPaperId = paperGraph.getStudentPaperId();
+        boolean flag1 = false,flag2 = false;
+        if(paperGraphDao.updateById(paperGraph)>0)
+            flag1 = true;
+        StudentPaper studentPaper = studentPaperDao.selectById(stuPaperId);
+        Integer nowScore = studentPaper.getTotalScore();
+        Integer totalScore = nowScore + teacherScore;
+        studentPaper.setTotalScore(totalScore);
+        if(studentPaperDao.updateById(studentPaper)>0)
+            flag2 = true;
+
+        return flag1 && flag2;
+    }
 
 
 

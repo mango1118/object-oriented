@@ -52,7 +52,7 @@
     </el-card>-->
     <el-card v-for="(question, index) in questions" :key="index" class="question-card">
       <div class="question-content">
-        <img v-if="question.content" :src="question.content" alt="题目内容">
+        <img :src="question.content" alt="题目内容">
       </div>
       <div class="student-answer">
         <img :src="question.answerImage" alt="学生作答">
@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
 
 export default {
   data() {
@@ -90,10 +90,10 @@ export default {
   },
   methods: {
     fetchQuestions() {
-      axios
-          .get('/api/questions') // 通过合适的URL获取题目数据
+      this.axios
+          .get('/teachers/questions') // 通过合适的URL获取题目数据
           .then(response => {
-            this.questions = response.data;
+            this.questions = response.data.data;
           })
           .catch(error => {
             console.error('Failed to fetch questions:', error);
@@ -107,7 +107,7 @@ export default {
         return;
       }
 
-      question.submitted = true;
+      question.submitted = 1;
 
       // 构建需要发送的表单数据
       const formData = {
@@ -116,8 +116,8 @@ export default {
       };
 
       // 使用axios或其他HTTP客户端库发送表单数据到后端
-      axios
-          .post('/api/submit-score', formData) // 根据实际情况修改URL和发送方法
+      this.axios
+          .post('/teachers/submit-score', formData) // 根据实际情况修改URL和发送方法
           .then(response => {
             // 处理成功发送后的逻辑
             console.log('Score submitted successfully!');
@@ -143,8 +143,8 @@ export default {
 }
 
 .student-answer img {
-  max-width: 200px;
-  max-height: 200px;
+  max-width: 1000px;
+  max-height: 1000px;
   margin-top: 10px;
 }
 

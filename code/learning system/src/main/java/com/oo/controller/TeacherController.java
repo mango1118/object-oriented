@@ -2,6 +2,7 @@ package com.oo.controller;
 
 import com.oo.controller.R.Code;
 import com.oo.controller.R.Result;
+import com.oo.domain.PaperGraph;
 import com.oo.domain.StuClass;
 import com.oo.service.PaperService;
 import com.oo.service.StudentService;
@@ -88,6 +89,41 @@ public class TeacherController {
             msg = "试卷发送成功！";
        else
             msg = "试卷发送失败，请重试！";
+        return new Result(code, msg);
+    }
+
+
+    /**
+     * @description: 获取要改卷的内容
+     * @param
+     * @return
+     */
+    @GetMapping("/questions")
+    public Result getTheClassPaper()
+    {
+        Map<String,Object> paperGraphs = teacherService.getObjContent();
+        Integer code = !paperGraphs.isEmpty() ? Code.GET_OK : Code.GET_ERR;
+        String msg = !paperGraphs.isEmpty() ? "教师改卷视图返回成功" : "教师改卷视图返回失败，请重试！";
+        return new Result(code, paperGraphs, msg);
+    }
+
+    /**
+     * @description: 教师改卷给分并保存
+     * @param
+     * @return
+     */
+    @PostMapping("/submit-score")
+    public Result giveScore(@RequestBody Map<String, Object> data)
+    {
+        Integer Id = (Integer) data.get("questionId");
+        Integer teacherScore = (Integer) data.get("teacherScore");
+        boolean flag = teacherService.giveScore(Id, teacherScore);
+        Integer code = flag ? Code.GET_OK : Code.GET_ERR;
+        String msg;
+        if(flag)
+            msg = "主观题成绩保存成功！";
+        else
+            msg = "主观题成绩保存失败，请重试！";
         return new Result(code, msg);
     }
 }

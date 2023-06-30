@@ -22,4 +22,7 @@ public interface StudentPaperDao extends BaseMapper<StudentPaper> {
     @Select("SELECT id FROM t_student_paper WHERE paper_id = #{paperId} AND student_id = #{studentId}")
     Integer getStudentPaperIdByPaperIdAndStudentId(Integer paperId, Integer studentId);
 
+    @Select("SELECT paper_id FROM t_student_paper WHERE id = #{stuPaperId}")
+    Integer getPaperIdByStudentPaperId(Integer stuPaperId);
+
 }
