@@ -1,5 +1,6 @@
 package com.oo.service;
 
+import com.oo.domain.QuestionGroupDTO;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -19,4 +20,14 @@ public interface PaperQuestionService {
      * @return List<Integer>
      */
     public List<Integer> getQuestionsByPaperId(Integer id);
+
+
+
+    /**
+     * 获得试卷题目
+     *
+     * @param paperId
+     * @return List<Integer>
+     */
+    public QuestionGroupDTO getQuestions(Integer paperId);
 }

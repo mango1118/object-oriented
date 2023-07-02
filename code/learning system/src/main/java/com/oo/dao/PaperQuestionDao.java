@@ -3,6 +3,7 @@ package com.oo.dao;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.oo.domain.PaperQuestion;
+import com.oo.domain.Question;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -25,4 +26,5 @@ public interface PaperQuestionDao extends BaseMapper<PaperQuestion> {
 
     @Select("SELECT set_score FROM t_paper_question WHERE paper_id = #{paperId} AND question_id = #{questionId}")
     Integer getScoreByPaperIdAndQuestionId(@Param("paperId") Integer paperId, @Param("questionId") Integer questionId);
+
 }
